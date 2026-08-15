@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix MelodiKraft versi live",
+  "description": "Aplikasi otomatis untuk membuat lirik lagu dan style musik (master prompt) berkualitas tinggi, terinspirasi oleh Slow Rock Melayu 90-an dan pop klasik.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
