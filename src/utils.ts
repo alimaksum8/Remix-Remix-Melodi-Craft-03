@@ -297,100 +297,222 @@ ${lyrics.outro.join("\n")}
 }
 
 /**
- * Helper to build optimized Suno / Udio Style Tags (max 120 chars recommended)
+ * Safely clamps any text to a strict maximum character limit (default 900),
+ * trimming cleanly at logical boundaries without cutting mid-word where possible.
  */
-export function formatSunoStyleTags(song: SongData): string {
-  const { stylePrompt } = song;
+export function clampToMaxChars(text: string, maxChars: number = 900): string {
+  if (!text) return "";
+  const cleaned = text.replace(/\s+/g, " ").trim();
+  if (cleaned.length <= maxChars) return cleaned;
   
-  // Determine if female, duet, or male vocal is more appropriate
-  let vocalTag = "male vocal";
+  const truncated = cleaned.substring(0, maxChars);
+  const lastBreak = Math.max(
+    truncated.lastIndexOf(","),
+    truncated.lastIndexOf("."),
+    truncated.lastIndexOf("|"),
+    truncated.lastIndexOf(";")
+  );
+  if (lastBreak > maxChars * 0.7) {
+    return truncated.substring(0, lastBreak).trim();
+  }
+  const lastSpace = truncated.lastIndexOf(" ");
+  if (lastSpace > maxChars * 0.8) {
+    return truncated.substring(0, lastSpace).trim();
+  }
+  return truncated.trim();
+}
+
+/**
+ * Helper to determine vocal descriptor for AI Music Prompts
+ */
+function getVocalDescriptor(vocalStyle: string): string {
+  const vocalLower = (vocalStyle || "").toLowerCase();
+  if (vocalLower.includes("female") || vocalLower.includes("wanita") || vocalLower.includes("perempuan") || vocalLower.includes("cewek")) {
+    return "warm female vocal, sweet emotive alto-soprano tone, soft natural vibrato, breathy intimacy";
+  } else if (vocalLower.includes("duet")) {
+    return "duet vocal, male and female harmonies, emotional interplay, dynamic vocal trade-offs";
+  } else if (vocalLower.includes("male") || vocalLower.includes("pria") || vocalLower.includes("cowok") || vocalLower.includes("laki-laki")) {
+    return "warm male vocal, chest voice dominant, emotional delivery, heartfelt natural vibrato, soft rasp on climax";
+  }
+  return "warm expressive vocal, natural vibrato, emotive delivery, clean pronunciation";
+}
+
+/**
+ * Helper to build aimusic.so Style of Music Tags (Maksimal KETAT ≤ 120 Karakter)
+ */
+export function formatAiMusicSoStyleTags(song: SongData): string {
+  const { stylePrompt } = song;
+  const timeSig = stylePrompt.timeSignature || "4/4";
+  
+  // Compact vocal descriptor
+  let vocal = "male vocal";
   const vocalLower = (stylePrompt.vocalStyle || "").toLowerCase();
   if (vocalLower.includes("female") || vocalLower.includes("wanita") || vocalLower.includes("perempuan") || vocalLower.includes("cewek")) {
-    vocalTag = "female vocal";
+    vocal = "female vocal";
   } else if (vocalLower.includes("duet")) {
-    vocalTag = "duet vocal, male female";
-  } else if (vocalLower.includes("male") || vocalLower.includes("pria") || vocalLower.includes("cowok") || vocalLower.includes("laki-laki")) {
-    vocalTag = "male vocal";
+    vocal = "duet vocal";
   }
 
-  // Format Time Signature / Birama tag
-  const biramaTag = stylePrompt.timeSignature ? `${stylePrompt.timeSignature} time signature` : "4/4 time signature";
+  // Extract compact attributes
+  const primaryGenre = stylePrompt.genre.split(",")[0].trim().toLowerCase();
+  const tempoClean = stylePrompt.tempo.replace(/BPM/i, "bpm").trim().toLowerCase();
+  const moodClean = stylePrompt.mood.split(",")[0].trim().toLowerCase();
 
-  // Pick primary genres, birama/time signature, and instrumental style
-  const tags = [
-    stylePrompt.genre.split(",")[0].toLowerCase(),
-    biramaTag,
-    stylePrompt.tempo.toLowerCase(),
-    vocalTag,
-    "emotional",
-    "electric guitar fingerstyle",
+  const parts: string[] = [
+    primaryGenre,
+    `${timeSig} meter`,
+    tempoClean,
+    `key ${stylePrompt.key}`,
+    vocal,
+    moodClean,
+    "guitar solo",
     "strings pad",
-    "plate reverb",
+    "90s ballad",
   ];
 
   if (stylePrompt.liveConcert && !stylePrompt.liveConcert.toLowerCase().includes("tidak ada")) {
-    tags.push("live concert");
-    const liveLower = stylePrompt.liveConcert.toLowerCase();
-    
-    // Check for Opening MC
-    if (
-      liveLower.includes("opening mc") || 
-      liveLower.includes("menyapa") || 
-      liveLower.includes("mc") || 
-      liveLower.includes("speaking") || 
-      liveLower.includes("banter") || 
-      liveLower.includes("greet") ||
-      liveLower.includes("sapaan")
-    ) {
-      tags.push("mc speaking", "storytelling", "natural speech");
-    }
-    
-    // Check for Tepuk Tangan
-    if (
-      liveLower.includes("tepuk tangan") || 
-      liveLower.includes("applause") || 
-      liveLower.includes("cheer") || 
-      liveLower.includes("sorakan")
-    ) {
-      tags.push("audience applause", "crowd cheering");
-    }
-    
-    // Check for Penonton Bernyanyi — Verse 1
-    if (
-      liveLower.includes("penonton bernyanyi verse 1") || 
-      liveLower.includes("verse 1") || 
-      liveLower.includes("sing along")
-    ) {
-      tags.push("audience singing only", "crowd sing along", "lead vocal silent");
-    }
-    
-    // Check for Penonton Bernyanyi — Chorus
-    if (
-      liveLower.includes("penonton bernyanyi chorus") || 
-      liveLower.includes("chorus") || 
-      liveLower.includes("epic chorus")
-    ) {
-      tags.push("crowd chorus", "audience singing only", "lead vocal silent");
-    }
+    parts.push("live concert");
+  }
 
-    // Check for Interaksi Vokalis
-    if (
-      liveLower.includes("interaksi") || 
-      liveLower.includes("interaction") || 
-      liveLower.includes("vokalis")
-    ) {
-      tags.push("crowd interaction", "audience response");
-    }
+  const raw = parts.filter(Boolean).join(", ");
+  return clampToMaxChars(raw, 120);
+}
 
-    // Check for Atmosfer Konser
-    if (
-      liveLower.includes("atmosfer") || 
-      liveLower.includes("atmosphere") || 
-      liveLower.includes("reverb")
-    ) {
-      tags.push("concert atmosphere", "arena reverb");
+/**
+ * Helper to build optimized Suno AI Style of Music Tags (Maksimal 900 Karakter)
+ */
+export function formatSunoStyleTags(song: SongData): string {
+  const { stylePrompt } = song;
+  const vocalDesc = getVocalDescriptor(stylePrompt.vocalStyle);
+  const timeSig = stylePrompt.timeSignature || "4/4";
+
+  const tags: string[] = [
+    stylePrompt.genre.toLowerCase(),
+    `${timeSig} time signature`,
+    stylePrompt.tempo.toLowerCase(),
+    `key ${stylePrompt.key}`,
+    vocalDesc,
+    stylePrompt.mood.toLowerCase(),
+    "crying electric guitar solo",
+    "long sustain distortion",
+    "acoustic guitar fingerpicking",
+    "melodic bassline",
+    "analog strings pad",
+    "dynamic power drums",
+    "heartfelt slow rock ballad",
+    "soaring chorus climax",
+    "90s vintage studio mix",
+    "analog tape warmth",
+    "stereo plate reverb",
+  ];
+
+  if (stylePrompt.introOpening) {
+    const cleanIntro = stylePrompt.introOpening.replace(/🎵/g, "").replace(/\s+/g, " ").trim();
+    if (cleanIntro) {
+      tags.push(cleanIntro.toLowerCase());
     }
   }
 
-  return tags.join(", ").substring(0, 120);
+  if (stylePrompt.liveConcert && !stylePrompt.liveConcert.toLowerCase().includes("tidak ada")) {
+    tags.push("live concert", "arena acoustics");
+    const liveLower = stylePrompt.liveConcert.toLowerCase();
+    
+    if (liveLower.includes("mc") || liveLower.includes("speaking") || liveLower.includes("banter") || liveLower.includes("sapaan")) {
+      tags.push("mc speaking", "storytelling intro", "natural speech");
+    }
+    if (liveLower.includes("tepuk") || liveLower.includes("applause") || liveLower.includes("cheer") || liveLower.includes("sorakan")) {
+      tags.push("audience applause", "crowd cheering");
+    }
+    if (liveLower.includes("verse 1") || liveLower.includes("sing along")) {
+      tags.push("crowd sing along", "audience singing verse", "lead vocal silent");
+    }
+    if (liveLower.includes("chorus") || liveLower.includes("epic chorus")) {
+      tags.push("crowd chorus sing along", "epic audience chant");
+    }
+    if (liveLower.includes("interaksi") || liveLower.includes("interaction")) {
+      tags.push("crowd interaction", "vocalist stage banter");
+    }
+    if (liveLower.includes("atmosfer") || liveLower.includes("atmosphere") || liveLower.includes("reverb")) {
+      tags.push("live stadium reverb", "authentic concert ambiance");
+    }
+  }
+
+  const rawTags = tags.filter(Boolean).join(", ");
+  return clampToMaxChars(rawTags, 900);
+}
+
+/**
+ * Helper to build Yolly AI Style of Music Tags & Prompt (Maksimal 900 Karakter)
+ */
+export function formatYollyAiStyleTags(song: SongData): string {
+  const { stylePrompt } = song;
+  const timeSig = stylePrompt.timeSignature || "4/4";
+  const vocalDesc = getVocalDescriptor(stylePrompt.vocalStyle);
+
+  const sections: string[] = [
+    `[Genre & Rhythm]: ${stylePrompt.genre}, ${timeSig} time signature, ${stylePrompt.tempo}, Key ${stylePrompt.key}`,
+    `[Vocal Tone]: ${vocalDesc}, Indonesian lyric phrasing`,
+    `[Instrumentation]: ${stylePrompt.introOpening.replace(/🎵/g, "").trim()}, screaming distorted electric guitar solo with long sustain, acoustic guitar arpeggios, warm melodic bass, expressive dynamic drums, lush vintage strings pad`,
+    `[Arrangement & Mood]: ${stylePrompt.mood}, ${stylePrompt.arrangement}`,
+    `[Production & Mixing]: ${stylePrompt.mixing}, 90s analog warmth, spacious plate reverb, clear vocal presence`,
+  ];
+
+  if (stylePrompt.liveConcert && !stylePrompt.liveConcert.toLowerCase().includes("tidak ada")) {
+    sections.push(`[Live Concert FX]: ${stylePrompt.liveConcert}, audience applause, crowd cheering, live arena acoustics`);
+  }
+
+  const combined = sections.join(" | ");
+  return clampToMaxChars(combined, 900);
+}
+
+/**
+ * Helper to build SongGenerator.io Style of Music Tags & Prompt (Maksimal 900 Karakter)
+ */
+export function formatSongGeneratorIoStyleTags(song: SongData): string {
+  const { stylePrompt } = song;
+  const timeSig = stylePrompt.timeSignature || "4/4";
+  const vocalDesc = getVocalDescriptor(stylePrompt.vocalStyle);
+  const introClean = stylePrompt.introOpening.replace(/🎵/g, "").trim();
+
+  let prompt = `${stylePrompt.genre} ballad in ${timeSig} time signature, ${stylePrompt.tempo}, key ${stylePrompt.key}. Mood is ${stylePrompt.mood.toLowerCase()} with heartfelt emotional storytelling. Features ${vocalDesc}. Instrumentation includes ${introClean}, crying melodic electric guitar solo with heavy sustain and bending, warm acoustic rhythm guitar, punchy melodic bassline, dynamic power ballad drums, and ambient string pads. Arrangement moves from intimate gentle verses with a 10-second melodic instrumental break into a soaring anthemic chorus climax. Sound engineering: ${stylePrompt.mixing.toLowerCase()}, vintage 90s analog console warmth, stereo plate reverb, pristine vocal clarity.`;
+
+  if (stylePrompt.liveConcert && !stylePrompt.liveConcert.toLowerCase().includes("tidak ada")) {
+    prompt += ` Live concert setting with ${stylePrompt.liveConcert.toLowerCase()}, audience applause, crowd singing along, and stadium atmosphere.`;
+  }
+
+  return clampToMaxChars(prompt, 900);
+}
+
+/**
+ * Helper to build Universal Extended AI Music Tags (Maksimal 900 Karakter)
+ */
+export function formatUniversalMusicTags(song: SongData): string {
+  const { stylePrompt } = song;
+  const timeSig = stylePrompt.timeSignature || "4/4";
+  const vocalDesc = getVocalDescriptor(stylePrompt.vocalStyle);
+
+  const tags = [
+    stylePrompt.genre.toLowerCase(),
+    `${timeSig} meter`,
+    stylePrompt.tempo.toLowerCase(),
+    `key ${stylePrompt.key}`,
+    vocalDesc,
+    stylePrompt.mood.toLowerCase(),
+    "screaming guitar solo",
+    "acoustic fingerstyle",
+    "analog synth pad",
+    "rich bass",
+    "live drum fills",
+    "10s instrumental break before chorus",
+    "anthemic chorus climax",
+    "vintage 90s analog mixing",
+    "spacious plate reverb",
+    "emotional nostalgic vibe",
+  ];
+
+  if (stylePrompt.liveConcert && !stylePrompt.liveConcert.toLowerCase().includes("tidak ada")) {
+    tags.push("live concert ambiance", "crowd cheering", "audience sing-along");
+  }
+
+  return clampToMaxChars(tags.join(", "), 900);
 }

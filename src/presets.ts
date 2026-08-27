@@ -2,6 +2,32 @@ import { Preset } from "./types";
 
 export const PRESETS: Preset[] = [
   {
+    id: "romantis-indonesia-klasik",
+    name: "Lagu Romantis Indonesia Klasik",
+    iconName: "Heart",
+    genre: "Pop Romantis Indonesia Klasik, Slow Rock Romantis, Balada Pop 90's",
+    mood: "Romantic, Warm, Heartfelt, Sweet, Nostalgic, Loving, Expressive",
+    tempo: "72 BPM",
+    key: "C / G (Bright, warm, and comfortable for romantic vocals)",
+    vocalStyle: "Warm Male/Female Vocal, Tender, Intimate, Direct Emotion, Clean Vibrato, Chest Voice with Soft Nuance",
+    lyricLanguage: "Bahasa Indonesia Sederhana, Langsung, Romantis (Aku, Kau, Dirimu, Kasih, Sayang, Pola: Kau hadir... / Kasih, genggamlah... / Betapa aku...)",
+    storyFlow: "Verse 1A (Perkenalan & Cinta Awal: KAU hadir) → Verse 1B (Perkembangan Cinta: Mata, Senyum, Sentuhan) → Pre-Chorus (Eskalasi) → Chorus A (Hook Utama: Kasih/Sayang + Pengakuan Cinta) → Chorus B (Variasi Hook) → Verse 3 (Penguatan Rasa) → Bridge (Janji & Kesetiaan) → Final Chorus (Klimaks) → Outro (Penutup Manis + Vocalization)",
+    description: "Gaya lagu cinta Indonesia klasik dengan bahasa langsung, sederhana, komunikatif, dan hook romantis yang mudah diingat.",
+  },
+  {
+    id: "balada-melayu-dangdut-slow",
+    name: "Balada Melayu & Dangdut Slow (Dramatis)",
+    iconName: "HeartCrack",
+    genre: "Balada Melayu, Dangdut Slow, Slow Rock Melayu 90's",
+    mood: "Deeply Emotional, Heartfelt, Melancholic, Dramatic, Poetic, Hope in Pain",
+    tempo: "72 BPM",
+    key: "Am / Dm (minor key, highly emotional with room for cengkok)",
+    vocalStyle: "Warm Emotional Vocal, Deep Feeling, Soft Cengkok / Vibrato, Chest Voice with Holding Notes",
+    lyricLanguage: "Natural Poetic Indonesian, Dual Metaphors (Cinta & Luka), Story Arc (Cinta → Luka → Menerima → Harapan → Bahagia → Luka Membekas)",
+    storyFlow: "Verse 1A (Pembukaan Cinta & Metafora Bunga) → Verse 1B (Citraan Luka & Darah Jiwa) → Pre-Chorus (Eskalasi) → Chorus 1A (Pernyataan Utama) → Chorus 1B (Pertanyaan Emosional & Kamar Gelap) → Bridge (Penerimaan Luka & Harapan Sinar Suria) → Outro (Filosofi & Kebahagiaan di Sebalik Duka) → Reprise (Penutup Luka Realistis)",
+    description: "Struktur balada Melayu/Dangdut slow dengan kurva emosi dramatis: CINTA → LUKA → PERTANYAAN → PENERIMAAN → HARAPAN → BAHAGIA → LUKA YANG MASIH TERSISA.",
+  },
+  {
     id: "slow-rock-melayu-90s",
     name: "Slow Rock Melayu 90-an",
     iconName: "Guitar",

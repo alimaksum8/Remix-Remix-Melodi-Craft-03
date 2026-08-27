@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-import { StylePromptData } from "../types";
-import { Copy, Check, Info, Music, Sliders, Volume2, User, HelpCircle } from "lucide-react";
+import { StylePromptData, SongData } from "../types";
+import { StyleTagsBoxes } from "./StyleTagsBoxes";
+import { Copy, Check, Info, Music, Sliders, Volume2, User, HelpCircle, Sparkles } from "lucide-react";
 
 interface MusicStylePromptProps {
   style: StylePromptData;
   chords: string;
+  songData?: SongData;
   onCopyFullPrompt: () => void;
 }
 
 export const MusicStylePrompt: React.FC<MusicStylePromptProps> = ({
   style,
   chords,
+  songData,
   onCopyFullPrompt,
 }) => {
   const [copiedFull, setCopiedFull] = useState<boolean>(false);
@@ -40,7 +43,7 @@ export const MusicStylePrompt: React.FC<MusicStylePromptProps> = ({
           type="button"
           id="btn-copy-full-prompt"
           onClick={handleCopyFull}
-          className="flex items-center justify-center gap-1.5 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-semibold shadow-sm hover:shadow-md transition-all shrink-0"
+          className="flex items-center justify-center gap-1.5 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-semibold shadow-sm hover:shadow-md transition-all shrink-0 cursor-pointer"
         >
           {copiedFull ? <Check size={14} /> : <Copy size={14} />}
           <span>{copiedFull ? "Tersalin!" : "Salin Master Prompt Lengkap"}</span>
@@ -66,6 +69,13 @@ export const MusicStylePrompt: React.FC<MusicStylePromptProps> = ({
           <p className="text-sm font-extrabold text-neutral-800 mt-1">Indonesian</p>
         </div>
       </div>
+
+      {/* Style of Music Tags for Suno, Yolly AI, SongGenerator.io */}
+      {songData && (
+        <div className="pt-2">
+          <StyleTagsBoxes songData={songData} />
+        </div>
+      )}
 
       {/* Accordion/Detail Sections */}
       <div className="space-y-4">
@@ -110,7 +120,7 @@ export const MusicStylePrompt: React.FC<MusicStylePromptProps> = ({
               type="button"
               id="copy-chords"
               onClick={handleCopyChords}
-              className="p-1 text-neutral-400 hover:text-amber-700 rounded transition-all"
+              className="p-1 text-neutral-400 hover:text-amber-700 rounded transition-all cursor-pointer"
               title="Salin Akor"
             >
               {copiedChords ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}

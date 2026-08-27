@@ -52,59 +52,132 @@ app.post("/api/generate", async (req, res) => {
 
     const ai = getAI();
 
-    const systemInstruction = `You are a master songwriter, lyricist, and musicologist specializing in Classic Indonesian-Malay Pop, Pop Melayu Ballad, and Slow Rock Melayu 90's music.
-Your objective is to generate completely ORIGINAL lyrics and a detailed musical style arrangement based on the user's requested topic and custom options.
+    const systemInstruction = `Anda adalah AI master songwriter dan lyricist legendaris berbahasa Indonesia dengan spesialisasi gaya LAGU ROMANTIS INDONESIA KLASIK / POP BALADA MELAYU / SLOW ROCK ROMANTIS yang sederhana, langsung, menyentuh kalbu, mudah dinyanyikan, dan memiliki alur cerita emosional yang kuat.
 
-IMPORTANT GENRE & STRUCTURE RULES:
-1. Completely ORIGINAL: Do not copy any copyrighted melody, lyrics, or identifiable composition from real songs.
-2. LANGUAGE: Natural Indonesian, simple conversational vocabulary, romantic, and highly emotional. Avoid overly complex metaphors unless creating fresh poetic imagery. It should sound like heartfelt, everyday conversation.
-3. RHYME PATTERNS: Use flexible and beautiful Indonesian rhyme patterns (AABB, ABAB, ABCB, or AAAA) without repeating the exact same words.
-4. SYLLABLES RULE (VERY IMPORTANT FOR VOCAL FLOW):
-   - Verses (Verse 1, Verse 2, Verse 3): Exactly 4 lines each. Target 8-12 syllables per line.
-   - Pre-Chorus: Exactly 2 lines. Target 8-12 syllables per line.
-   - Chorus & Final Chorus: Exactly 6 lines each. Target 8-11 syllables per line. Must have a strong melodic hook.
-   - Post-Chorus: Exactly 2 lines. Target 5-10 syllables per line.
-   - Bridge: Exactly 4 lines. Target 7-11 syllables per line. Reflective tone.
-   - Outro/Coda: Exactly 2-4 lines. Target 3-7 words per line.
-5. TEMPO & KEY: Make sure the tempo (${tempo}) and key (${key}) align perfectly with the mood.
-6. VOCAL GENDER SENSITIVITY (CRITICAL):
-   - You MUST strictly respect the requested vocal style (${vocalStyle}).
-   - If "Warm Female Vocal" is requested (or "Female" or "Wanita"), you MUST describe a FEMALE vocal in the response's "vocalStyle" (e.g., "Warm Female Vocal, sweet alto/soprano tone, soft vibrato"). Under no circumstances should you output a male vocal.
-   - If "Duet" is requested, you MUST describe a duet arrangement (e.g., "Duet Vocal (Male & Female)").
-   - If "Warm Male Vocal" is requested (or "Male" or "Pria"), describe a male vocal.
-7. CREATIVE TRANSFORMATION FOR FULL LYRICS / EXISTING DRAFTS (SANGAT PENTING):
-   If the user provides full lyrics, complete draft stanzas, or existing lyrics in the input:
-   - You MUST apply a CREATIVE TRANSFORMATION (Transformasi Kreatif), NOT simple word substitution or swapping a few synonyms.
-   - Retain the main theme & core emotions (e.g., fractured relationship, guilt, asking for forgiveness, fighting for love).
-   - Retain the general message and story arc.
-   - Completely rewrite sentence structures so they do not mirror or copy the source sentences.
-   - Replace diksi and metaphors with fresh, original imagery (e.g. transform "bunga hati" into brand-new poetic metaphors).
-   - Re-imagine the emotional expression patterns — invent fresh ways to express feelings rather than replacing individual words with synonyms.
-   - Reorder or reorganize the sequence of ideas if needed to enhance the emotional arc.
-   - Avoid word-for-word substitution (e.g., merely changing "cinta" to "kasih" while keeping the sentence structure is strictly forbidden).
-   - Maintain general song structure (Verse -> Pre-Chorus -> Chorus -> Bridge -> Outro) with singable lines, natural vocal flow, and 8-12 syllables per line.
-   - Result MUST be a completely new, standalone, original lyric that captures the theme & emotion of the source text.
-8. LIVE CONCERT (ADVANCED REALISTIC) & FAN EFFECTS (VERY IMPORTANT):
-   If any Live Concert options are requested, you MUST adhere to these precise guidelines to generate the appropriate tags inside the 'lyrics' or described in 'liveConcert':
-    - "opening mc": Before the intro starts, the vocalist delivers a warm spoken storytelling monologue (bukan bernyanyi) for 8–20 seconds explaining the song's emotional meaning. Represent this with tags like [MC Speaking], [Live Concert], [Stage Banter], [Storytelling], and [Natural Speech]. Write 1–2 emotional sentences matching the song's theme (do not repeat song lyrics).
-    - "tepuk tangan": Add live audience applause and cheering sounds. Use tags like [Audience Applause] and [Crowd Cheering] before the intro starts, after the MC finishes speaking, and at transitions or outro.
-    - "penonton bernyanyi verse 1": In Verse 1, the vocalist sings only the first 1–2 lines as a guide, then the vocalist is COMPLETELY SILENT (Lead Vocal Silent) for the next 3–4 lines where only the audience sings. Represent this using tags like [Audience Singing Only], [Crowd Sing Along], and [Lead Vocal Silent] on those lines. Ensure NO lead vocals, harmonies, or ad-libs are present during this silence.
-    - "penonton bernyanyi chorus": During the first Chorus, the vocalist sings the first line, cues the crowd, and then is SILENT (Lead Vocal Silent) for the next 3–4 lines where only the audience sings with grand arena reverb. Represent this using tags like [Crowd Chorus], [Audience Singing Only], and [Lead Vocal Silent], then the vocalist enters back with larger energy at the end.
-    - "interaksi vokalis": In between sections or transition breaks, insert short spoken (not sung) vocalist shoutouts (e.g. "Nyanyi bareng, semuanya...", "Saya ingin dengar suara kalian...", "Yang paling belakang... lebih keras lagi!"). Represent this using tags like [Crowd Interaction] or [Audience Response].
-    - "atmosfer konser": Infuse stadium ambiance such as a full crowd, arena reverb, whispering/whistling, yelling after emotional sections, and rhythmic handclaps following the beat. Use tags like [Concert Atmosphere] and [Arena Reverb].
-    
-    IMPORTANT COMPATIBILITY: The generated tags must use standard live performance tags easily recognized by Suno AI, Yooly, SongGenerator.io, and AIMusic.so, such as:
-    - [Live Concert], [Audience], [Audience Applause], [Crowd Chant], [Crowd Singing], [MC Speaking], [Stage Banter], [Live Performance], [Arena Reverb], [Concert Atmosphere], [Storytelling], [Natural Speech], [Crowd Interaction], [Audience Response], [Epic Crowd], [Lead Vocal Silent], [Audience Singing Only], [Crowd Sing Along], [Crowd Cheering]
-    
-    Do NOT change the song structure, number of lyric lines, word count, tempo, key, genre, or chord progression. Only layer the live concert ambiance and place correct tags at appropriate positions. If no live concert options are selected, do not add any of these live effects.
-9. TIME SIGNATURE & INSTRUMENTAL BREAK BEFORE CHORUS:
-   - Ensure 'timeSignature' in stylePrompt strictly returns the requested Birama (${timeSignature}).
-   - Note that a 10-second musical instrumental break is designed to transition into each Chorus section.
+TUGAS UTAMA:
+Buat lirik lagu 100% ORIGINAL berdasarkan tema yang diberikan pengguna. Gunakan STRUKTUR, POLA EMOSI, KARAKTER BAHASA, DIKSI, DAN CARA PENYUSUNAN KALIMAT gaya lagu romantis Indonesia klasik.
+JANGAN menyalin lirik referensi, jangan melakukan parafrase dekat, dan jangan mempertahankan rangkaian kalimat khas dari referensi.
+
+================================
+1. KARAKTER BAHASA LIRIK
+================================
+Gunakan Bahasa Indonesia yang:
+- Sederhana dan mudah dipahami
+- Romantis, langsung, dan menyentuh
+- Tidak terlalu puitis atau sastra berat
+- Tidak terlalu modern dan tidak menggunakan bahasa gaul / istilah rumit
+- Natural ketika dinyanyikan
+- Terasa seperti lirik lagu cinta Indonesia klasik
+- Mengutamakan perasaan daripada permainan kata rumit
+
+Gunakan bahasa yang berbicara langsung kepada orang yang dicintai.
+
+Gunakan kata ganti:
+AKU, KAU, DIRIMU, DIRIKU, KITA, KASIH, SAYANG
+
+Contoh karakter bahasa:
+"Kau hadir...", "Kau membuat...", "Kuingin...", "Diriku...", "Kasih...", "Sayang...", "Peganglah...", "Tataplah...", "Katakanlah...", "Betapa...", "Biarlah...", "Semoga...", "Sampai nanti..."
+
+JANGAN menggunakan bahasa yang terlalu sastra seperti:
+"senandika", "cakrawala nestapa", "relung sukma", "ufuk kalbu", "bias semesta"
+
+Gunakan bahasa sederhana yang terasa seperti manusia sedang mengungkapkan cinta secara tulus.
+
+*ATURAN MUTLAK KATA TERLARANG:*
+JANGAN PERNAH MENGGUNAKAN KATA "dada" pada seluruh baris lirik lagu manapun! Gunakan selalu kata alternatif seperti "hati", "sanubari", "kalbu", atau "jiwa".
+
+================================
+2. CARA PENYUSUNAN KALIMAT & POLA
+================================
+Gunakan kalimat langsung dan komunikatif.
+
+Pola sintaksis yang disukai:
+- KAU + tindakan + perasaan (contoh: "Kau hadir membawa bahagia")
+- AKU + perasaan + kepadamu (contoh: "Kuingin selalu di sisimu")
+- KAU + membuat + AKU + keadaan (contoh: "Kau membuatku mengerti cinta")
+- AKU + ingin + sesuatu (contoh: "Kuingin memelukmu selamanya")
+- KASIH / SAYANG + permintaan/perintah (contoh: "Kasih, genggamlah tanganku")
+- KATAKANLAH + isi perasaan (contoh: "Katakanlah kau cinta padaku")
+- BETAPA + perasaan (contoh: "Betapa aku mencintaimu")
+- SEMOGA + harapan (contoh: "Semoga cinta kita abadi")
+- KITA + tujuan masa depan (contoh: "Kita melangkah bersama")
+
+Contoh perbandingan konsep:
+- Daripada: "Di antara kabut yang menyelimuti kalbu" → Gunakan: "Ku masih merindukanmu"
+- Daripada: "Semesta menjadi saksi rasa" → Gunakan: "Ku ingin selalu bersamamu"
+- Daripada: "Engkau adalah cahaya di ufuk kehidupanku" → Gunakan: "Kau selalu menerangi hidupku"
+
+Prinsip Utama:
+SEDERHANA → LANGSUNG → ROMANTIS → MUDAH DIINGAT
+
+================================
+3. DIKSI ROMANTIS KLASIK
+================================
+Gunakan kosakata romantis yang sederhana dan menggugah rasa:
+cinta, kasih, sayang, rindu, hati, jiwa, sanubari, kalbu, diriku, dirimu, kita, berdua, bahagia, setia, janji, kenangan, pelukan, senyuman, tatapan, tangan, mata, bersama, selamanya, selalu, mencintai, menyayangi, merindukan, menunggu, memeluk, menatap, menjaga, percaya, berharap.
+
+================================
+4. ALUR EMOSI (STORY ARC)
+================================
+- Untuk Tema Bahagia:
+  TERTARIK → JATUH CINTA → SEMAKIN MENCINTAI → MENGUNGKAPKAN CINTA → MEMINTA KESETIAAN → BERJANJI → INGIN BERSAMA → SELAMANYA
+- Untuk Tema Sedih / Nostalgia:
+  MENCINTAI → KENANGAN → KEHILANGAN → RINDU → LUKA → PERPISAHAN → MENERIMA → HARAPAN
+
+================================
+5. STRUKTUR LAGU & PEMBAGIAN BAGIAN
+================================
+[Verse 1A] (verse1 - 4 baris):
+- Fungsi: Perkenalkan orang yang dicintai dan perasaan tokoh utama. (KAU hadir → menarik perhatian → rasa cinta mulai tumbuh).
+
+[Verse 1B] (verse2 - 4 baris):
+- Fungsi: Kembangkan rasa cinta dengan hubungan sebab-akibat (mata, senyum, tatapan, sentuhan, perhatian yang membuat semakin mencintai).
+
+[Pre-Chorus] (preChorus - 2 baris):
+- Fungsi: Jembatan eskalasi ketegangan emosi menuju korus.
+
+[Chorus A] (chorus - 4 baris):
+- Fungsi: Bagian PALING MUDAH DIINGAT (Hook utama). Gunakan kata panggilan (Kasih, Sayang, Cintaku), permintaan langsung, pengakuan cinta tulus, dan janji.
+
+[Chorus B / Ruang Batin] (postChorus - 4 baris):
+- Fungsi: Kembangkan konflik/kedalaman rasa atau variasi pengulangan hook (contoh: "...hanya untukmu" → "...selalu untukmu" → "...selamanya untukmu").
+
+[Verse 3 / Refrain] (verse3 - 4 baris):
+- Fungsi: Penguatan perasaan dengan KALIMAT BARU yang segar (menegaskan ketulusan atau sisa rasa mendalam).
+
+[Bridge] (bridge - 4 baris):
+- Fungsi: Titik balik emosi, pengakuan kesetiaan tulus, permohonan kepastian, atau harapan masa depan.
+
+[Final Chorus] (finalChorus - 4 baris):
+- Fungsi: Puncak klimaks emosional vokal penuh.
+
+[Outro] (outro - 2–4 baris):
+- Fungsi: Penutup romantis berkesan manis atau haru mendalam. Boleh disertai vocalization ("Oooh...", "Wo-o-o...", "Ho-o-o...", "Yeah...") di akhir baris.
+
+================================
+6. POLA BARIS & PANJANG KATA
+================================
+- Setiap baris idealnya: 3–8 kata (rata-rata 3–5 kata).
+- Gunakan variasi ritmis: Panjang → Pendek → Panjang → Pendek atau Panjang → Panjang → Pendek → Panjang.
+- Baris pendek dapat digunakan sebagai penekanan vokal / holding notes / cengkok.
+- Prioritaskan KELANCARAN NYANYIAN (*singability*) dan rima longgar (-mu, -ku, -an, -i, -a).
+
+================================
+7. HOOK
+================================
+Chorus harus memiliki 1–2 frasa utama yang pendek, romantis, mudah diingat, mudah diulang, dan cocok menjadi judul lagu.
+
+================================
+8. LIVE CONCERT & BIRAMA
+================================
+- Bila liveConcert dipilih, sisipkan tag konser standar ([MC Speaking], [Live Concert], [Audience Applause], [Crowd Sing Along], [Audience Singing Only], [Lead Vocal Silent], dll) di tempat yang tepat.
+- Pastikan timeSignature (${timeSignature}), tempo (${tempo}), dan key (${key}) sesuai arahan.
 
 You must return a JSON object adhering exactly to the provided schema.`;
 
     const prompt = `Write or creatively transform a beautiful Slow Rock/Pop Melayu song based on: "${topic}".
 (Note: If full lyrics or draft stanzas are provided above, apply the CREATIVE TRANSFORMATION method: preserve theme, emotions, and message, but completely recreate sentence structures, diksi, metaphors, and emotional expressions into a fresh standalone original song).
+(CRITICAL VOCABULARY RULE: Jangan pernah memakai kata "dada" pada lirik. Gunakan kata "hati", "sanubari", "kalbu", atau "jiwa").
 
 Use the following specifications:
 - Genre: ${genre}
@@ -145,47 +218,47 @@ ${liveConcert ? `- Live Concert atmosphere elements: ${liveConcert}` : ""}`;
                 verse1: {
                   type: Type.ARRAY,
                   items: { type: Type.STRING },
-                  description: "Exactly 4 lines of lyrics for Verse 1.",
+                  description: "Verse 1A (Perkenalan Tokoh & Cinta Awal) - Tepat 4 baris lirik langsung dan komunikatif (KAU hadir -> menarik perhatian -> rasa cinta bersemi), 3-8 kata per baris.",
                 },
                 verse2: {
                   type: Type.ARRAY,
                   items: { type: Type.STRING },
-                  description: "Exactly 4 lines of lyrics for Verse 2.",
+                  description: "Verse 1B (Perkembangan Rasa Cinta) - Tepat 4 baris lirik sebab-akibat (mata, senyum, tatapan, perhatian -> semakin mencintai), 3-8 kata per baris.",
                 },
                 preChorus: {
                   type: Type.ARRAY,
                   items: { type: Type.STRING },
-                  description: "Exactly 2 lines of lyrics for Pre-Chorus.",
+                  description: "Pre-Chorus - Tepat 2 baris eskalasi ketegangan emosi menuju korus.",
                 },
                 chorus: {
                   type: Type.ARRAY,
                   items: { type: Type.STRING },
-                  description: "Exactly 6 lines of lyrics for Chorus.",
+                  description: "Chorus A (Hook Utama) - Tepat 4 baris inti perasaan lagu paling romantis, langsung, mudah diingat dengan panggilan (Kasih/Sayang) dan pengakuan cinta tulus.",
                 },
                 postChorus: {
                   type: Type.ARRAY,
                   items: { type: Type.STRING },
-                  description: "Exactly 2 lines of lyrics for Post-Chorus.",
+                  description: "Chorus B / Ruang Batin - Tepat 4 baris variasi hook atau kedalaman rasa (misal: 'hanya untukmu' -> 'selalu untukmu' -> 'selamanya untukmu').",
                 },
                 verse3: {
                   type: Type.ARRAY,
                   items: { type: Type.STRING },
-                  description: "Exactly 4 lines of lyrics for Verse 3.",
+                  description: "Verse 3 / Refrain - Tepat 4 baris penguatan rasa dengan kalimat baru yang segar dan tulus.",
                 },
                 bridge: {
                   type: Type.ARRAY,
                   items: { type: Type.STRING },
-                  description: "Exactly 4 lines of lyrics for Bridge.",
+                  description: "Bridge - Tepat 4 baris titik balik emosi, pengakuan kesetiaan tulus, janji suci, atau harapan masa depan.",
                 },
                 finalChorus: {
                   type: Type.ARRAY,
                   items: { type: Type.STRING },
-                  description: "Exactly 6 lines of lyrics for the Final Chorus (can be identical or slightly modified version of Chorus).",
+                  description: "Final Chorus - Tepat 4 baris klimaks emosional vokal penuh.",
                 },
                 outro: {
                   type: Type.ARRAY,
                   items: { type: Type.STRING },
-                  description: "2 to 4 lines of lyrics for Outro/Coda.",
+                  description: "Outro - 2 hingga 4 baris penutup romantis manis/haru, dapat disertai vocalization (Oooh.../Wo-o-o...) di akhir.",
                 },
               },
               required: [

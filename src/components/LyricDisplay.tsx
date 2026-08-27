@@ -17,16 +17,16 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
   const [editingKey, setEditingKey] = useState<{ section: keyof LyricsData; index: number } | null>(null);
   const [editValue, setEditValue] = useState<string>("");
 
-  const sections: { key: keyof LyricsData; label: string; target: string; min: number; max: number }[] = [
-    { key: "verse1", label: "VERSE 1", target: "8–12 Suku Kata", min: 8, max: 12 },
-    { key: "verse2", label: "VERSE 2", target: "8–12 Suku Kata", min: 8, max: 12 },
-    { key: "preChorus", label: "PRE-CHORUS", target: "8–12 Suku Kata", min: 8, max: 12 },
-    { key: "chorus", label: "CHORUS", target: "8–11 Suku Kata", min: 8, max: 11 },
-    { key: "postChorus", label: "POST CHORUS", target: "5–10 Suku Kata", min: 5, max: 10 },
-    { key: "verse3", label: "VERSE 3", target: "8–12 Suku Kata", min: 8, max: 12 },
-    { key: "bridge", label: "BRIDGE", target: "7–11 Suku Kata", min: 7, max: 11 },
-    { key: "finalChorus", label: "FINAL CHORUS", target: "8–11 Suku Kata", min: 8, max: 11 },
-    { key: "outro", label: "OUTRO", target: "3–7 Kata Per Baris", min: 3, max: 12 },
+  const sections: { key: keyof LyricsData; label: string; subLabel: string; target: string; min: number; max: number }[] = [
+    { key: "verse1", label: "VERSE 1A", subLabel: "Perkenalan Tokoh & Cinta Awal (KAU Hadir)", target: "4 Baris • 3–8 Kata", min: 2, max: 8 },
+    { key: "verse2", label: "VERSE 1B", subLabel: "Perkembangan Rasa (Sebab-Akibat & Tatapan)", target: "4 Baris • 3–8 Kata", min: 2, max: 8 },
+    { key: "preChorus", label: "PRE-CHORUS", subLabel: "Eskalasi Transisi Menuju Korus", target: "2 Baris • 3–8 Kata", min: 2, max: 8 },
+    { key: "chorus", label: "CHORUS A", subLabel: "Hook Utama & Panggilan Cinta (Kasih/Sayang)", target: "4 Baris • Hook Romantis", min: 2, max: 8 },
+    { key: "postChorus", label: "CHORUS B / VARIASI", subLabel: "Variasi Hook / Kedalaman Rasa", target: "4 Baris • Penegasan Rasa", min: 2, max: 8 },
+    { key: "verse3", label: "VERSE 3 / REFRAIN", subLabel: "Penguatan Ketulusan Cinta (Kalimat Baru)", target: "4 Baris • 3–8 Kata", min: 2, max: 8 },
+    { key: "bridge", label: "BRIDGE", subLabel: "Titik Balik Emosi, Janji & Kesetiaan", target: "4 Baris • Puncak Ketulusan", min: 2, max: 8 },
+    { key: "finalChorus", label: "FINAL CHORUS", subLabel: "Klimaks Vokal Emosional Penuh", target: "4 Baris • Puncak Emosi", min: 2, max: 8 },
+    { key: "outro", label: "OUTRO", subLabel: "Penutup Romantis & Vocalization (Oooh...)", target: "2–4 Baris • Resolusi Manis", min: 2, max: 8 },
   ];
 
   const handleCopySection = (sectionName: string, lines: string[] | string) => {
@@ -74,26 +74,51 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Visual Header Controls */}
-      <div className="flex items-center justify-between border-b border-neutral-150 pb-4">
-        <div>
-          <h3 className="text-base font-semibold text-neutral-800">Lirik Lagu Hasil Kembangan</h3>
-          <p className="text-xs text-neutral-500">Klik baris lirik mana pun untuk mengubah atau mengedit teks secara manual.</p>
+      {/* Visual Header Controls & Dramatic Arc Roadmap */}
+      <div className="space-y-4 border-b border-neutral-150 pb-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 className="text-base font-semibold text-neutral-800">Lirik Lagu Hasil Kembangan</h3>
+            <p className="text-xs text-neutral-500">Struktur Balada Melayu &amp; Dangdut Slow (Dramatis Arc &amp; Pola Panjang-Pendek).</p>
+          </div>
+          
+          <button
+            type="button"
+            id="btn-toggle-hyphenation"
+            onClick={() => setShowHyphenated(!showHyphenated)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 border cursor-pointer shrink-0 ${
+              showHyphenated
+                ? "bg-amber-100 text-amber-900 border-amber-300"
+                : "bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50"
+            }`}
+          >
+            {showHyphenated ? <EyeOff size={13} /> : <Eye size={13} />}
+            <span>{showHyphenated ? "Sembunyikan Suku Kata" : "Tampilkan Suku Kata (Phonetics)"}</span>
+          </button>
         </div>
-        
-        <button
-          type="button"
-          id="btn-toggle-hyphenation"
-          onClick={() => setShowHyphenated(!showHyphenated)}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 border ${
-            showHyphenated
-              ? "bg-amber-100 text-amber-900 border-amber-300"
-              : "bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50"
-          }`}
-        >
-          {showHyphenated ? <EyeOff size={13} /> : <Eye size={13} />}
-          <span>{showHyphenated ? "Sembunyikan Suku Kata" : "Tampilkan Suku Kata (Phonetics)"}</span>
-        </button>
+
+        {/* Dramatic Arc Steps Pill Navigation */}
+        <div className="p-3 rounded-xl bg-gradient-to-r from-amber-50/80 via-neutral-50 to-orange-50/60 border border-amber-200/60 text-xs">
+          <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-900 uppercase tracking-wider mb-2">
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+            <span>Kurva Emosional Balada Melayu / Dangdut Slow:</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-medium text-neutral-700">
+            <span className="px-2 py-0.5 rounded-md bg-white border border-neutral-200 shadow-2xs font-semibold text-emerald-800">1. Cinta (Verse 1A)</span>
+            <span className="text-neutral-300">→</span>
+            <span className="px-2 py-0.5 rounded-md bg-white border border-neutral-200 shadow-2xs font-semibold text-rose-800">2. Luka (Verse 1B)</span>
+            <span className="text-neutral-300">→</span>
+            <span className="px-2 py-0.5 rounded-md bg-white border border-neutral-200 shadow-2xs font-semibold text-amber-800">3. Korus / Refrain</span>
+            <span className="text-neutral-300">→</span>
+            <span className="px-2 py-0.5 rounded-md bg-white border border-neutral-200 shadow-2xs font-semibold text-purple-800">4. Pertanyaan Emosional</span>
+            <span className="text-neutral-300">→</span>
+            <span className="px-2 py-0.5 rounded-md bg-white border border-neutral-200 shadow-2xs font-semibold text-blue-800">5. Menerima &amp; Harapan (Bridge)</span>
+            <span className="text-neutral-300">→</span>
+            <span className="px-2 py-0.5 rounded-md bg-white border border-neutral-200 shadow-2xs font-semibold text-teal-800">6. Resolusi Bahagia (Outro)</span>
+            <span className="text-neutral-300">→</span>
+            <span className="px-2 py-0.5 rounded-md bg-white border border-neutral-200 shadow-2xs font-semibold text-neutral-700">7. Luka Tersisa (Reprise)</span>
+          </div>
+        </div>
       </div>
 
       {/* Intro Block (Description only) */}
@@ -117,7 +142,7 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
 
       {/* Lyric Blocks Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {sections.map(({ key, label, target, min, max }) => {
+        {sections.map(({ key, label, subLabel, target, min, max }) => {
           const lines = lyrics[key];
           if (!Array.isArray(lines)) return null;
 
@@ -142,19 +167,24 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
                 className="p-5 rounded-2xl border border-neutral-100 bg-white shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] hover:shadow-md transition-all duration-300 flex flex-col justify-between"
               >
               <div>
-                <div className="flex items-center justify-between mb-4 border-b border-neutral-50 pb-2">
+                <div className="flex items-start justify-between mb-4 border-b border-neutral-50 pb-2.5 gap-2">
                   <div>
-                    <span className="text-xs font-bold tracking-wider text-amber-700">{label}</span>
-                    <span className="ml-2 text-[10px] bg-neutral-100 px-1.5 py-0.5 rounded text-neutral-500 font-medium">
-                      {target}
-                    </span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-xs font-bold tracking-wider text-amber-700">{label}</span>
+                      <span className="text-[10px] bg-neutral-100 px-1.5 py-0.5 rounded text-neutral-500 font-medium">
+                        {target}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-neutral-500 font-medium mt-0.5">
+                      {subLabel}
+                    </p>
                   </div>
                   
                   <button
                     type="button"
                     id={`copy-${key}`}
                     onClick={() => handleCopySection(key, lines)}
-                    className="p-1 text-neutral-400 hover:text-amber-700 hover:bg-neutral-50 rounded transition-all"
+                    className="p-1 text-neutral-400 hover:text-amber-700 hover:bg-neutral-50 rounded transition-all shrink-0"
                     title={`Salin ${label}`}
                   >
                     {copiedSection === key ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
@@ -220,17 +250,26 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
                                 <Edit3 size={12} />
                               </button>
 
-                              {/* Syllable Counter Pill */}
-                              <span
-                                className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full select-none ${
-                                  isOutsideLimits
-                                    ? "bg-amber-50 text-amber-600 border border-amber-200/60"
-                                    : "bg-neutral-100 text-neutral-500"
-                                }`}
-                                title={isOutsideLimits ? `Target optimal: ${min}-${max} suku kata` : `${syllables} suku kata`}
-                              >
-                                {syllables}
-                              </span>
+                              {/* Word & Syllable Counter Pill */}
+                              {(() => {
+                                const wordCount = line.trim().split(/\s+/).filter(Boolean).length;
+                                return (
+                                  <div className="flex items-center gap-1.5">
+                                    <span
+                                      className="text-[10px] font-medium px-1.5 py-0.5 rounded-md bg-neutral-100 text-neutral-600 select-none"
+                                      title={`${wordCount} kata`}
+                                    >
+                                      {wordCount} kata
+                                    </span>
+                                    <span
+                                      className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200/50 select-none"
+                                      title={`${syllables} suku kata`}
+                                    >
+                                      {syllables} sk
+                                    </span>
+                                  </div>
+                                );
+                              })()}
                             </div>
                           </div>
                         )}

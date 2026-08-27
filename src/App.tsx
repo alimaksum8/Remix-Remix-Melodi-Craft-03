@@ -6,10 +6,13 @@ import { LyricDisplay } from "./components/LyricDisplay";
 import { MusicStylePrompt } from "./components/MusicStylePrompt";
 import { DynamicCoverArt } from "./components/DynamicCoverArt";
 import { LiveConcertSelector } from "./components/LiveConcertSelector";
+import { StyleTagsBoxes } from "./components/StyleTagsBoxes";
 import {
   generateMasterPromptMarkdown,
   formatSunoLyrics,
   formatSunoStyleTags,
+  formatYollyAiStyleTags,
+  formatSongGeneratorIoStyleTags,
 } from "./utils";
 import {
   Music,
@@ -669,7 +672,7 @@ export default function App() {
                   }`}
                 >
                   <CopyPlus size={14} />
-                  <span>Penyalin Suno/Udio</span>
+                  <span>Penyalin AI (aimusic.so / Suno / Yolly / SongGen)</span>
                 </button>
                 <button
                   type="button"
@@ -700,6 +703,7 @@ export default function App() {
                   <MusicStylePrompt
                     style={songData.stylePrompt}
                     chords={songData.chordsSuggestion}
+                    songData={songData}
                     onCopyFullPrompt={handleCopyMasterPrompt}
                   />
                 )}
@@ -707,48 +711,39 @@ export default function App() {
                 {activeTab === "suno" && (
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-base font-semibold text-neutral-800">Copy-Paste Suno & Udio Creator</h3>
-                      <p className="text-xs text-neutral-500">Gunakan kotak salin di bawah ini untuk mengisikan formulir kreasi pada situs Suno AI atau Udio secara instan.</p>
+                      <h3 className="text-base font-semibold text-neutral-800">
+                        Generator Prompt &amp; Style of Music Tags (aimusic.so, Suno, Yolly AI, SongGenerator.io)
+                      </h3>
+                      <p className="text-xs text-neutral-500">
+                        Gunakan kolom style tags di bawah ini untuk mengisi formulir pembuatan musik pada aimusic.so (≤ 120 karakter), Suno AI, Yolly AI, maupun SongGenerator.io.
+                      </p>
                     </div>
 
-                    {/* Suno Style Tags */}
-                    <div className="p-4 rounded-xl border border-neutral-150 bg-white space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider">Style of Music Tags</span>
-                        <button
-                          type="button"
-                          id="copy-suno-tags"
-                          onClick={handleCopySunoTags}
-                          className="flex items-center gap-1.5 text-xs font-bold text-amber-600 hover:text-amber-700 hover:underline transition-all"
-                        >
-                          {copiedTags ? <Check size={13} /> : <Copy size={13} />}
-                          <span>{copiedTags ? "Tersalin!" : "Salin Tags"}</span>
-                        </button>
-                      </div>
-                      <div className="p-3 rounded-lg bg-neutral-50 font-mono text-xs text-neutral-800 border border-neutral-100 break-words">
-                        {formatSunoStyleTags(songData)}
-                      </div>
-                      <p className="text-[10px] text-neutral-400">Cocok diisikan pada kolom &quot;Style of Music&quot; di Suno AI (maksimal 120 karakter).</p>
-                    </div>
+                    {/* Dedicated Style Tags Boxes for Suno, Yolly, SongGenerator (≤ 900 Chars) */}
+                    <StyleTagsBoxes songData={songData} />
 
-                    {/* Suno Lyrics (With structural block indicators) */}
+                    {/* Full Lyrics Sheet (With structural block indicators) */}
                     <div className="p-4 rounded-xl border border-neutral-150 bg-white space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider">Lyrics Sheet (With Structure Bracket Tags)</span>
+                        <span className="text-xs font-bold text-neutral-700 uppercase tracking-wider">
+                          Lembar Lirik Siap Salin (Format Tag Struktur [Verse], [Chorus])
+                        </span>
                         <button
                           type="button"
                           id="copy-suno-lyrics"
                           onClick={handleCopySunoLyrics}
-                          className="flex items-center gap-1.5 text-xs font-bold text-amber-600 hover:text-amber-700 hover:underline transition-all"
+                          className="flex items-center gap-1.5 text-xs font-bold text-amber-600 hover:text-amber-700 hover:underline transition-all cursor-pointer"
                         >
                           {copiedLyrics ? <Check size={13} /> : <Copy size={13} />}
-                          <span>{copiedLyrics ? "Tersalin!" : "Salin Lirik Suno"}</span>
+                          <span>{copiedLyrics ? "Tersalin!" : "Salin Lirik Lengkap"}</span>
                         </button>
                       </div>
                       <pre className="p-4 rounded-lg bg-neutral-50 font-mono text-xs text-neutral-800 border border-neutral-100 overflow-y-auto max-h-72 whitespace-pre-wrap leading-relaxed">
                         {formatSunoLyrics(songData)}
                       </pre>
-                      <p className="text-[10px] text-neutral-400">Akurasi struktur tag kurung siku (seperti [Verse], [Chorus]) membantu AI menyanyikan bagian lagu dengan eskalasi aransemen yang benar.</p>
+                      <p className="text-[10px] text-neutral-400">
+                        Tag kurung siku (seperti [Verse], [Instrumental Break - 10s], [Chorus]) memandu AI untuk membawakan dinamika lagu secara akurat.
+                      </p>
                     </div>
                   </div>
                 )}

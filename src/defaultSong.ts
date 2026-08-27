@@ -1,77 +1,77 @@
 import { SongData } from "./types";
 
 export const DEFAULT_SONG: SongData = {
-  songTitle: "Gerimis Di Ujung Senja",
-  chordsSuggestion: "Verse: Am - Dm - G - C - F - Bdim - E | Chorus: Am - Dm - G - C - F - Dm - E - Am",
+  songTitle: "Hanya Untukmu Kasih",
+  chordsSuggestion: "Verse: C - G/B - Am - F - G | Chorus: C - Em - F - G - Em - Am - Dm - G | Bridge: F - G - Em - Am - Dm - G - C",
   lyrics: {
-    intro: "Gitar elektrik clean bermelodi sendu berpadu dengan gesekan biola lembut dan ketukan drum pelan pada 72 BPM.",
+    intro: "Petikan gitar akustik lembut berpadu dengan gesekan strings pad hangat dan piano elektrik bertempo 72 BPM.",
     verse1: [
-      "Dingin malam mulai meraba jiwa",
-      "Kusendiri menatap langit sepi",
-      "Ada janji yang dulu pernah ada",
-      "Kini sirna bagaikan mimpi sunyi"
+      "Kau hadir di dalam hidupku",
+      "Membawa hangat cinta sejati",
+      "Membuat hatiku terpaut",
+      "Pada senyum manismu"
     ],
     verse2: [
-      "Mengapa harus ada ragu di dada",
-      "Saat rindu mulai merantai hati",
-      "Bila memang kita saling menjaga",
-      "Mengapa kini kautinggal kumati"
+      "Tatap matamu yang begitu teduh",
+      "Membuatku semakin menyayangimu",
+      "Tak ingin sedetik pun berlalu",
+      "Tanpa ada dirimu"
     ],
     preChorus: [
-      "Kini bayangmu datang menjelma",
-      "Membawa luka di dalam dada"
+      "Kini ku yakin pada rasa ini",
+      "Kau satu-satunya pilihanku"
     ],
     chorus: [
-      "Gerimis senja basahi bumi ini",
-      "Seolah tahu pedih yang kurasakan",
-      "Hatiku hancur kautinggal pergi",
-      "Hanya kenangan yang kini tersisa",
-      "Kuberharap kautahu rasa sunyi",
-      "Menanti dirimu kembalilah kasih"
+      "Kasih, genggam erat tanganku",
+      "Betapa aku mencintaimu",
+      "Katakanlah kau kan selalu setia",
+      "Menemani hidupku"
     ],
     postChorus: [
-      "Kembalilah kasih",
-      "Pelipur lara"
+      "Kuingin menjaga hatimu",
+      "Hanya untukmu cintaku",
+      "Selalu untukmu sayangku",
+      "Hingga akhir waktu"
     ],
     verse3: [
-      "Kuterima semua keputusanmu",
-      "Meski perih merobek relung kalbu",
-      "Kudoakan selalu bahagia bersamamu",
-      "Biarlah rinduku kusimpan selalu"
+      "Biar waktu terus berganti",
+      "Cintaku takkan pernah pudar",
+      "Tetap abadi untuk dirimu",
+      "Sampai nafasku terhenti"
     ],
     bridge: [
-      "Bila nanti kau tak lagi bahagia",
-      "Ingatlah ada aku yang menanti",
-      "Cinta ini takkan pernah sirna",
-      "Hingga hembusan napasku terhenti"
+      "Peganglah janjiku ini",
+      "Ku kan selalu ada di sampingmu",
+      "Semoga cinta kita berdua",
+      "Bahagia selamanya"
     ],
     finalChorus: [
-      "Gerimis senja basahi bumi ini",
-      "Seolah tahu pedih yang kurasakan",
-      "Hatiku hancur kautinggal pergi",
-      "Hanya kenangan yang kini tersisa",
-      "Kuberharap kautahu rasa sunyi",
-      "Menanti dirimu kembalilah kasih"
+      "Kasih, genggam erat tanganku",
+      "Betapa aku mencintaimu",
+      "Katakanlah kau kan selalu setia",
+      "Menemani hidupku"
     ],
     outro: [
-      "Kembalilah kasih",
-      "Aku menanti",
-      "Di ujung senja"
+      "Hanya dirimu kekasih hatiku",
+      "Selamanya bersamamu",
+      "Oooh... Wo-o-o...",
+      "Hanya untukmu"
     ]
   },
   stylePrompt: {
-    genre: "Slow Rock Melayu 90's, Pop Melayu Ballad",
-    mood: "Warm, Romantic, Heartfelt, Hopeful, Emotional, Elegant, Nostalgic, Soft but Powerful",
+    genre: "Pop Romantis Indonesia Klasik, Slow Rock Romantis, Balada Pop 90's",
+    mood: "Romantic, Warm, Heartfelt, Sweet, Nostalgic, Loving, Expressive",
     tempo: "72 BPM",
-    key: "Am (Comfortable for male vocals)",
+    key: "C (Comfortable & sweet for romantic vocals)",
     timeSignature: "4/4",
-    introOpening: "8 Bars Instrumental. Clean Electric Guitar Fingerstyle entering first, followed by soft piano strings pad. Bass enters at bar 5, followed by light cymbal swell and natural plate reverb.",
-    arrangement: "Verse: Minimal clean guitar and soft pad. Pre-Chorus: Strings swell and snare rolls increase intensity. Chorus: Full arrangement with heavy melodic electric guitar lead, dynamic bass, and powerful slow drums. Bridge: Pulled back acoustic piano and strings only. Outro: Guitar solo fading out gently with natural strings release.",
-    vocalStyle: "Warm Male Vocal, Emotional, Natural, Clean Pronunciation, Smooth Legato, Soft Vibrato, Chest Voice Dominant",
-    lyricLanguage: "Natural Indonesian, Conversational, Simple romantic vocabulary, highly emotional",
-    melodyCharacter: "Verse: Mid register, gentle wave. Pre-Chorus: Ascending notes. Chorus: Highest emotional octave lift. Outro: Descending, peaceful resolution.",
-    dynamics: "Verse: Soft and intimate. Pre-Chorus: Building energy. Chorus: Wide and powerful. Bridge: Reflective and pulled back. Final Chorus: Maximum climax. Outro: Gentle fade.",
-    mixing: "Lead vocal forward, warm electric guitar tone, wide stereo strings pad, natural piano, round warm bass, plate reverb, spacious stereo field.",
+    introOpening: "8 Bars Instrumental. Acoustic guitar picking accompanied by warm electric piano and lush strings pad. Soft bass enters on bar 5.",
+    arrangement: "Verse 1A & 1B: Intimate acoustic guitar and soft piano. Pre-Chorus: Strings crescendo. Chorus: Full band arrangement with rich bass, melodious slow drums, and warm electric guitar fill. Bridge: Intimate piano breakdown with emotional build-up. Final Chorus: Full climax. Outro: Soft fade with vocal ad-libs.",
+    vocalStyle: "Warm Male Vocal, Tender, Intimate, Direct Emotion, Clean Vibrato, Chest Voice with Soft Falsetto nuances",
+    lyricLanguage: "Natural Indonesian, Romantic, Direct, Simple & Heartfelt Classic Love Song",
+    melodyCharacter: "Verse: Gentle wave, melodic & conversational. Pre-Chorus: Ascending build. Chorus: Catchy repetitive romantic hook with strong emotional lift. Outro: Warm peaceful resolution.",
+    dynamics: "Verse: Soft and tender. Pre-Chorus: Growing passion. Chorus: Broad and passionate. Bridge: Deep and heartfelt. Final Chorus: Passionate peak. Outro: Sweet fade.",
+    mixing: "Lead vocal intimate and upfront, warm acoustic guitar, lush stereo strings, mellow bass, spacious warm plate reverb.",
     liveConcert: "Tidak ada (Aransemen Studio Standar)"
   }
 };
+
