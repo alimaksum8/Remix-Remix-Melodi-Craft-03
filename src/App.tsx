@@ -267,16 +267,42 @@ export default function App() {
   }, [topic]);
   
   // Custom advanced settings fields (multiple choice selections, all selected by default)
-  const [selectedGenres, setSelectedGenres] = useState<string[]>(OPTIONS_GENRE);
-  const [selectedMoods, setSelectedMoods] = useState<string[]>(OPTIONS_MOOD);
-  const [selectedTempos, setSelectedTempos] = useState<string[]>(OPTIONS_TEMPO);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([
+    "Slow Rock Melayu 90's",
+    "Romantic Ballad",
+    "Sad Romantic",
+    "Pure Intimacy"
+  ]);
+  const [selectedMoods, setSelectedMoods] = useState<string[]>([
+    "Warm",
+    "Romantic",
+    "Emotional",
+    "Soft but Powerful",
+    "Melancholic",
+    "Intimate",
+    "Uplifting"
+  ]);
+  const [selectedTempos, setSelectedTempos] = useState<string[]>(["80 BPM", "95 BPM"]);
   const [selectedBirama, setSelectedBirama] = useState<string>("4/4");
-  const [selectedKeys, setSelectedKeys] = useState<string[]>(OPTIONS_KEY);
-  const [selectedVocals, setSelectedVocals] = useState<string[]>(OPTIONS_VOCAL);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(["Am", "Cm", "G Major", "C Major"]);
+  const [selectedVocals, setSelectedVocals] = useState<string[]>([
+    "Warm Male Vocal",
+    "Emotional",
+    "Natural",
+    "Chest Voice Dominant",
+    "Vulnerable Vocal",
+    "Soft chest-head voice",
+    "Whispery Vocals"
+  ]);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>(OPTIONS_LANGUAGE);
   const [selectedLiveConcerts, setSelectedLiveConcerts] = useState<string[]>([]);
   const [selectedStories, setSelectedStories] = useState<string[]>(OPTIONS_STORY);
-  const [selectedIntros, setSelectedIntros] = useState<string[]>(["🎵 Solo Gitar Sustain", "🎵 Solo Gitar Bending"]);
+  const [selectedIntros, setSelectedIntros] = useState<string[]>([
+    "🎵 Solo Gitar Sustain",
+    "🎵 Solo Gitar Bending",
+    "🎵 Solo Gitar Vibrato",
+    "🎵 Solo Nada Tinggi / Gitar Menjerit"
+  ]);
 
   const [showAdvanced, setShowAdvanced] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<"lyrics" | "prompt" | "suno" | "cover">("lyrics");
