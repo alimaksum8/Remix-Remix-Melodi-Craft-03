@@ -192,7 +192,7 @@ Use the following specifications:
 ${liveConcert ? `- Live Concert atmosphere elements: ${liveConcert}` : ""}`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
+      model: "gemini-3.5-flash",
       contents: prompt,
       config: {
         systemInstruction,
