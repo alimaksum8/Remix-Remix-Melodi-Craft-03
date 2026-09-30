@@ -173,11 +173,42 @@ Chorus harus memiliki 1–2 frasa utama yang pendek, romantis, mudah diingat, mu
 - Bila liveConcert dipilih, sisipkan tag konser standar ([MC Speaking], [Live Concert], [Audience Applause], [Crowd Sing Along], [Audience Singing Only], [Lead Vocal Silent], dll) di tempat yang tepat.
 - Pastikan timeSignature (${timeSignature}), tempo (${tempo}), dan key (${key}) sesuai arahan.
 
+================================
+9. ATURAN MUTLAK ARANSEMEN & PRODUKSI MUSIK (WAJIB DIPATUHI)
+================================
+- Gunakan mood pilihan pengguna HANYA untuk mengontrol suasana hati/emosional dan ekspresi musikal (rasa, dinamika, melodi, dan cara pembawaan lagu).
+- JANGAN PERNAH menyertakan karakter suara hangat ("warm" sound character / warm tonal coloration) dalam instrumentasi atau deskripsi nada instrumen.
+- JANGAN PERNAH menggunakan synth, synthesizer lead, synth pad, synth pluck, EDM synth, atau lapisan melodi elektronik apa pun.
+- JANGAN PERNAH membuat aransemen yang padat, bising, atau rumit (avoid dense or busy arrangements).
+- Hindari frekuensi suara yang menusuk, tajam, terlalu terang, bising, keras, atau berkarakter logam/metalik.
+- Pastikan suara yang digambarkan berkarakter bersih (clean), alami/akustik (natural), lembut (soft), dan terkontrol dengan baik.
+- Pertahankan instrumentasi tetap minimal dan terpisah dengan jelas (minimal and separated instrumentation).
+- Hindari pelapisan instrumen yang berlebihan (no excessive layering).
+- Jangan ada efek berisik, reverb berlebih, atau delay berlebih.
+- Jangan gunakan tekstur elektronik yang agresif.
+- Gunakan instrumen akustik/organik alami yang sesuai dengan karakter rekaman studio yang bersih.
+- Pertahankan bass tetap terasa/hadir (present) namun harus halus dan terkontrol tanpa dengungan frekuensi rendah yang berlumpur atau berlebih (no booming or muddy low end).
+- Pastikan ketukan drum tetap rapat, sederhana, dan terkendali dengan baik (tight, simple, and restrained drums).
+- Berikan prioritas penuh pada kejelasan vokal (vocal clarity) dan ruang bauran yang longgar/luas (spacious, uncluttered mix).
+- Hasil akhir aransemen harus: bersih (clean), alami (natural), penuh emosi (emotional), minimalis (minimal), tidak bising (non-noisy), dan TIDAK PERNAH digerakkan oleh synth (never synth-driven).
+
 You must return a JSON object adhering exactly to the provided schema.`;
 
     const prompt = `Write or creatively transform a beautiful Slow Rock/Pop Melayu song based on: "${topic}".
 (Note: If full lyrics or draft stanzas are provided above, apply the CREATIVE TRANSFORMATION method: preserve theme, emotions, and message, but completely recreate sentence structures, diksi, metaphors, and emotional expressions into a fresh standalone original song).
 (CRITICAL VOCABULARY RULE: Jangan pernah memakai kata "dada" pada lirik. Gunakan kata "hati", "sanubari", "kalbu", atau "jiwa").
+
+(CRITICAL MUSIC PRODUCTION & ARRANGEMENT CONSTRAINTS):
+- Use the selected mood(s) ONLY to control the emotional atmosphere and musical expression (feeling, dynamics, melody, performance).
+- Do NOT use a "warm" sound character or warm tonal coloration.
+- Do NOT use synths, synthesizer leads, synth pads, synth plucks, EDM synths, or electronic melodic layers.
+- Do NOT create a dense or busy arrangement. Keep instrumentation minimal and separated. No excessive layering.
+- Avoid harsh, bright, metallic, sharp, or piercing frequencies.
+- Keep the sound clean, natural, soft, and controlled with natural acoustic/organic instruments.
+- Keep the bass present but smooth and controlled (no booming or muddy low end).
+- Keep drums tight, simple, and restrained.
+- Prioritize vocal clarity and a spacious, uncluttered mix. No noisy effects, no excessive reverb, or excessive delay.
+- The overall output style prompt must be clean, natural, emotional, minimal, non-noisy, and never synth-driven.
 
 Use the following specifications:
 - Genre: ${genre}
@@ -277,18 +308,18 @@ ${liveConcert ? `- Live Concert atmosphere elements: ${liveConcert}` : ""}`;
             stylePrompt: {
               type: Type.OBJECT,
               properties: {
-                genre: { type: Type.STRING, description: "Style or genre tags, e.g. Slow Rock Melayu 90s, Pop Melayu Ballad" },
+                genre: { type: Type.STRING, description: "Style or genre tags, e.g. Slow Rock Melayu 90s, Pop Melayu Ballad. Strictly NO synth tags or EDM/electronic tags. Clean and natural acoustic/organic tags only." },
                 mood: { type: Type.STRING, description: "List of mood adjectives" },
                 tempo: { type: Type.STRING, description: "BPM value (e.g., 72 BPM)" },
                 key: { type: Type.STRING, description: "Vocal key (e.g., Am, G, Em)" },
                 timeSignature: { type: Type.STRING, description: "Time signature (birama / ketukan), e.g., '4/4', '3/4', '6/8'" },
-                introOpening: { type: Type.STRING, description: "Detailed intro arrangement instructions (8 bars, instruments entering sequence)" },
-                arrangement: { type: Type.STRING, description: "Arrangement escalation path from Verse (minimal) to Chorus (full/climax) and Outro" },
-                vocalStyle: { type: Type.STRING, description: "Vocal instruction notes. MUST strictly match the requested gender (e.g. 'Warm Female Vocal, sweet alto/soprano tone, soft vibrato' if female was selected; 'Warm Male Vocal...' if male was selected; 'Duet Vocal (Male & Female)...' if duet was selected)." },
+                introOpening: { type: Type.STRING, description: "Detailed intro arrangement instructions (8 bars). Must use clean, natural acoustic/organic instruments only. STRICTLY no synths, synth pads, electronic layers, or busy layering." },
+                arrangement: { type: Type.STRING, description: "Arrangement escalation path from Verse (minimal) to Chorus (full/climax) and Outro. Must be a minimal, separated, non-dense arrangement using natural acoustic/organic instruments. No excessive layering, never synth-driven." },
+                vocalStyle: { type: Type.STRING, description: "Vocal instruction notes. Focus on emotional feeling, dynamics, and performance based on the selected mood, with high clarity. MUST strictly match the requested gender (e.g. 'Female Vocal, sweet alto/soprano tone, soft vibrato' if female was selected; 'Male Vocal...' if male was selected; 'Duet Vocal (Male & Female)...' if duet was selected). Do NOT use 'warm' sound character or warm tonal coloration." },
                 lyricLanguage: { type: Type.STRING, description: "Language definition" },
                 melodyCharacter: { type: Type.STRING, description: "A detailed breakdown of melodic register and register changes between Verse, Pre-Chorus, and Chorus" },
                 dynamics: { type: Type.STRING, description: "Dynamics instructions (Soft in Verses, open and wide in Chorus, pulling back in Bridge)" },
-                mixing: { type: Type.STRING, description: "Sound mixing guidelines (Lead vocal forward, wide stereo strings, natural piano, round warm bass, plate reverb)" },
+                mixing: { type: Type.STRING, description: "Sound mixing guidelines. Prioritize vocal clarity and a spacious, uncluttered mix. Specify clean studio-recording character, tight simple drums, smooth controlled bass (no booming or muddy low end). No noisy effects, no excessive reverb, and no excessive delay." },
                 liveConcert: { type: Type.STRING, description: "Detailed description of how selected live concert atmosphere elements are integrated (e.g., crowd cheering, greetings, chantings, fan sing-alongs), or 'Tidak ada (Aransemen Studio Standar)' if none were requested." },
               },
               required: [

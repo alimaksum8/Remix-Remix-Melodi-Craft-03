@@ -471,7 +471,7 @@ export default function App() {
                   Melodi<span className="text-amber-500 font-extrabold">Kraft</span> Konser
                 </span>
                 <span className="text-[10px] uppercase font-bold tracking-widest bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">
-                  Indonesian v1.2
+                  Indonesian v1.3
                 </span>
               </div>
               <span className="text-[11px] text-neutral-500 font-medium tracking-wide">
