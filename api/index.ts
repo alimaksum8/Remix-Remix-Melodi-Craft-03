@@ -378,7 +378,7 @@ ${liveConcert ? `- Live Concert atmosphere elements: ${liveConcert}` : ""}`;
               properties: {
                 intro: {
                   type: Type.STRING,
-                  description: "8-bar instrument intro description matching 90s slow rock (e.g., clean guitar pickings, wide strings pad, etc.)",
+                  description: "8-bar instrument intro description matching 90s slow rock (e.g., clean guitar pickings, etc.)",
                 },
                 verse1: {
                   type: Type.ARRAY,

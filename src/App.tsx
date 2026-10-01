@@ -28,6 +28,7 @@ import {
   CopyPlus,
   Play,
   ArrowRight,
+  AlertCircle,
 } from "lucide-react";
 
 const OPTIONS_GENRE = [
@@ -491,6 +492,37 @@ export default function App() {
           
           {/* LEFT COLUMN: PARAMETERS CONFIGURATION (5 cols) */}
           <section className="lg:col-span-5 space-y-6">
+            {/* PANIL LARANGAN MUTLAK (STRICT CLEAN MUSIC RULES) */}
+            <div className="bg-rose-50/60 border border-rose-200/80 rounded-2xl p-6 space-y-4 shadow-sm">
+              <div className="flex items-center gap-2 text-rose-800">
+                <AlertCircle size={18} className="stroke-[2.5]" />
+                <h3 className="text-xs font-black uppercase tracking-wider">
+                  Larangan Mutlak Produksi Musik
+                </h3>
+              </div>
+              <p className="text-[11px] text-rose-700/95 leading-relaxed font-semibold">
+                Untuk menjaga kemurnian, kebersihan, dan kejelasan aransemen musik alami klasik, aplikasi ini menerapkan aturan larangan keras berikut pada aransemen musik:
+              </p>
+              <ul className="text-[10px] text-rose-700 space-y-2 list-none font-medium">
+                <li className="flex items-start gap-1.5">
+                  <span className="text-rose-600 font-bold shrink-0">•</span>
+                  <span><span className="font-extrabold text-rose-800 uppercase">Dilarang Strings &amp; Synth:</span> Tidak menggunakan gesekan strings, synth pad, synth lead, atau lapisan melodi elektronik/EDM.</span>
+                </li>
+                <li className="flex items-start gap-1.5">
+                  <span className="text-rose-600 font-bold shrink-0">•</span>
+                  <span><span className="font-extrabold text-rose-800 uppercase">Dilarang Warm Design:</span> Karakter &quot;Warm&quot; hanya boleh diterapkan pada penampilan vokal alami, bukan untuk membuat instrumen hangat atau menambahkan pad.</span>
+                </li>
+                <li className="flex items-start gap-1.5">
+                  <span className="text-rose-600 font-bold shrink-0">•</span>
+                  <span><span className="font-extrabold text-rose-800 uppercase">Dilarang Dekorasi Berlebih:</span> Musik harus minimalis, tanpa piano/organ otomatis (kecuali dipilih), dan vokal harus tetap menjadi fokus utama yang sunyi dari instrumen bising.</span>
+                </li>
+                <li className="flex items-start gap-1.5">
+                  <span className="text-rose-600 font-bold shrink-0">•</span>
+                  <span><span className="font-extrabold text-rose-800 uppercase">Dilarang Romantis Elektronik:</span> Ekspresi romantis murni dihasilkan oleh penjiwaan penyanyi dan melodi vokal, bukan dari synthesizer.</span>
+                </li>
+              </ul>
+            </div>
+
             <div className="bg-white border border-neutral-200/80 rounded-2xl p-6 shadow-sm space-y-6">
               <div>
                 <h2 className="text-base font-bold text-neutral-900">Arsitektur Lagu & Gaya</h2>

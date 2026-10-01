@@ -366,7 +366,6 @@ export function formatAiMusicSoStyleTags(song: SongData): string {
     vocal,
     moodClean,
     "guitar solo",
-    "strings pad",
     "90s ballad",
   ];
 
@@ -397,12 +396,10 @@ export function formatSunoStyleTags(song: SongData): string {
     "long sustain distortion",
     "acoustic guitar fingerpicking",
     "melodic bassline",
-    "analog strings pad",
     "dynamic power drums",
     "heartfelt slow rock ballad",
     "soaring chorus climax",
     "90s vintage studio mix",
-    "analog tape warmth",
     "stereo plate reverb",
   ];
 
@@ -452,9 +449,9 @@ export function formatYollyAiStyleTags(song: SongData): string {
   const sections: string[] = [
     `[Genre & Rhythm]: ${stylePrompt.genre}, ${timeSig} time signature, ${stylePrompt.tempo}, Key ${stylePrompt.key}`,
     `[Vocal Tone]: ${vocalDesc}, Indonesian lyric phrasing`,
-    `[Instrumentation]: ${stylePrompt.introOpening.replace(/🎵/g, "").trim()}, screaming distorted electric guitar solo with long sustain, acoustic guitar arpeggios, warm melodic bass, expressive dynamic drums, lush vintage strings pad`,
+    `[Instrumentation]: ${stylePrompt.introOpening.replace(/🎵/g, "").trim()}, screaming distorted electric guitar solo with long sustain, acoustic guitar arpeggios, melodic bass, expressive dynamic drums`,
     `[Arrangement & Mood]: ${stylePrompt.mood}, ${stylePrompt.arrangement}`,
-    `[Production & Mixing]: ${stylePrompt.mixing}, 90s analog warmth, spacious plate reverb, clear vocal presence`,
+    `[Production & Mixing]: ${stylePrompt.mixing}, spacious plate reverb, clear vocal presence`,
   ];
 
   if (stylePrompt.liveConcert && !stylePrompt.liveConcert.toLowerCase().includes("tidak ada")) {
