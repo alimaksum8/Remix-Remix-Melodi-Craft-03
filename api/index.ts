@@ -295,6 +295,18 @@ Chorus harus memiliki 1–2 frasa utama yang pendek, romantis, mudah diingat, mu
 - PENALARAN UTAMA: Jangan menafsirkan kata "emotional", "romantic", "melancholic", "warm", "soft", atau "intimate" as perintah untuk menambahkan pad, synth, organ, string, lapisan atmosfer, atau desain suara hangat. Karakter emosional harus datang dari PENAMPILAN VOKAL dan MELODI saja.
 - TARGET SUARA: Minimalis, bersih, latar belakang instrumen tenang saat vokal dinyanyikan, kehadiran vokal jelas, drum terkontrol, nada instrumen sustained, tanpa gesekan, tanpa dengung, tanpa kebisingan strumming, tanpa synth, tanpa organ, tanpa pewarnaan hangat, dan aransemen tidak bising/penuh.
 
+================================
+13. ATURAN ARANSEMEN HENING MUTLAK & PENGURANGAN EFEK BISING (ABSOLUTE SILENT ARRANGEMENT & SOUND EFFECTS ELIMINATION - WAJIB DIPATUHI)
+================================
+- JADIKAN HASIL MUSIK SANGAT HENING, TENANG, DAN LEMBUT (Quiet, Hushed, Peaceful, and Silent arrangement):
+  * TANPA SNARE DRUM (NO SNARE DRUM AT ALL): Jangan gunakan snare drum atau ketukan snare yang tajam/keras dalam aransemen.
+  * TANPA BASS DRUM / HEAVY KICK (NO HEAVY BASS/KICK DRUM): Hilangkan bass drum yang keras atau ketukan kick drum yang bising.
+  * TANPA BASS YANG BERAT/BOOMING (NO HEAVY/BOOMING BASS): Hindari frekuensi rendah yang bergema, booming, berlumpur, atau bising.
+- KECILKAN DAN MINIMALKAN EFEK SUARA SUASANA "WARM" DAN "ROMANTIC" (Eliminate noisy Warm/Romantic sound effects & ambient noise):
+  * JANGAN PERNAH menambahkan efek suara suasana (sound effects), efek ambien bising, tekstur atmosfer berisik, desisan tape, atau lapisan latar belakang bising yang berasal dari interpretasi suasana "Warm" atau "Romantic/Romantik".
+  * Efek suasana "Warm" dan "Romantic" harus diperkecil sedemikian rupa hingga tidak terdengar sama sekali dalam instrumen, sehingga hasil akhirnya benar-benar hening, bersih, jernih, dan sangat enak didengar (extremely silent, clear, dry-to-moderate, and pleasant to listen to).
+  * Semua efek bising, gemuruh, atau atmosfer hangat yang mengganggu keheningan harus dihilangkan total untuk menghasilkan suara yang hening, tenang, jernih, dan sangat enak didengar.
+
 You must return a JSON object adhering exactly to the provided schema.`;
 
     const prompt = `Write or creatively transform a beautiful Slow Rock/Pop Melayu song based on: "${topic}".
@@ -343,6 +355,10 @@ You must return a JSON object adhering exactly to the provided schema.`;
   * Vocal Section Rule: Densitas instrumen harus dikurangi dramatis saat vokal bernyanyi. Gunakan respon instrumen sangat pendek dan halus di antara frasa vokal. JANGAN isi setiap ruang kosong.
   * Mixing: Vokal bersih, dry-to-moderate, centered, terpisah jelas dari instrumen. Low-end rapat, midrange bersih, treble halus, tanpa kekasaran, kemudaran, atau lebar stereo berlebih.
   * Karakter emosi harus didapat HANYA dari penampilan vokal dan melodi, bukan dari instrumen tambahan.
+- SILENT ARRANGEMENT & NO SOUND EFFECTS (ATURAN HENING MUTLAK):
+  * JADIKAN HASIL MUSIK SANGAT HENING, TENANG, DAN LEMBUT.
+  * ABSOLUTELY NO SNARE DRUM, NO HEAVY BASS DRUM, NO HEAVY/BOOMING BASS.
+  * KECILKAN EFEK SUARA SUASANA WARM DAN ROMANTIK. Jangan gunakan efek suasana bising, tape noise, pad gemuruh, atau atmosfer bising hangat/romantik yang membuat berisik. Pastikan hasilnya hening, tenang, jernih, dan sangat enak didengar.
 
 Use the following specifications:
 - Genre: ${genre}
