@@ -1,76 +1,76 @@
 import { SongData } from "./types";
 
 export const DEFAULT_SONG: SongData = {
-  songTitle: "Hanya Untukmu Kasih",
-  chordsSuggestion: "Verse: C - G/B - Am - F - G | Chorus: C - Em - F - G - Em - Am - Dm - G | Bridge: F - G - Em - Am - Dm - G - C",
+  songTitle: "Suara Hati Yang Sunyi",
+  chordsSuggestion: "Verse: Am - Dm - G - C - F - Dm - E | Chorus: Dm - G - C - F - Dm - E - Am | Bridge: F - G - Em - Am - Dm - E",
   lyrics: {
-    intro: "Petikan gitar akustik lembut berpadu dengan ketukan drum santai bertempo 72 BPM.",
+    intro: "Sangat hening, hanya satu melodi gitar elektrik sustain bertempo 80 BPM.",
     verse1: [
-      "Kau hadir di dalam hidupku",
-      "Membawa indah cinta sejati",
-      "Membuat hatiku terpaut",
-      "Pada senyum manismu"
+      "Dingin malam menyelimuti jiwa",
+      "Ku terdiam dalam sepi yang sunyi",
+      "Mengenang dirimu yang jauh di sana",
+      "Meninggalkan luka di hati"
     ],
     verse2: [
-      "Tatap matamu yang begitu teduh",
-      "Membuatku semakin menyayangimu",
-      "Tak ingin sedetik pun berlalu",
-      "Tanpa ada dirimu"
+      "Sayup terdengar melodi kepiluan",
+      "Mengingatkan janji yang pernah terucap",
+      "Kini tinggalah ku dalam penantian",
+      "Menatap bayangmu yang lenyap"
     ],
     preChorus: [
-      "Kini ku yakin pada rasa ini",
-      "Kau satu-satunya pilihanku"
+      "Mengapa harus perpisahan ini",
+      "Menghancurkan mimpi yang kita bina"
     ],
     chorus: [
-      "Kasih, genggam erat tanganku",
-      "Betapa aku mencintaimu",
-      "Katakanlah kau kan selalu setia",
-      "Menemani hidupku"
+      "Kasih, dengarlah rintihan hatiku",
+      "Betapa dalamnya rasa rinduku",
+      "Kuberharap kau kan kembali lagi",
+      "Menghapus air mata ini"
     ],
     postChorus: [
-      "Kuingin menjaga hatimu",
-      "Hanya untukmu cintaku",
-      "Selalu untukmu sayangku",
-      "Hingga akhir waktu"
+      "Hanya sunyi yang menemani",
+      "Dalam sepi ku menangis",
+      "Selalu menanti dirimu",
+      "Hingga akhir nanti"
     ],
     verse3: [
-      "Biar waktu terus berganti",
-      "Cintaku takkan pernah pudar",
-      "Tetap abadi untuk dirimu",
-      "Sampai nafasku terhenti"
+      "Biar waktu terus berlalu pergi",
+      "Cintaku kepadamu takkan mati",
+      "Tetap tersimpan di dalam sanubari",
+      "Sampai ku pejamkan mata ini"
     ],
     bridge: [
-      "Peganglah janjiku ini",
-      "Ku kan selalu ada di sampingmu",
-      "Semoga cinta kita berdua",
-      "Bahagia selamanya"
+      "Tuhan, kuatkanlah hatiku",
+      "Menghadapi cobaan yang berat ini",
+      "Semoga dia bahagia selalu",
+      "Walau tak lagi bersama ku"
     ],
     finalChorus: [
-      "Kasih, genggam erat tanganku",
-      "Betapa aku mencintaimu",
-      "Katakanlah kau kan selalu setia",
-      "Menemani hidupku"
+      "Kasih, dengarlah rintihan hatiku",
+      "Betapa dalamnya rasa rinduku",
+      "Kuberharap kau kan kembali lagi",
+      "Menghapus air mata ini"
     ],
     outro: [
-      "Hanya dirimu kekasih hatiku",
-      "Selamanya bersamamu",
+      "Kembali sunyi berselimut sepi",
+      "Hanya rindu yang tertinggal di sini",
       "Oooh... Wo-o-o...",
-      "Hanya untukmu"
+      "Sunyi..."
     ]
   },
   stylePrompt: {
-    genre: "Pop Indonesia Klasik, Slow Rock, Balada Pop 90's",
-    mood: "Heartfelt, Sweet, Nostalgic, Loving, Expressive",
-    tempo: "72 BPM",
-    key: "C (Comfortable & sweet for vocals)",
+    genre: "Rock Kapak Malaysia 90's, Slow Rock Melayu 90's, Romantic Sad Rock Ballad",
+    mood: "Hening, Minimalis, Intim, Melankolis, Emosional, Mendayu, Menyentuh Hati, Dinamika Lembut",
+    tempo: "80 BPM",
+    key: "Am (A Minor)",
     timeSignature: "4/4",
-    introOpening: "8 Bars Instrumental. Acoustic guitar picking accompanied by clean electric piano. Soft bass enters on bar 5.",
-    arrangement: "Verse 1A & 1B: Intimate acoustic guitar and soft piano. Pre-Chorus: Soft crescendo. Chorus: Full band arrangement with rich bass, melodious slow drums, and clean electric guitar fill. Bridge: Intimate piano breakdown with emotional build-up. Final Chorus: Full climax. Outro: Soft fade with vocal ad-libs.",
-    vocalStyle: "Clear Male Vocal, Tender, Intimate, Direct Emotion, Clean Vibrato, Chest Voice with Soft Falsetto nuances",
-    lyricLanguage: "Natural Indonesian, Direct, Simple & Heartfelt Classic Love Song",
-    melodyCharacter: "Verse: Gentle wave, melodic & conversational. Pre-Chorus: Ascending build. Chorus: Catchy repetitive hook with strong emotional lift. Outro: Peaceful resolution.",
-    dynamics: "Verse: Soft and tender. Pre-Chorus: Growing passion. Chorus: Broad and passionate. Bridge: Deep and heartfelt. Final Chorus: Passionate peak. Outro: Sweet fade.",
-    mixing: "Lead vocal intimate and upfront, acoustic guitar, mellow bass, spacious plate reverb.",
+    introOpening: "Sangat hening, hanya satu melodi gitar elektrik sustain.",
+    arrangement: "Verse: Vokal menjadi pusat perhatian utama, diiringi bass minimal dan ketukan pedal drum lembut. Instrumental Break: Solo gitar elektrik sustain selama 10 detik yang bersih dan mendayu. Chorus: Tetap intim dan hening, emosi vokal meningkat tetapi instrumen tidak bertambah, drum sangat minimalis tanpa snare keras atau crash cymbal. Outro: Kembali hening dengan satu melodi gitar elektrik sustain panjang.",
+    vocalStyle: "Male vocal, deep chest voice dominant, natural emotional delivery, heartfelt natural vibrato, subtle raspy texture on climax. No backing vocals.",
+    lyricLanguage: "Natural Indonesian, Conversational, Simple vocabulary, Deep feeling",
+    melodyCharacter: "Verse: Gentle wave, melodic & conversational. Pre-Chorus: Ascending build. Chorus: Catchy repetitive hook with strong emotional lift. Outro: Soft sustained peaceful ending.",
+    dynamics: "Sangat lembut dan hening di setiap bagian, dinamika terkontrol penuh, tanpa ada ledakan drum atau penambahan instrumen bising.",
+    mixing: "Professional clean studio recording. Dry vocal recording, minimal reverb, no excessive delay. Clear separation of three instruments (electric lead guitar, electric bass, minimal drum kit without snare).",
     liveConcert: "Tidak ada (Aransemen Studio Standar)"
   }
 };

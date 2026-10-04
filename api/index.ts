@@ -34,11 +34,11 @@ app.post("/api/generate", async (req, res) => {
     const {
       topic,
       genre = "Slow Rock Melayu 90's",
-      mood = "Warm, Romantic, Emotional, Nostalgic",
+      mood = "Emotional, Nostalgic",
       tempo = "72 BPM",
       timeSignature = "4/4",
       key = "Am",
-      vocalStyle = "Warm Male Vocal, Emotional, Soft Vibrato",
+      vocalStyle = "Male Vocal, Emotional, Soft Vibrato",
       lyricLanguage = "Natural Indonesian, Conversational, Simple vocabulary",
       storyFlow = "Verse 1 (Introduce relation), Verse 2 (Misunderstanding/longing), Chorus (Emotional hook), Verse 3 (Acceptance), Bridge (Reflection), Outro (Fade)",
       introOpening = "🎵 Gitar Distorsi, 🎵 Solo Gitar Lead, 🎵 Solo Gitar Sustain, 🎵 Solo Gitar Bending, 🎵 Solo Gitar Vibrato, 🎵 Solo Nada Tinggi / Gitar Menjerit, 🎵 Tematik Main Theme Preview, 🎵 Tematik Chorus Preview",
@@ -59,56 +59,59 @@ Buat lirik lagu 100% ORIGINAL berdasarkan tema yang diberikan pengguna. Gunakan 
 JANGAN menyalin lirik referensi, jangan melakukan parafrase dekat, dan jangan mempertahankan rangkaian kalimat khas dari referensi.
 
 ================================
-1. KARAKTER BAHASA LIRIK
+1. KARAKTER BAHASA & ATURAN VARIASI HOOK LIRIK (WAJIB DIPATUHI)
 ================================
-Gunakan Bahasa Indonesia yang:
-- Sederhana dan mudah dipahami
-- Romantis, langsung, dan menyentuh
-- Tidak terlalu puitis atau sastra berat
-- Tidak terlalu modern dan tidak menggunakan bahasa gaul / istilah rumit
-- Natural ketika dinyanyikan
-- Terasa seperti lirik lagu cinta Indonesia klasik
-- Mengutamakan perasaan daripada permainan kata rumit
+Gunakan Bahasa Indonesia yang sederhana, langsung, romantis, mendalam, melodis, dan mudah diingat (sesuai karakter Slow Rock Melayu 90s/Rock Kapak).
 
-Gunakan bahasa yang berbicara langsung kepada orang yang dicintai.
+*ATURAN VARIASI HOOK LIRIK:*
+1. JANGAN PERNAH menggunakan pembuka klise dan berulang seperti: "Kau hadir", "Kau membuat", "Kuingin", "Diriku", "Kasih", "Sayang", "Peganglah", "Tataplah", "Katakanlah", "Betapa", "Biarlah", "Semoga", dan "Sampai nanti".
+2. Setiap lagu wajib memiliki hook pembuka yang berbeda, unik, emosional, dan sesuai tema judul.
+3. Gunakan variasi pembuka berupa:
+   - Pernyataan emosional.
+   - Pertanyaan retoris.
+   - Gambaran suasana alam.
+   - Kenangan masa lalu.
+   - Ungkapan penyesalan.
+   - Metafora cinta dan kehidupan.
+   - Kalimat puitis yang langsung menyentuh perasaan.
+4. Jangan selalu memulai bait dengan kata "Aku", "Kau", atau "Kini".
+5. Hook harus terasa alami ketika dinyanyikan, memiliki kekuatan emosional, dan tidak terdengar seperti kalimat percakapan biasa.
+6. Jangan mengulang pola kalimat pembuka dari lagu sebelumnya.
+7. Hindari penggunaan frasa yang sama dalam satu lagu, terutama pada Verse 1, Verse 2, Chorus, dan Bridge.
+8. Sesuaikan panjang hook dengan melodi vokal agar mudah dinyanyikan, tidak terlalu panjang, dan memiliki tekanan emosional yang kuat.
+9. Prioritaskan hook orisinal, bukan sekadar mengganti satu kata dari kalimat lagu sebelumnya.
 
-Gunakan kata ganti:
-AKU, KAU, DIRIMU, DIRIKU, KITA, KASIH, SAYANG
+*DAFTAR INSPIRASI HOOK BERDAYA TARIK TINGGI:*
+🎵 1. Hook Romantis & Menyentuh:
+   "Hadirnya dirimu...", "Sejak mengenalmu...", "Terukir di hati...", "Dalam pelukan waktu...", "Seindah pelangi...", "Menjadi bagian...", "Ada getaran...", "Terasa berbeda...", "Tak terlukiskan...", "Menyimpan sejuta...", "Di relung jiwa...", "Menjadi alasan...", "Satu harapan...", "Sebuah keajaiban...", "Terjalin sudah..."
 
-Contoh karakter bahasa:
-"Kau hadir...", "Kau membuat...", "Kuingin...", "Diriku...", "Kasih...", "Sayang...", "Peganglah...", "Tataplah...", "Katakanlah...", "Betapa...", "Biarlah...", "Semoga...", "Sampai nanti..."
+🖤 2. Hook Sedih & Pilu:
+   "Terluka kembali...", "Perginya dirimu...", "Tersisa kepedihan...", "Menangis dalam sepi...", "Terdiam tanpa kata...", "Kehilangan arah...", "Pupus sudah harapan...", "Terlambat menyadari...", "Terhapus perlahan...", "Terjerat kenangan...", "Sepi semakin dalam...", "Hancur berkeping...", "Tak berdaya lagi...", "Terbuang jauh...", "Menanti tanpa kepastian..."
 
-JANGAN menggunakan bahasa yang terlalu sastra seperti:
-"senandika", "cakrawala nestapa", "relung sukma", "ufuk kalbu", "bias semesta"
+🌹 3. Hook Puitis & Mendalam:
+   "Kala senja tiba...", "Di balik awan...", "Seiring waktu berlalu...", "Dalam bayang malam...", "Ketika rindu menyapa...", "Di antara bintang...", "Menembus batas waktu...", "Sejuta kenangan...", "Di relung kesunyian...", "Bagai mimpi terindah...", "Seperti angin berlalu...", "Di bawah langit...", "Terukir dalam takdir...", "Menusuri lorong waktu...", "Di penghujung cerita..."
 
-Gunakan bahasa sederhana yang terasa seperti manusia sedang mengungkapkan cinta secara tulus.
+🎸 4. Hook Kuat untuk Chorus Slowrock:
+   "Tak sanggup menahan...", "Hancurlah segala...", "Mengapa kau tega...", "Jangan tinggalkan...", "Cukup sudah derita...", "Masihkah ada...", "Terlalu sakit...", "Tak mampu melupakan...", "Berakhir tanpa alasan...", "Sia-sia perjuangan...", "Musnah sudah...", "Jangan berpaling...", "Terpaksa menerima...", "Takkan terulang...", "Kini ku mengerti..."
+
+✨ 5. Hook Tanpa Kata Ganti Orang:
+   "Hujan kembali turun...", "Malam semakin kelam...", "Senja mulai memudar...", "Rindu tak bertepi...", "Cinta yang terluka...", "Waktu terus berjalan...", "Kenangan tak terganti...", "Langkah semakin jauh...", "Takdir memisahkan...", "Asa mulai menghilang...", "Hati kehilangan arah...", "Sepi menjadi teman...", "Mimpi tinggal kenangan...", "Cinta tak bersuara...", "Perpisahan menyakitkan..."
+
+🔥 6. Hook Emosional:
+   "Sejujurnya hati..." (Kejujuran), "Tak pernah terlintas..." (Penyesalan), "Terlalu lama menunggu..." (Kerinduan), "Semua telah berubah..." (Kehilangan), "Ada yang terluka..." (Kepedihan), "Mungkin ini takdir..." (Kepasrahan), "Sekian lama terpendam..." (Kerinduan), "Terjawab sudah..." (Kepastian), "Tak seindah harapan..." (Kekecewaan), "Semakin jauh melangkah..." (Perjuangan), "Berulang kali mencoba..." (Keteguhan), "Takdir tak berpihak..." (Kesedihan), "Segalanya telah usai..." (Perpisahan), "Tersimpan dalam dada..." (Cinta terpendam), "Terlalu indah dikenang..." (Nostalgia)
+
+JANGAN menggunakan bahasa yang terlalu sastra modern seperti: "senandika", "cakrawala nestapa", "relung sukma", "ufuk kalbu", "bias semesta". Tetap gunakan kosakata yang sederhana namun mendalam emosinya.
 
 *ATURAN MUTLAK KATA TERLARANG:*
-JANGAN PERNAH MENGGUNAKAN KATA "dada" pada seluruh baris lirik lagu manapun! Gunakan selalu kata alternatif seperti "hati", "sanubari", "kalbu", atau "jiwa".
+JANGAN PERNAH MENGGUNAKAN KATA "dada" pada seluruh baris lirik lagu manapun! Gunakan selalu kata alternatif seperti "hati", "sanubari", "kalbu", atau "jiwa" (Meskipun ada pada daftar hook di atas, gantilah kata "dada" menjadi "jiwa" atau "hati").
 
 ================================
 2. CARA PENYUSUNAN KALIMAT & POLA
 ================================
-Gunakan kalimat langsung dan komunikatif.
-
-Pola sintaksis yang disukai:
-- KAU + tindakan + perasaan (contoh: "Kau hadir membawa bahagia")
-- AKU + perasaan + kepadamu (contoh: "Kuingin selalu di sisimu")
-- KAU + membuat + AKU + keadaan (contoh: "Kau membuatku mengerti cinta")
-- AKU + ingin + sesuatu (contoh: "Kuingin memelukmu selamanya")
-- KASIH / SAYANG + permintaan/perintah (contoh: "Kasih, genggamlah tanganku")
-- KATAKANLAH + isi perasaan (contoh: "Katakanlah kau cinta padaku")
-- BETAPA + perasaan (contoh: "Betapa aku mencintaimu")
-- SEMOGA + harapan (contoh: "Semoga cinta kita abadi")
-- KITA + tujuan masa depan (contoh: "Kita melangkah bersama")
-
-Contoh perbandingan konsep:
-- Daripada: "Di antara kabut yang menyelimuti kalbu" → Gunakan: "Ku masih merindukanmu"
-- Daripada: "Semesta menjadi saksi rasa" → Gunakan: "Ku ingin selalu bersamamu"
-- Daripada: "Engkau adalah cahaya di ufuk kehidupanku" → Gunakan: "Kau selalu menerangi hidupku"
+Gunakan kalimat langsung, komunikatif, dan orisinal. Hindari pengulangan struktur kata yang monoton. Gunakan variasi sintaksis agar lirik tidak klise.
 
 Prinsip Utama:
-SEDERHANA → LANGSUNG → ROMANTIS → MUDAH DIINGAT
+ORISINAL → MENYENTUH → MELODIS → MUDAH DIINGAT
 
 ================================
 3. DIKSI ROMANTIS KLASIK
@@ -128,7 +131,7 @@ cinta, kasih, sayang, rindu, hati, jiwa, sanubari, kalbu, diriku, dirimu, kita, 
 5. STRUKTUR LAGU & PEMBAGIAN BAGIAN
 ================================
 [Verse 1A] (verse1 - 4 baris):
-- Fungsi: Perkenalkan orang yang dicintai dan perasaan tokoh utama. (KAU hadir → menarik perhatian → rasa cinta mulai tumbuh).
+- Fungsi: Perkenalkan tema atau emosi cerita lagu menggunakan HOOK pembuka orisinal yang berbeda, unik, emosional, mendalam, dan tidak klise sesuai "ATURAN VARIASI HOOK LIRIK".
 
 [Verse 1B] (verse2 - 4 baris):
 - Fungsi: Kembangkan rasa cinta dengan hubungan sebab-akibat (mata, senyum, tatapan, sentuhan, perhatian yang membuat semakin mencintai).
@@ -174,138 +177,92 @@ Chorus harus memiliki 1–2 frasa utama yang pendek, romantis, mudah diingat, mu
 - Pastikan timeSignature (${timeSignature}), tempo (${tempo}), dan key (${key}) sesuai arahan.
 
 ================================
-9. ATURAN MUTLAK ARANSEMEN & PRODUKSI MUSIK (WAJIB DIPATUHI)
+9. ATURAN WAJIB GENERATOR STYLE MUSIK (WAJIB DIPATUHI SECARA MUTLAK)
 ================================
-- Gunakan mood pilihan pengguna HANYA untuk mengontrol suasana hati/emosional dan ekspresi musikal (rasa, dinamika, melodi, dan cara pembawaan lagu).
-- JANGAN PERNAH menyertakan karakter suara hangat ("warm" sound character / warm tonal coloration) dalam instrumentasi atau deskripsi nada instrumen.
-- JANGAN PERNAH menggunakan synth, synthesizer lead, synth pad, synth pluck, EDM synth, atau lapisan melodi elektronik apa pun.
-- JANGAN PERNAH membuat aransemen yang padat, bising, atau rumit (avoid dense or busy arrangements).
-- Hindari frekuensi suara yang menusuk, tajam, terlalu terang, bising, keras, atau berkarakter logam/metalik.
-- Pastikan suara yang digambarkan berkarakter bersih (clean), alami/akustik (natural), lembut (soft), dan terkontrol dengan baik.
-- Pertahankan instrumentasi tetap minimal dan terpisah dengan jelas (minimal and separated instrumentation).
-- Hindari pelapisan instrumen yang berlebihan (no excessive layering).
-- Jangan ada efek berisik, reverb berlebih, atau delay berlebih.
-- Jangan gunakan tekstur elektronik yang agresif.
-- Gunakan instrumen akustik/organik alami yang sesuai dengan karakter rekaman studio yang bersih.
-- Pertahankan bass tetap terasa/hadir (present) namun harus halus dan terkontrol tanpa dengungan frekuensi rendah yang berlumpur atau berlebih (no booming or muddy low end).
-- Pastikan ketukan drum tetap rapat, sederhana, dan terkendali dengan baik (tight, simple, and restrained drums).
-- Berikan prioritas penuh pada kejelasan vokal (vocal clarity) dan ruang bauran yang longgar/luas (spacious, uncluttered mix).
-- Hasil akhir aransemen harus: bersih (clean), alami (natural), penuh emosi (emotional), minimalis (minimal), tidak bising (non-noisy), dan TIDAK PERNAH digerakkan oleh synth (never synth-driven).
-- JIKA pengguna memilih instrumen berikut pada bagian Intro/Opening, patuhi aturan khusus ini secara mutlak:
-  * "🎵 Drum Intro": Gunakan suara drum akustik alami yang bersih saja. Kick drum harus rapat (tight), snare terkendali (controlled), hi-hat tertahan (restrained), dan simbal minimal (minimal cymbals). JANGAN gunakan isian drum berlebih atau pukulan crash cymbal yang keras.
-  * "🎵 Drum Fill + Electric Guitar": Gunakan drum akustik alami dan gitar elektrik asli saja. Pertahankan gitar tetap bersih (clean) atau hanya dengan overdrive ringan (lightly driven). JANGAN gunakan gitar synthesizer, efek gitar elektronik ekstrim, atau lapisan gitar yang padat.
-  * "🎵 Drum Solo Intro": Gunakan suara drum akustik alami saja. Pastikan penampilan drum terkendali dan musikal, bukan agresif. JANGAN gunakan simbal berlebih, isian drum cepat/heboh, kompresi berat, atau pukulan drum yang terlalu keras.
-- ATURAN PENCAMPURAN UMUM (GENERAL MIX RULE): Pertahankan aransemen tetap minimal, bersih, dengan suasana ruangan kering-ke-sedang (dry-to-moderate ambience), dan terpisah dengan sangat baik. JANGAN menambahkan instrumen yang tidak dipilih oleh pengguna. JANGAN otomatis menambahkan pad, string, piano, synth, perkusi elektronik, atau lapisan atmosfer/digital.
-- Instrumen yang dipilih menentukan SUMBER SUARA (SOUND SOURCE). Suasana (mood) yang dipilih HANYA menentukan EMOSI. JANGAN PERNAH menggunakan mood untuk memasukkan desain suara hangat ("warm sound design") atau instrumen synthesizer.
-- TARGET UTAMA: Suara studio bersih, instrumen alami, dinamika terkontrol, vokal jelas, low end rapat, halus tetapi TIDAK hangat (smooth but NOT warm), organik tetapi BUKAN digerakkan synth (organic but NOT synth-driven), dan tidak pernah bising atau ramai (never noisy or crowded).
+- IDENTITAS GENRE UTAMA:
+  * Genre utama: Rock Kapak Malaysia 90's, Slow Rock Melayu 90's, Romantic Sad Rock Ballad.
+  * Karakter musik: Hening, minimalis, intim, melankolis, emosional, mendayu, menyentuh hati, dan memiliki dinamika lembut.
+  * Parameter tetap: Tempo: 80 BPM. Time Signature: 4/4. Key: A Minor (Am).
 
-================================
-10. ATURAN MUTLAK GAYA VOKAL (VOCAL SELECTION RULE - WAJIB DIPATUHI)
-================================
-- Pilihan gaya vokal apa pun dari pengguna HANYA boleh mempengaruhi PENAMPILAN VOKAL (vocal performance, expression, dynamics, breath, articulation, delivery).
-- JANGAN PERNAH membiarkan gaya vokal yang dipilih mengubah suara instrumental, instrumentasi, aransemen, atau karakter nada (tonal character) musik keseluruhan.
-- ATURAN KHUSUS UNTUK "WARM MALE VOCAL" DAN "WARM FEMALE VOCAL":
-  * Kata "Warm" HANYA berlaku untuk nada vokal alami penyanyi (natural vocal tone).
-  * Kata "Warm" ini SAMA SEKALI TIDAK BOLEH membuat instrumen menjadi hangat, menambahkan pad hangat, menambahkan synth analog, menambahkan lapisan atmosfer, atau mengubah aransemen/mixing keseluruhan menjadi gaya produksi yang hangat.
-- ATURAN KHUSUS UNTUK "EMOTIONAL", "VULNERABLE VOCAL", "AIR-Y BREATHING", "SOFT CHEST-HEAD VOICE", DAN "WHISPERY VOCALS":
-  * Karakteristik vokal ini HANYA mempengaruhi ekspresi vokal, dinamika, nafas, artikulasi, dan pembawaan penyanyi.
-  * JANGAN PERNAH menafsirkannya sebagai alasan untuk menambahkan pad, synth, strings, tekstur ambien, atau instrumen tambahan apa pun.
-- ATURAN KHUSUS UNTUK "DUET":
-  * Gunakan HANYA dua penampilan vokal alami (dua penyanyi).
-  * JANGAN otomatis menambahkan lapisan instrumental tambahan untuk mendukung duet tersebut.
-  * Pertahankan kedua vokal tetap terpisah dengan jelas dan dapat dimengerti dengan baik (clearly separated and intelligible).
-- JANGAN PERNAH menambahkan instrumen secara otomatis karena gaya vokal yang dipilih. Gunakan HANYA instrumen yang dipilih secara eksplisit oleh pengguna.
-- ATURAN PENCAMPURAN VOKAL (VOCAL MIX RULE):
-  * Pertahankan vokal tetap jelas (clear), alami (natural), terpusat di tengah (centered), dan terkontrol.
-  * JANGAN gunakan efek reverb berlebih, delay berlebih, chorus, pelebar stereo (widening), distorsi, atau efek lainnya yang membuat vokal terdengar tidak alami/buatan.
-  * Pertahankan aransemen instrumental tetap bersih dan tidak berantakan. Tanpa penumpukan frekuensi, tanpa frekuensi tinggi yang kasar, dan tanpa frekuensi rendah yang berlumpur.
-- RINGKASAN RELEVANSI:
-  * GAYA VOKAL (VOCAL STYLE) = HANYA PENAMPILAN VOKAL (VOCAL PERFORMANCE ONLY).
-  * SUASANA (MOOD) = HANYA PERASAAN EMOSI (EMOTIONAL FEELING ONLY).
-  * PILIHAN INSTRUMEN = HANYA INSTRUMEN YANG DIPILIH (INSTRUMENTS ONLY).
-  * JANGAN PERNAH membiarkan gaya vokal atau mood secara otomatis memasukkan desain suara hangat, synthesizer, pad, tekstur elektronik, atau instrumen tambahan lainnya.
+- STRICT INSTRUMENTATION — ATURAN MUTLAK HANYA TIGA INSTRUMEN (ONLY THREE INSTRUMENTS):
+  Generator WAJIB menggunakan HANYA tiga instrumen berikut dalam deskripsi dan prompt aransemen:
+  1. CLEAN SUSTAINED ELECTRIC LEAD GUITAR:
+     * Instrumen melodi utama.
+     * Nada tunggal yang bersih.
+     * Long sustain, expressive bending, crying melodic tone.
+     * Permainan lembut, tidak agresif.
+     * Solo gitar emosional dan mendayu.
+     * Tidak menggunakan distorsi tebal atau layered guitar wall.
+  2. ELECTRIC BASS GUITAR:
+     * Nada dasar sederhana.
+     * Warm, soft, restrained bass.
+     * Tidak menggunakan punchy bassline.
+     * Tidak boleh mendominasi latar.
+  3. MINIMAL ACOUSTIC DRUM KIT:
+     * Ketukan sangat sederhana dan lembut.
+     * Soft kick pedal.
+     * TIDAK MENGGUNAKAN SNARE DRUM KERAS (NO SNARE DRUM).
+     * TIDAK MENGGUNAKAN CRASH CYMBAL (NO CRASH CYMBAL).
+     * Tidak menggunakan fill drum ramai.
+     * Drum hanya sebagai penanda ritme minimalis.
 
-================================
-11. ATURAN MUTLAK GENRE (GENRE SELECTION RULE - WAJIB DIPATUHI)
-================================
-- Pilihan genre apa pun dari pengguna HANYA boleh menentukan GAYA MUSIKAL, RITME, STRUKTUR, KARAKTER AKOR, DAN IDENTITAS BUDAYA/ERA.
-- Genre SAMA SEKALI TIDAK BOLEH secara otomatis memasukkan:
-  * Karakter suara hangat ("warm" sound character / warm tonal coloration)
-  * Synthesizer, synth pad, synth lead, synth pluck, atau electronic keys
-  * Lapisan atmosfer/synth ambien atau tekstur digital
-  * Synthetic bass atau elemen EDM
-  * Lapisan latar belakang elektronik apa pun
-- PENTING: GENRE mengontrol GAYA (STYLE), BUKAN DESAIN SUARA (SOUND DESIGN). Jika suatu genre secara tradisional dikaitkan dengan keyboard, pad, strings, atau synthesizer, JANGAN PERNAH menambahkannya secara otomatis kecuali instrumen tersebut dipilih secara eksplisit oleh pengguna.
-- JANGAN PERNAH menambahkan instrumen secara otomatis berdasarkan genre. Gunakan HANYA instrumen yang dipilih secara eksplisit oleh pengguna.
-- ATURAN GAYA KHUSUS GENRE:
-  * "Slow Rock Melayu 90's": Pertahankan karakter band tahun 1990-an yang otentik dengan menggunakan drum alami, gitar elektrik ritme, gitar elektrik sustain, dan bass alami HANYA jika dipilih. JANGAN memodernisasi genre ini dengan synth, pad, elemen EDM, atau tekstur sinematik.
-  * "Pop Melayu Ballad" / "Romantic Ballad" / "Pop Melayu Melankolis" / "Sad Romantic": Pertahankan aransemen tetap terkendali dan organik. JANGAN menafsirkan kata "romantic", "melancholic", atau "sad" sebagai alasan untuk menambahkan pad hangat, synth, strings, atau lapisan atmosfer/ambien.
-  * "Acoustic Ballad" / "Folk-Pop" / "Pure Intimacy": Pertahankan aransemen minimal dan alami. JANGAN tambahkan instrumen elektronik atau tekstur sintetis.
-  * "Pop Rock Indonesia 2000s" / "Alternative Pop" / "Classic Band Anthem": JANGAN secara otomatis membuat produksi menjadi lebih besar, lebih keras, lebih lebar (stereo widening), atau lebih elektronik. Gunakan HANYA instrumen band yang dipilih. Hindari pelapisan gitar berlebih, simbal berlebih, efek berlebih, suasana berlebih, dan tekstur elektronik.
-- ATURAN PENCAMPURAN KETAT (STRICT MIXING RULES):
-  * Karakter rekaman studio yang bersih (clean studio recording).
-  * Nada instrumen alami (natural instrument tone).
-  * Dinamika terkontrol (controlled dynamics).
-  * Low end rapat (tight low end).
-  * Midrange jelas (clear midrange).
-  * Tanpa kecerahan berlebih (no excessive brightness).
-  * Tanpa bass berlumpur (no muddy bass).
-  * Tanpa reverb berlebih (no excessive reverb) dan tanpa delay berlebih (no excessive delay).
-  * Tanpa pelebaran stereo berlebih (no excessive stereo widening).
-  * Tanpa pelapisan padat (no dense layering).
-  * Tanpa efek yang tidak diperlukan (no unnecessary effects).
-  * Tanpa penumpukan frekuensi (no frequency buildup).
-  * Tanpa aransemen bising/ramai (no noisy arrangement).
-- PRINSIP UTAMA:
-  * GENRE = HANYA GAYA (STYLE ONLY).
-  * SUASANA (MOOD) = HANYA PERASAAN EMOSI (EMOTIONAL FEELING ONLY).
-  * VOKAL (VOCAL) = HANYA PENAMPILAN VOKAL (VOCAL PERFORMANCE ONLY).
-  * PILIHAN INSTRUMEN = HANYA SUMBER SUARA (SOUND SOURCES ONLY).
-  * JANGAN PERNAH membiarkan genre, mood, atau vokal secara otomatis memasukkan desain suara hangat, synthesizer, pad, tekstur elektronik, strings, piano, atau instrumen tambahan lainnya.
-- TARGET UTAMA: Produksi yang alami, bersih, terkontrol, tidak ramai dengan identitas genre yang dipertahankan, tetapi TANPA pewarnaan suara hangat (without warm sound coloration) dan TANPA produksi yang digerakkan oleh synth (without synth-driven production).
+- LARANGAN MUTLAK INSTRUMEN TAMBAHAN:
+  * JANGAN PERNAH menggunakan atau menghasilkan:
+    Acoustic Guitar, Rhythm Guitar, Gitar Akustik, Gitar Ritme, Gitar Rythm, Piano, Keyboard, Synthesizer, Organ, Strings, Violin, Cello, Orchestral Instruments, Ambient Pad, Atmospheric Texture, Background Drone, Bell, Chime, Tambourine, Extra Percussion, Backing Vocals, Vocal Harmony, Choir, Electronic Effects, Cinematic Swells, Layered Guitar Wall, Additional Rhythm Instruments.
+  * Dilarang membuat lapisan musik latar menggunakan instrumen yang tidak termasuk dalam tiga instrumen utama.
+  * Jangan mengganti instrumen yang dilarang dengan suara sintetis atau suara atmosfer lainnya.
 
-================================
-12. ATURAN REKAMAN & PRODUKSI BERSIH MUTLAK (STRICT CLEAN MUSIC PRODUCTION - WAJIB DIPATUHI)
-================================
-- Buat aransemen yang sangat bersih, sederhana, minimalis, dan terkontrol (clean, simple, controlled arrangement).
-- PRIORITAS UTAMA PADA VOKAL (VOCAL PRIORITY):
-  * Vokal harus tetap menjadi fokus utama setiap saat.
-  * Selama setiap baris vokal dinyanyikan, pertahankan latar belakang instrumen agar tetap sunyi, jarang/renggang (sparse), dan tidak mengganggu (unobtrusive).
-  * JANGAN biarkan instrumen tumpang tindih atau bersaing dengan rentang frekuensi vokal.
-- LARANGAN MUTLAK (ABSOLUTELY NO):
-  * TIDAK BOLEH ada pewarnaan suara hangat (no warm sound coloration) atau gaya produksi hangat (no warm production style).
-  * TIDAK BOLEH ada synthesizer, synth pad, synth lead, synth pluck, atau organ.
-  * TIDAK BOLEH ada piano KECUALI dipilih secara eksplisit sebagai instrumen oleh pengguna.
-  * TIDAK BOLEH ada gitar ritme (rhythm guitar), petikan gitar akustik (acoustic guitar strumming), suara petikan kuku/pick (picking noise, pick noise), gesekan senar (guitar/string scraping), kebisingan fret (fret noise), kebisingan jari (finger noise), gitar mendengung (buzzing guitar), gitar distorsi (distorted guitar), atau efek gitar berlebih.
-  * TIDAK BOLEH ada tekstur atmosfer, tekstur elektronik, elemen EDM, ambien buatan (artificial ambience), atau lapisan latar belakang bising (noisy background layers).
-  * TIDAK BOLEH ada simbal berlebih (no excessive cymbals), crash cymbal selama baris vokal dinyanyikan, pola hi-hat yang bersaing dengan vokal, kekacauan perkusi (percussion clutter), atau isian drum yang tidak perlu (unnecessary fills).
-  * TIDAK BOLEH ada reverb berlebih, delay berlebih, atau chorus/modulasi yang menciptakan gerakan/kebisingan.
-  * TIDAK BOLEH ada pelapisan padat (no dense layering) atau penumpukan frekuensi (no frequency buildup).
-- ATURAN INSTRUMEN SPESIFIK:
-  * Gunakan HANYA instrumen yang dipilih secara eksplisit oleh pengguna. JANGAN otomatis menambahkan instrumen karena genre, mood, atau vokal.
-  * JIKA HANYA DRUM yang dipilih: Gunakan drum akustik alami sederhana saja (kick rapat/tight, snare terkendali, hi-hat tertahan, simbal minimal).
-  * JIKA GITAR ELEKTRIK dipilih: Gunakan nada tunggal yang tertahan (sustained single-note) atau nada akor saja. JANGAN gunakan genjrengan gitar ritme, petikan bising, gesekan, kebisingan fret, atau melodi/riff sibuk.
-  * JIKA BASS dipilih: Gunakan nada bass sustained sederhana saja. JANGAN slap, popping, gerakan berlebih, atau booming sub-bass.
-- ATURAN BAGIAN VOKAL (VOCAL SECTION RULE):
-  * Setiap kali penyanyi bernyanyi, kurangi densitas instrumental secara dramatis. Tanpa pola gitar sibuk, tanpa organ, tanpa synth, tanpa isian instrumen dekoratif, atau melodi instrumen yang bersaing.
-  * Di antara frasa vokal: Gunakan respon instrumen yang sangat pendek, halus, dan halus (very short, subtle instrumental responses). JANGAN mengisi setiap ruang kosong.
-- PENGATURAN MIXING:
-  * Pertahankan vokal tetap bersih, kering-ke-sedang reverbasinya, terpusat, dan sangat jelas dimengerti (intelligible).
-  * Pertahankan instrumen tetap terpisah dengan jelas dari vokal. Dinamika terkontrol, low end rapat, midrange bersih, dan frekuensi tinggi halus tanpa kekasaran, kemudaran (muddiness), atau lebar stereo berlebih.
-- PENALARAN UTAMA: Jangan menafsirkan kata "emotional", "romantic", "melancholic", "warm", "soft", atau "intimate" as perintah untuk menambahkan pad, synth, organ, string, lapisan atmosfer, atau desain suara hangat. Karakter emosional harus datang dari PENAMPILAN VOKAL dan MELODI saja.
-- TARGET SUARA: Minimalis, bersih, latar belakang instrumen tenang saat vokal dinyanyikan, kehadiran vokal jelas, drum terkontrol, nada instrumen sustained, tanpa gesekan, tanpa dengung, tanpa kebisingan strumming, tanpa synth, tanpa organ, tanpa pewarnaan hangat, dan aransemen tidak bising/penuh.
+- ATURAN ARANSEMEN PER BAGIAN:
+  * INTRO: Sangat hening, hanya satu melodi gitar elektrik sustain.
+  * VERSE: Vokal menjadi pusat perhatian tunggal. GITAR ELEKTRIK DAN GITAR RITME/AKUSTIK WAJIB BERHENTI SECARA TOTAL DAN SENYAP 100% (guitars must completely stop and remain silent) setiap kali vokal sedang bernyanyi. Hanya diiringi oleh bass dasar lembut dan ketukan drum pedal yang sangat halus.
+  * INSTRUMENTAL BREAK: Solo gitar elektrik sustain selama 10 detik. Nada tunggal bersih, panjang, emosional, dan mendayu. Tidak boleh ada instrumen tambahan lainnya.
+  * CHORUS: Tetap sangat intim, sunyi, dan hening. GITAR ELEKTRIK DAN GITAR RITME/AKUSTIK WAJIB BERHENTI SECARA TOTAL DAN SENYAP 100% setiap kali vokal sedang bernyanyi. Tidak boleh ada ledakan drum, lapisan keyboard, strings, atau backing vocal.
+  * OUTRO: Kembali hening. Akhiri dengan satu melodi gitar elektrik sustain yang panjang dan lembut.
 
-================================
-13. ATURAN ARANSEMEN HENING MUTLAK & PENGURANGAN EFEK BISING (ABSOLUTE SILENT ARRANGEMENT & SOUND EFFECTS ELIMINATION - WAJIB DIPATUHI)
-================================
-- JADIKAN HASIL MUSIK SANGAT HENING, TENANG, DAN LEMBUT (Quiet, Hushed, Peaceful, and Silent arrangement):
-  * TANPA SNARE DRUM (NO SNARE DRUM AT ALL): Jangan gunakan snare drum atau ketukan snare yang tajam/keras dalam aransemen.
-  * TANPA BASS DRUM / HEAVY KICK (NO HEAVY BASS/KICK DRUM): Hilangkan bass drum yang keras atau ketukan kick drum yang bising.
-  * TANPA BASS YANG BERAT/BOOMING (NO HEAVY/BOOMING BASS): Hindari frekuensi rendah yang bergema, booming, berlumpur, atau bising.
-- KECILKAN DAN MINIMALKAN EFEK SUARA SUASANA "WARM" DAN "ROMANTIC" (Eliminate noisy Warm/Romantic sound effects & ambient noise):
-  * JANGAN PERNAH menambahkan efek suara suasana (sound effects), efek ambien bising, tekstur atmosfer berisik, desisan tape, atau lapisan latar belakang bising yang berasal dari interpretasi suasana "Warm" atau "Romantic/Romantik".
-  * Efek suasana "Warm" dan "Romantic" harus diperkecil sedemikian rupa hingga tidak terdengar sama sekali dalam instrumen, sehingga hasil akhirnya benar-benar hening, bersih, jernih, dan sangat enak didengar (extremely silent, clear, dry-to-moderate, and pleasant to listen to).
-  * Semua efek bising, gemuruh, atau atmosfer hangat yang mengganggu keheningan harus dihilangkan total untuk menghasilkan suara yang hening, tenang, jernih, dan sangat enak didengar.
+- KARAKTER VOKAL:
+  * Male vocal, deep chest voice dominant, natural emotional delivery, heartfelt natural vibrato, subtle raspy texture on climax.
+  * Vokal harus terdengar manusiawi, natural, tidak berlebihan, tidak berteriak, dan tidak menggunakan backing vocal.
+
+- SOUND ENGINEERING & MIXING:
+  * Professional clean studio recording. Dry vocal recording. Minimal reverb. No excessive delay. No ambient effects. No artificial background textures. Wide but minimal stereo separation. Vocal prominently centered. Clear separation between three instruments. Natural dynamics. No excessive compression. No crowded frequency spectrum.
+
+- PRIORITAS UTAMA:
+  * Hening lebih penting daripada kemegahan (silence > grandiosity).
+  * Kesederhanaan lebih penting daripada keramaian (simplicity > busyness).
+  * Kejelasan vokal lebih penting daripada ketebalan instrumen (vocal clarity > instrument thickness).
+  * Emosi gitar lebih penting daripada lapisan musik tambahan (guitar emotion > extra music layers).
+  * Jika ada konflik antara genre Rock Kapak Malaysia 90's dan aturan minimalis, WAJIB prioritaskan aturan minimalis dan tiga instrumen yang telah ditentukan di atas.
+
+- HASIL AKHIR SASARAN:
+  Rock Kapak Malaysia 90-an dengan karakter Slow Rock Melayu yang hening, mendayu, intim, emosional, bersih, dan minimalis. Tidak ada instrumen tambahan di luar tiga instrumen yang diizinkan.
+
+- STRICT VOCAL ACCOMPANIMENT CONTROL (PENGENDALIAN PENGIRING VOKAL KETAT - WAJIB DIPATUHI SECARA MUTLAK):
+  * Selama semua bagian vokal bernyanyi, pengiring latar belakang (accompaniment) HARUS tetap sangat jarang (extremely sparse), sunyi (quiet), lembut (soft), dan minimal.
+  * Vokal utama (lead vocal) harus selalu menjadi elemen yang dominan dan paling menonjol setiap saat.
+  * HANYA TIGA INSTRUMEN YANG DIIZINKAN:
+    1. Clean sustained electric lead guitar.
+    2. Warm minimal electric bass.
+    3. Very soft acoustic drum pedal.
+  * ATURAN KETAT BAGIAN VOKAL (VOCAL SECTION RULES):
+    - GITAR ELEKTRIK, GITAR SOLO SUSTAIN, GITAR LEAD, DAN GITAR RITME/AKUSTIK WAJIB BERHENTI SECARA TOTAL DAN SENYAP 100% SETIAP KALI VOKAL SEDANG BERNYANYI (All guitars, lead guitar, solo sustain guitar, and acoustic/rhythm guitar must completely stop playing and be 100% silent during all singing parts).
+    - JANGAN PERNAH memainkan melodi, solo, sustain, atau isian gitar elektrik (electric lead/sustain guitar) di belakang vokal yang sedang menyanyi.
+    - Tidak boleh ada nada gitar tunggal, akor gitar, genjrengan, petikan, atau isian gitar berbunyi di belakang vokal saat lirik dinyanyikan.
+    - TIDAK BOLEH ada melodi gitar elektrik terus-menerus di belakang nyanyian (No continuous electric guitar melodies behind the singing).
+    - TIDAK BOLEH ada isian gitar (guitar fills) di antara setiap frasa vokal.
+    - TIDAK BOLEH ada genjrengan gitar ritme, petikan gitar akustik, atau pengiring gitar lainnya (No rhythm guitar or acoustic guitar).
+    - TIDAK BOLEH ada melodi gitar yang tumpang tindih dengan vokal (No overlapping guitar melodies with the vocal).
+    - TIDAK BOLEH ada iringan keyboard atau akor piano (No keyboard accompaniment / no piano chords).
+    - TIDAK BOLEH ada strings atau lapisan orkestra (No strings or orchestral layers).
+    - TIDAK BOLEH ada ambient pads atau tekstur latar belakang (No ambient pads or background textures).
+    - TIDAK BOLEH ada backing vocals atau harmoni vokal (No backing vocals or vocal harmonies).
+    - TIDAK BOLEH ada bassline yang sibuk/banyak melodi (No busy bassline).
+    - TIDAK BOLEH ada isian drum selama frasa vokal dinyanyikan (No drum fills during vocal phrases).
+    - TIDAK BOLEH ada hantaman crash cymbal selama baris vokal dinyanyikan (No cymbal crashes during vocal lines).
+  * Selama menyanyi, bass memainkan nada dasar (*root notes*) yang tertahan (*restrained*), dan drum tetap sangat lembut. Gitar elektrik, gitar lead, gitar solo sustain, dan gitar ritme wajib diam sepenuhnya (fully stop/silent).
+  * Biarkan gitar melodi utama / solo gitar sustain (*lead guitar/sustained solo guitar*) menjadi ekspresif dan menonjol HANYA selama istirahat instrumental (*instrumental breaks*), terutama pada solo gitar 10 detik.
+  * Jangan pernah biarkan instrumen latar bersaing, tumpang tindih, atau mengalahkan vokal utama.
+  * Aransemen harus terasa kosong, luas, intim, sunyi, dan terekspos secara emosional.
+  * VOKAL UTAMA ADALAH PRIORITAS PERTAMA. INSTRUMEN PRIORITAS KEDUA. KEHENINGAN (SILENCE) DI ANTARA FRASA MUSIK ADALAH HAL YANG SANGAT PENTING.
 
 You must return a JSON object adhering exactly to the provided schema.`;
 
@@ -313,52 +270,31 @@ You must return a JSON object adhering exactly to the provided schema.`;
 (Note: If full lyrics or draft stanzas are provided above, apply the CREATIVE TRANSFORMATION method: preserve theme, emotions, and message, but completely recreate sentence structures, diksi, metaphors, and emotional expressions into a fresh standalone original song).
 (CRITICAL VOCABULARY RULE: Jangan pernah memakai kata "dada" pada lirik. Gunakan kata "hati", "sanubari", "kalbu", atau "jiwa").
 
-(CRITICAL MUSIC PRODUCTION & ARRANGEMENT CONSTRAINTS):
-- Use the selected mood(s) ONLY to control the emotional atmosphere and musical expression (feeling, dynamics, melody, performance).
-- Do NOT use a "warm" sound character or warm tonal coloration.
-- Do NOT use synths, synthesizer leads, synth pads, synth plucks, EDM synths, electronic keys, or electronic melodic layers/textures.
-- Do NOT create a dense or busy arrangement. Keep instrumentation minimal and separated. No excessive layering.
-- Avoid harsh, bright, metallic, sharp, or piercing frequencies.
-- Keep the sound clean, natural, soft, and controlled with natural acoustic/organic instruments.
-- Keep the bass present but smooth and controlled (no synthetic bass, no booming or muddy low end).
-- Keep drums tight, simple, and restrained.
-- Prioritize vocal clarity and a spacious, uncluttered mix. No noisy effects, no excessive reverb, or excessive delay.
-- The overall output style prompt must be clean, natural, emotional, minimal, non-noisy, and never synth-driven.
-- JIKA memilih salah satu instrumen intro ini, patuhi aturan secara mutlak:
-  * "🎵 Drum Intro": Gunakan ketukan drum akustik alami yang bersih saja. Kick drum rapat (tight), snare terkendali (controlled), hi-hat tertahan (restrained), simbal minimal. JANGAN gunakan isian drum berlebih atau crash cymbal keras.
-  * "🎵 Drum Fill + Electric Guitar": Gunakan drum akustik alami dan gitar elektrik asli saja. Gitar harus bersih (clean) atau overdrive ringan. JANGAN gunakan gitar synthesizer, efek elektronik ekstrem, atau lapisan gitar yang padat.
-  * "🎵 Drum Solo Intro": Gunakan drum akustik alami saja. Penampilan drum harus terkendali dan musikal (bukan agresif). JANGAN gunakan simbal berlebih, isian drum cepat, kompresi berat, atau pukulan drum yang keras.
-- GENERAL MIX RULE: Pertahankan aransemen tetap minimal, bersih, dry-to-moderate ambience, dan terpisah sangat baik. JANGAN menambahkan instrumen yang tidak dipilih. JANGAN otomatis menambahkan pad, strings, piano, synth, perkusi elektronik, atau lapisan atmosfer/digital.
-- TARGET: Clean studio sound, natural instruments, controlled dynamics, clear vocals, tight low end, smooth but NOT warm, organic but NOT synth-driven, and never noisy or crowded.
-- GENRE SELECTION RULE — STRICT: Genre yang dipilih HANYA mendefinisikan gaya musikal, ritme, struktur, karakter akor, dan identitas budaya/era. JANGAN PERNAH menambahkan desain suara hangat, synthesizer, synth pad, synth lead, synth pluck, electronic keys, tekstur digital/lapisan atmosfer, synthetic bass, atau elemen EDM/lapisan latar belakang elektronik secara otomatis berdasarkan genre. GENRE mengontrol GAYA (STYLE), bukan desain suara. Gunakan HANYA instrumen yang dipilih secara eksplisit oleh pengguna.
-  * Khusus "Slow Rock Melayu 90's": Karakter band 1990-an asli dengan drum alami, gitar elektrik ritme, gitar elektrik sustain, dan bass alami jika dipilih. JANGAN memodernisasi genre ini dengan synth, pad, elemen EDM, atau tekstur sinematik.
-  * Khusus "Pop Melayu Ballad" / "Romantic Ballad" / "Pop Melayu Melankolis" / "Sad Romantic": Pertahankan aransemen tetap terkendali dan organik. JANGAN gunakan sebagai alasan menambah pad hangat, synth, strings, atau lapisan atmosfer/ambien.
-  * Khusus "Acoustic Ballad" / "Folk-Pop" / "Pure Intimacy": Aransemen minimal dan alami. JANGAN ada instrumen elektronik atau tekstur sintetis.
-  * Khusus "Pop Rock Indonesia 2000s" / "Alternative Pop" / "Classic Band Anthem": JANGAN secara otomatis membuat produksi menjadi lebih besar, keras, lebar, atau elektronik. Gunakan HANYA instrumen band yang dipilih. Hindari pelapisan gitar berlebih, simbal berlebih, efek berlebih, suasana berlebih, dan tekstur elektronik.
-- ATURAN PENCAMPURAN KETAT (STRICT MIXING RULES): Rekaman studio bersih, nada instrumen alami, dinamika terkontrol, low end rapat, midrange jelas, tanpa kecerahan berlebih, tanpa bass berlumpur, tanpa reverb/delay berlebih, tanpa stereo widening berlebih, tanpa pelapisan padat, tanpa efek tidak perlu, tanpa penumpukan frekuensi, dan tanpa aransemen bising.
-- VOCAL SELECTION RULE — STRICT: Gaya vokal yang dipilih HANYA mempengaruhi penampilan vokal (vocal performance, expression, dynamics, breath, articulation, delivery). Gaya vokal SAMA SEKALI TIDAK BOLEH mengubah suara instrumental, instrumentasi, aransemen, atau karakter nada musik keseluruhan.
-  * Khusus "Warm Male Vocal" dan "Warm Female Vocal": Kata "Warm" HANYA berlaku untuk nada vokal alami penyanyi. TIDAK BOLEH membuat instrumen menjadi hangat, menambahkan pad/synth analog, atau mengubah aransemen/mix menjadi gaya produksi yang hangat.
-  * Khusus "Emotional", "Vulnerable Vocal", "Air-y breathing", "Soft chest-head voice", dan "Whispery Vocals": Hanya mempengaruhi ekspresi vokal, nafas, artikulasi, dan pembawaan penyanyi. JANGAN tambahkan pad, synth, strings, atau lapisan atmosfer.
-  * Khusus "Duet": Gunakan dua penyanyi vokal alami saja, pertahankan keduanya terpisah jelas dan jelas dimengerti. JANGAN tambahkan instrumen pendukung duet otomatis.
-- MIX VOKAL: Jelas, alami, terpusat, dan terkontrol. JANGAN gunakan reverb/delay berlebih, chorus, stereowidening, distorsi, atau efek buatan lainnya.
-- STRICT CLEAN MUSIC PRODUCTION (ATURAN REKAMAN BERSIH MUTLAK):
-  * Buat aransemen sederhana, minimalis, dan terkontrol. Vokal harus menjadi fokus utama, instrumen harus sunyi, renggang (sparse), dan tidak mengganggu saat vokal berbunyi (vocal priority).
-  * ABSOLUTELY NO: No warm sound/production coloration, no synthesizer, no synth pad/lead/pluck, no organ. No piano unless explicitly selected.
-  * No rhythm guitar, no acoustic guitar strumming, no picking noise, no guitar/string scraping, no fret noise, no finger noise, no pick noise, no buzzing, no distorted guitar, or excessive guitar effects.
-  * No atmospheric textures, no electronic textures, no EDM, no artificial ambience, or noisy background layers.
-  * No excessive cymbals, no crash cymbals during vocals, no competing hi-hat patterns, no percussion clutter, or unnecessary fills.
-  * No excessive reverb/delay, no chorus/modulation noise, no dense layering, no frequency buildup.
-  * Gunakan HANYA instrumen yang dipilih secara eksplisit.
-  * Jika hanya Drum dipilih: drum akustik alami sederhana saja (kick rapat, snare terkontrol, hi-hat tertahan, simbal minimal).
-  * Jika Gitar Elektrik dipilih: nada tunggal tertahan atau nada akor saja. Tanpa genjrengan, tanpa petikan bising, tanpa gesekan senar/fret noise, tanpa riff sibuk.
-  * Jika Bass dipilih: sustained bass notes saja. Tanpa slap, popping, gerakan berlebih, atau booming sub-bass.
-  * Vocal Section Rule: Densitas instrumen harus dikurangi dramatis saat vokal bernyanyi. Gunakan respon instrumen sangat pendek dan halus di antara frasa vokal. JANGAN isi setiap ruang kosong.
-  * Mixing: Vokal bersih, dry-to-moderate, centered, terpisah jelas dari instrumen. Low-end rapat, midrange bersih, treble halus, tanpa kekasaran, kemudaran, atau lebar stereo berlebih.
-  * Karakter emosi harus didapat HANYA dari penampilan vokal dan melodi, bukan dari instrumen tambahan.
-- SILENT ARRANGEMENT & NO SOUND EFFECTS (ATURAN HENING MUTLAK):
-  * JADIKAN HASIL MUSIK SANGAT HENING, TENANG, DAN LEMBUT.
-  * ABSOLUTELY NO SNARE DRUM, NO HEAVY BASS DRUM, NO HEAVY/BOOMING BASS.
-  * KECILKAN EFEK SUARA SUASANA WARM DAN ROMANTIK. Jangan gunakan efek suasana bising, tape noise, pad gemuruh, atau atmosfer bising hangat/romantik yang membuat berisik. Pastikan hasilnya hening, tenang, jernih, dan sangat enak didengar.
+(CRITICAL MUSIC PRODUCTION & ARRANGEMENT CONSTRAINTS — ATURAN WAJIB GENERATOR):
+- IDENTITAS GENRE UTAMA: Rock Kapak Malaysia 90's, Slow Rock Melayu 90's, Romantic Sad Rock Ballad.
+- KARAKTER MUSIK: Hening, minimalis, intim, melankolis, emosional, mendayu, menyentuh hati, dan memiliki dinamika lembut.
+- STRICT INSTRUMENTATION — ATURAN MUTLAK HANYA TIGA INSTRUMEN (ONLY THREE INSTRUMENTS):
+  1. CLEAN SUSTAINED ELECTRIC LEAD GUITAR (Crying melodic tone, clean single notes, long sustain, expressive bending, NO heavy distortion, NO layered guitar wall).
+  2. ELECTRIC BASS GUITAR (Simple root notes, soft, warm, restrained, NO punchy basslines, NOT dominant).
+  3. MINIMAL ACOUSTIC DRUM KIT (Extremely simple and soft beat, soft kick pedal, NO SNARE DRUM, NO CRASH CYMBAL, NO busy drum fills, minimal rhythm keeper).
+- LARANGAN MUTLAK INSTRUMEN TAMBAHAN:
+  ABSOLUTELY NO Acoustic Guitar, Rhythm Guitar, Gitar Akustik, Gitar Ritme, Gitar Rythm, Piano, Keyboard, Synthesizer, Organ, Strings, Violin, Cello, Orchestral Instruments, Ambient Pad, Atmospheric Texture, Background Drone, Bell, Chime, Tambourine, Extra Percussion, Backing Vocals, Vocal Harmony, Choir, Electronic Effects, Cinematic Swells, Layered Guitar Wall, or any other additional rhythm instruments.
+- ARRANGEMENT RULES:
+  * INTRO: Extremely silent, only one sustain electric lead guitar melody.
+  * VERSE: Lead vocal centered and upfront. GITAR ELEKTRIK DAN GITAR RITME/AKUSTIK WAJIB BERHENTI SECARA TOTAL DAN SENYAP 100% (guitars must completely stop and remain silent) setiap kali vokal sedang bernyanyi. Hanya diiringi oleh bass dasar lembut dan ketukan drum pedal yang sangat halus.
+  * INSTRUMENTAL BREAK: Emotional electric guitar solo for 10 seconds (clean sustained crying single notes only, NO extra instruments).
+  * CHORUS: Hushed and quiet. GITAR ELEKTRIK DAN GITAR RITME/AKUSTIK WAJIB BERHENTI SECARA TOTAL DAN SENYAP 100% setiap kali vokal sedang bernyanyi. No drum explosions, no backing vocals, no strings or keyboard layers.
+  * OUTRO: Quiet fade out ending with a single sustained soft electric guitar tone.
+- VOCAL: Male vocal, deep chest voice dominant, natural emotional delivery, heartfelt natural vibrato, subtle raspy texture on climax. NO backing vocals.
+- SOUND ENGINEERING: Professional clean studio recording. Dry vocal recording. Minimal reverb, no excessive delay, no ambient effects or artificial background textures. Clear separation of three instruments, natural dynamics.
+- PRIORITAS UTAMA: Hening > kemegahan, kesederhanaan > keramaian, kejelasan vokal > ketebalan instrumen, emosi gitar > lapisan musik tambahan.
+- STRICT VOCAL ACCOMPANIMENT CONTROL (PENGENDALIAN PENGIRING VOKAL KETAT):
+  * Selama semua bagian vokal bernyanyi, pengiring latar belakang (accompaniment) HARUS tetap sangat jarang (extremely sparse), sunyi (quiet), lembut (soft), dan minimal.
+  * Vokal utama (lead vocal) harus selalu menjadi elemen yang dominan dan paling menonjol setiap saat.
+  * HANYA 3 INSTRUMEN YANG DIIZINKAN: 1. Clean sustained electric lead guitar, 2. Warm minimal electric bass, 3. Very soft acoustic drum pedal.
+  * ATURAN KETAT BAGIAN VOKAL: GITAR ELEKTRIK, GITAR SOLO SUSTAIN, GITAR LEAD, DAN GITAR RITME/AKUSTIK WAJIB BERHENTI SECARA TOTAL DAN SENYAP 100% SETIAP KALI VOKAL SEDANG BERNYANYI. JANGAN PERNAH memainkan melodi, solo, sustain, atau isian gitar elektrik (electric lead/sustain guitar) di belakang vokal yang sedang menyanyi. No continuous electric guitar melodies behind singing, No guitar fills between every vocal phrase, No busy guitar strumming, No overlapping guitar melodies with vocal, No rhythm guitar or acoustic guitar, No keyboard/piano accompaniment, No strings or orchestral layers, No ambient pads or background textures, No backing vocals or vocal harmonies, No busy bassline, No drum fills during vocal phrases, No cymbal crashes during vocal lines.
+  * Selama menyanyi, bass memainkan root notes tertahan, drum tetap sangat lembut, dan sustained electric lead/solo guitar senyap sepenuhnya. Lead guitar/sustained solo guitar boleh menonjol HANYA selama solo gitar 10 detik.
+  * VOKAL UTAMA ADALAH PRIORITAS PERTAMA. INSTRUMEN PRIORITAS KEDUA. KEHENINGAN (SILENCE) DI ANTARA FRASA MUSIK ADALAH HAL YANG SANGAT PENTING.
 
 Use the following specifications:
 - Genre: ${genre}
@@ -370,6 +306,7 @@ Use the following specifications:
 - Vocal Style: ${vocalStyle}
 - Lyric Language: ${lyricLanguage}
 - Story Flow structure: ${storyFlow}
+- Target: Rock Kapak Malaysia 90-an dengan karakter Slow Rock Melayu yang hening, mendayu, intim, emosional, bersih, dan minimalis. Tanpa instrumen tambahan di luar tiga instrumen yang diizinkan. Gitar elektrik dan ritme wajib diam/berhenti total saat vokal menyanyi.
 ${liveConcert ? `- Live Concert atmosphere elements: ${liveConcert}` : ""}`;
 
     const response = await ai.models.generateContent({

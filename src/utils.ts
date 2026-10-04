@@ -132,7 +132,7 @@ export function generateMasterPromptMarkdown(song: SongData): string {
   return `# MASTER PROMPT — ${stylePrompt.genre.toUpperCase()} (ORIGINAL)
 
 ## OBJECTIVE
-Transform this song into an ORIGINAL ${stylePrompt.genre} ballad with warm, romantic, emotional storytelling and memorable sing-along melodies.
+Transform this song into an ORIGINAL ${stylePrompt.genre} ballad, romantic mute, emotional storytelling and memorable sing-along melodies.
 The result MUST feel like a classic song while remaining completely original.
 
 ---
@@ -328,13 +328,13 @@ export function clampToMaxChars(text: string, maxChars: number = 900): string {
 function getVocalDescriptor(vocalStyle: string): string {
   const vocalLower = (vocalStyle || "").toLowerCase();
   if (vocalLower.includes("female") || vocalLower.includes("wanita") || vocalLower.includes("perempuan") || vocalLower.includes("cewek")) {
-    return "warm female vocal, sweet emotive alto-soprano tone, soft natural vibrato, breathy intimacy";
+    return "female vocal, sweet emotive alto-soprano tone, soft natural vibrato, breathy intimacy";
   } else if (vocalLower.includes("duet")) {
     return "duet vocal, male and female harmonies, emotional interplay, dynamic vocal trade-offs";
   } else if (vocalLower.includes("male") || vocalLower.includes("pria") || vocalLower.includes("cowok") || vocalLower.includes("laki-laki")) {
-    return "warm male vocal, chest voice dominant, emotional delivery, heartfelt natural vibrato, soft rasp on climax";
+    return "male vocal, chest voice dominant, emotional delivery, heartfelt natural vibrato, soft rasp on climax";
   }
-  return "warm expressive vocal, natural vibrato, emotive delivery, clean pronunciation";
+  return "expressive vocal, natural vibrato, emotive delivery, clean pronunciation";
 }
 
 /**
@@ -471,7 +471,7 @@ export function formatSongGeneratorIoStyleTags(song: SongData): string {
   const vocalDesc = getVocalDescriptor(stylePrompt.vocalStyle);
   const introClean = stylePrompt.introOpening.replace(/🎵/g, "").trim();
 
-  let prompt = `${stylePrompt.genre} ballad in ${timeSig} time signature, ${stylePrompt.tempo}, key ${stylePrompt.key}. Mood is ${stylePrompt.mood.toLowerCase()} with heartfelt emotional storytelling. Features ${vocalDesc}. Instrumentation includes ${introClean}, crying melodic electric guitar solo with heavy sustain and bending, warm acoustic rhythm guitar, punchy melodic bassline, dynamic power ballad drums, and ambient string pads. Arrangement moves from intimate gentle verses with a 10-second melodic instrumental break into a soaring anthemic chorus climax. Sound engineering: ${stylePrompt.mixing.toLowerCase()}, vintage 90s analog console warmth, stereo plate reverb, pristine vocal clarity.`;
+  let prompt = `${stylePrompt.genre} ballad in ${timeSig} time signature, ${stylePrompt.tempo}, key ${stylePrompt.key}. Mood is ${stylePrompt.mood.toLowerCase()} with heartfelt emotional storytelling. Features ${vocalDesc}. Instrumentation includes ${introClean}, crying melodic electric guitar solo with heavy sustain and bending, acoustic guitar, punchy melodic bassline, dynamic power ballad drums, and ambient. Arrangement moves from intimate gentle verses with a 10-second melodic instrumental break into a soaring anthemic chorus climax. Sound engineering: ${stylePrompt.mixing.toLowerCase()}, vintage 90s analog console, stereo plate reverb, pristine vocal clarity.`;
 
   if (stylePrompt.liveConcert && !stylePrompt.liveConcert.toLowerCase().includes("tidak ada")) {
     prompt += ` Live concert setting with ${stylePrompt.liveConcert.toLowerCase()}, audience applause, crowd singing along, and stadium atmosphere.`;
@@ -497,8 +497,8 @@ export function formatUniversalMusicTags(song: SongData): string {
     stylePrompt.mood.toLowerCase(),
     "screaming guitar solo",
     "acoustic fingerstyle",
-    "analog synth pad",
-    "rich bass",
+    "mute",
+    "bass",
     "live drum fills",
     "10s instrumental break before chorus",
     "anthemic chorus climax",

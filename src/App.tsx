@@ -32,17 +32,14 @@ import {
 } from "lucide-react";
 
 const OPTIONS_GENRE = [
+  "Rock Kapak Malaysia 90's",
   "Slow Rock Melayu 90's",
+  "Romantic Sad Rock Ballad",
   "Pop Melayu Ballad",
-  "Romantic Ballad",
   "Pop Melayu Melankolis",
   "Acoustic Ballad",
-  "Sad Romantic",
-  "Pop Rock Indonesia 2000s",
-  "Alternative Pop",
-  "Classic Band Anthem",
-  "Folk-Pop",
-  "Pure Intimacy"
+  "Pure Intimacy",
+  "Pop Rock Indonesia 2000s"
 ];
 
 const OPTIONS_BIRAMA = [
@@ -70,26 +67,23 @@ const OPTIONS_KEY = [
 ];
 
 const OPTIONS_MOOD = [
-  "Warm",
-  "Romantic",
+  "Hening",
+  "Minimalis",
+  "Intim",
+  "Melankolis",
+  "Emosional",
+  "Mendayu",
+  "Menyentuh Hati",
+  "Dinamika Lembut",
   "Heartfelt",
-  "Hopeful",
-  "Emotional",
-  "Elegant",
   "Nostalgic",
   "Soft but Powerful",
-  "Sad",
-  "Melancholic",
-  "Intimate",
-  "Heartbreaking",
-  "Uplifting",
-  "Cozy",
-  "Peaceful"
+  "Sad"
 ];
 
 const OPTIONS_VOCAL = [
-  "Warm Male Vocal",
-  "Warm Female Vocal",
+  "Male Vocal",
+  "Female Vocal",
   "Duet",
   "Emotional",
   "Natural",
@@ -269,25 +263,24 @@ export default function App() {
   
   // Custom advanced settings fields (multiple choice selections, all selected by default)
   const [selectedGenres, setSelectedGenres] = useState<string[]>([
+    "Rock Kapak Malaysia 90's",
     "Slow Rock Melayu 90's",
-    "Romantic Ballad",
-    "Sad Romantic",
-    "Pure Intimacy"
+    "Romantic Sad Rock Ballad"
   ]);
   const [selectedMoods, setSelectedMoods] = useState<string[]>([
-    "Warm",
-    "Romantic",
-    "Emotional",
-    "Soft but Powerful",
-    "Melancholic",
-    "Intimate",
-    "Uplifting"
+    "Hening",
+    "Minimalis",
+    "Intim",
+    "Melankolis",
+    "Emosional",
+    "Mendayu",
+    "Menyentuh Hati"
   ]);
-  const [selectedTempos, setSelectedTempos] = useState<string[]>(["80 BPM", "95 BPM"]);
+  const [selectedTempos, setSelectedTempos] = useState<string[]>(["80 BPM"]);
   const [selectedBirama, setSelectedBirama] = useState<string>("4/4");
-  const [selectedKeys, setSelectedKeys] = useState<string[]>(["Am", "Cm", "G Major", "C Major"]);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(["Am"]);
   const [selectedVocals, setSelectedVocals] = useState<string[]>([
-    "Warm Male Vocal",
+    "Male Vocal",
     "Emotional",
     "Natural",
     "Chest Voice Dominant",
@@ -324,41 +317,41 @@ export default function App() {
     
     if (hasDuet && !hadDuet) {
       // Duet was newly selected -> automatically select Warm Male Vocal and Warm Female Vocal
-      if (!finalValues.includes("Warm Male Vocal")) {
-        finalValues.push("Warm Male Vocal");
+      if (!finalValues.includes("Male Vocal")) {
+        finalValues.push("Male Vocal");
       }
-      if (!finalValues.includes("Warm Female Vocal")) {
-        finalValues.push("Warm Female Vocal");
+      if (!finalValues.includes("Female Vocal")) {
+        finalValues.push("Female Vocal");
       }
     } else if (!hasDuet && hadDuet) {
       // Duet was unselected -> enforce single selection between Warm Male Vocal and Warm Female Vocal
-      if (finalValues.includes("Warm Male Vocal") && finalValues.includes("Warm Female Vocal")) {
-        finalValues = finalValues.filter(v => v !== "Warm Female Vocal");
+      if (finalValues.includes("Male Vocal") && finalValues.includes("Warm Female Vocal")) {
+        finalValues = finalValues.filter(v => v !== "Female Vocal");
       }
     } else {
       // Duet state did not change
       if (hasDuet) {
         // If Duet is active, both must remain. If one is removed, deselect Duet too.
-        const hasMale = finalValues.includes("Warm Male Vocal");
-        const hasFemale = finalValues.includes("Warm Female Vocal");
+        const hasMale = finalValues.includes("Male Vocal");
+        const hasFemale = finalValues.includes("Female Vocal");
         if (!hasMale || !hasFemale) {
           finalValues = finalValues.filter(v => v !== "Duet");
         }
       } else {
         // Duet is NOT active -> only one of Warm Male Vocal or Warm Female Vocal can be chosen
-        const hasMale = finalValues.includes("Warm Male Vocal");
-        const hasFemale = finalValues.includes("Warm Female Vocal");
+        const hasMale = finalValues.includes("Male Vocal");
+        const hasFemale = finalValues.includes("Female Vocal");
         
-        const hadMale = selectedVocals.includes("Warm Male Vocal");
-        const hadFemale = selectedVocals.includes("Warm Female Vocal");
+        const hadMale = selectedVocals.includes("Male Vocal");
+        const hadFemale = selectedVocals.includes("Female Vocal");
         
         if (hasMale && hasFemale) {
           if (!hadMale && hasMale) {
             // Warm Male Vocal was newly selected -> deselect Warm Female Vocal
-            finalValues = finalValues.filter(v => v !== "Warm Female Vocal");
+            finalValues = finalValues.filter(v => v !== "Female Vocal");
           } else if (!hadFemale && hasFemale) {
             // Warm Female Vocal was newly selected -> deselect Warm Male Vocal
-            finalValues = finalValues.filter(v => v !== "Warm Male Vocal");
+            finalValues = finalValues.filter(v => v !== "Male Vocal");
           }
         }
       }
@@ -501,9 +494,13 @@ export default function App() {
                 </h3>
               </div>
               <p className="text-[11px] text-rose-700/95 leading-relaxed font-semibold">
-                Untuk menjaga kemurnian, kebersihan, dan kejelasan aransemen musik alami klasik, aplikasi ini menerapkan aturan larangan keras berikut pada aransemen musik:
+                Untuk menjaga kemurnian, kebersihan, dan kejelasan aransemen musik alami klasik, aplikasi ini menerapkan aturan larangan keras berikut pada aransemen musik (HANYA 3 INSTRUMEN UTAMA YANG DIIZINKAN: Clean Lead Guitar, Bass, &amp; Soft Drum Pedal):
               </p>
               <ul className="text-[10px] text-rose-700 space-y-2 list-none font-medium">
+                <li className="flex items-start gap-1.5">
+                  <span className="text-rose-600 font-bold shrink-0">•</span>
+                  <span><span className="font-extrabold text-rose-800 uppercase">Dilarang Gitar Ritme &amp; Akustik:</span> Tidak menggunakan gitar akustik, gitar ritme, petikan, atau genjrengan pengiring apa pun demi menjaga kesunyian vokal.</span>
+                </li>
                 <li className="flex items-start gap-1.5">
                   <span className="text-rose-600 font-bold shrink-0">•</span>
                   <span><span className="font-extrabold text-rose-800 uppercase">Dilarang Strings &amp; Synth:</span> Tidak menggunakan gesekan strings, synth pad, synth lead, atau lapisan melodi elektronik/EDM.</span>
@@ -514,11 +511,7 @@ export default function App() {
                 </li>
                 <li className="flex items-start gap-1.5">
                   <span className="text-rose-600 font-bold shrink-0">•</span>
-                  <span><span className="font-extrabold text-rose-800 uppercase">Dilarang Dekorasi Berlebih:</span> Musik harus minimalis, tanpa piano/organ otomatis (kecuali dipilih), dan vokal harus tetap menjadi fokus utama yang sunyi dari instrumen bising.</span>
-                </li>
-                <li className="flex items-start gap-1.5">
-                  <span className="text-rose-600 font-bold shrink-0">•</span>
-                  <span><span className="font-extrabold text-rose-800 uppercase">Dilarang Romantis Elektronik:</span> Ekspresi romantis murni dihasilkan oleh penjiwaan penyanyi dan melodi vokal, bukan dari synthesizer.</span>
+                  <span><span className="font-extrabold text-rose-800 uppercase">Dilarang Dekorasi Berlebih:</span> Musik harus minimalis, tanpa piano/organ otomatis, dan vokal harus tetap menjadi fokus utama yang sunyi dari instrumen bising.</span>
                 </li>
               </ul>
             </div>
