@@ -28,11 +28,109 @@ function getAI(): GoogleGenAI {
   return aiClient;
 }
 
+// Helper functions for Indonesian hyphenated syllabification (PUEBI)
+function hyphenateIndonesianWord(word: string): string {
+  const clean = word.trim();
+  if (!clean || clean.length < 2) return word;
+  if (clean.includes("-")) return clean;
+
+  const isVowel = (c: string) => c ? "aeiouAEIOU".includes(c) : false;
+  
+  if (clean.length === 2) {
+    if (isVowel(clean[0]) && isVowel(clean[1])) {
+      const pair = clean.toLowerCase();
+      if (!["ai", "au", "oi", "ei"].includes(pair)) {
+        return `${clean[0]}-${clean[1]}`;
+      }
+    }
+    return clean;
+  }
+  
+  let syllables: string[] = [];
+  let current = "";
+  
+  for (let i = 0; i < clean.length; i++) {
+    const char = clean[i];
+    current += char;
+    
+    const next = clean[i + 1];
+    const nextNext = clean[i + 2];
+    const nextNextNext = clean[i + 3];
+    
+    if (isVowel(char)) {
+      if (next) {
+        if (isVowel(next)) {
+          const dip = (char + next).toLowerCase();
+          if (!["ai", "au", "oi", "ei"].includes(dip)) {
+            syllables.push(current);
+            current = "";
+          }
+        } else if (nextNext && isVowel(nextNext)) {
+          syllables.push(current);
+          current = "";
+        } else if (nextNext && !isVowel(nextNext)) {
+          const digraph = ["ng", "ny", "sy", "kh"].includes((next + nextNext).toLowerCase());
+          if (digraph) {
+            if (nextNextNext && isVowel(nextNextNext)) {
+              syllables.push(current);
+              current = "";
+            } else if (nextNextNext && !isVowel(nextNextNext)) {
+              current += next + nextNext;
+              syllables.push(current);
+              current = "";
+              i += 2;
+            }
+          } else {
+            current += next;
+            syllables.push(current);
+            current = "";
+            i++;
+          }
+        }
+      }
+    }
+  }
+  
+  if (current) {
+    syllables.push(current);
+  }
+  
+  return syllables.filter(Boolean).join("-");
+}
+
+function hyphenateLine(text: string): string {
+  if (!text) return "";
+  return text.split(/\s+/).map(word => {
+    const match = word.match(/^([^a-zA-Z0-9]*)(.*?)([^a-zA-Z0-9]*)$/);
+    if (!match) return word;
+    const [, prefix, core, suffix] = match;
+    if (!core) return word;
+    const hyphenated = hyphenateIndonesianWord(core);
+    return `${prefix}${hyphenated}${suffix}`;
+  }).join(" ");
+}
+
+function ensureHyphenatedLyrics(lyrics: any): any {
+  if (!lyrics) return lyrics;
+  const result: any = { ...lyrics };
+  const keys = ["verse1", "verse2", "preChorus", "chorus", "postChorus", "verse3", "bridge", "finalChorus", "outro"];
+  for (const key of keys) {
+    if (Array.isArray(result[key])) {
+      result[key] = result[key].map((line: string) => {
+        return line.includes("-") ? line : hyphenateLine(line);
+      });
+    }
+  }
+  return result;
+}
+
 // API Route: Generate lyrics and music production style parameters
 app.post("/api/generate", async (req, res) => {
   try {
     const {
-      topic,
+      topic = "",
+      isOriginalLyrics = false,
+      originalLyrics = "",
       genre = "Slow Rock Melayu 90's",
       mood = "Emotional, Nostalgic",
       tempo = "72 BPM",
@@ -45,9 +143,18 @@ app.post("/api/generate", async (req, res) => {
       liveConcert = "",
     } = req.body;
 
-    if (!topic || topic.trim() === "") {
-      res.status(400).json({ error: "Topic is required" });
-      return;
+    const isOriginalMode = Boolean(isOriginalLyrics);
+
+    if (isOriginalMode) {
+      if (!originalLyrics || originalLyrics.trim() === "") {
+        res.status(400).json({ error: "Lirik original wajib diisi saat mode lirik original aktif." });
+        return;
+      }
+    } else {
+      if (!topic || topic.trim() === "") {
+        res.status(400).json({ error: "Tema atau ide cerita lagu wajib diisi." });
+        return;
+      }
     }
 
     const ai = getAI();
@@ -268,7 +375,47 @@ Chorus harus memiliki 1–2 frasa utama yang pendek, romantis, mudah diingat, mu
 
 You must return a JSON object adhering exactly to the provided schema.`;
 
-    const prompt = `Write or creatively transform a beautiful Slow Rock/Pop Melayu song based on: "${topic}".
+    const prompt = isOriginalMode
+      ? `MODE LIRIK ORIGINAL DIAKTIFKAN OLEH PENGGUNA.
+
+LIRIK ORIGINAL DARI PENGGUNA:
+"""
+${originalLyrics.trim()}
+"""
+
+ATURAN SANGAT KETAT UNTUK MODE LIRIK ORIGINAL (WAJIB DIPATUHI 100%):
+1. DILARANG MENYENTUH, MENGUBAH, MENAMBAH, ATAU MENGURANGI KATA-KATA LIRIK:
+   Aplikasi dan AI TIDAK BOLEH mengubah, memparafrase, atau mengganti kosakata lirik yang dimasukkan pengguna. Setiap kata dalam lirik pengguna harus tetap sama persis!
+2. UBAH FORMAT TULISAN LIRIK MENJADI PEMENGGALAN SUKU KATA DENGAN TANDA HUBUNG (hyphenated syllabification / format lirik berpemisah suku kata):
+   - Format ini memenggal setiap kata berdasarkan suku kata fonetik bahasa Indonesia menggunakan tanda hubung (-).
+   - Contoh:
+     Tulisan normal: "Masih berbunga cintaku ini"
+     Format pemenggalan suku kata: "Ma-sih ber-bu-nga cin-ta-ku i-ni"
+   - Contoh lain:
+     "Di dalam hatiku yang terluka" -> "Di da-lam ha-ti-ku yang ter-lu-ka"
+     "Walau kini engkau telah pergi" -> "Wa-lau ki-ni eng-kau te-lah per-gi"
+   - Seluruh baris lirik pada verse1, verse2, preChorus, chorus, postChorus, verse3, bridge, finalChorus, outro HARUS ditulis dalam format pemenggalan suku kata bertanda hubung ini.
+3. DISTRIBUSI BAIT LIRIK ORIGINAL KE DALAM STRUKTUR:
+   - Petakan baris-baris lirik original pengguna ke dalam bagian lagu: intro (deskripsi instrumental 8 bar), verse1, verse2, preChorus, chorus, postChorus, verse3, bridge, finalChorus, outro.
+   - Semua baris lirik WAJIB berformat pemenggalan suku kata dengan tanda hubung.
+4. TUGAS PRODUKSI MUSIK & ARANSEMEN:
+   - Tentukan judul lagu (songTitle) yang paling tepat dari lirik tersebut.
+   - Buat progresi akor (chordsSuggestion) untuk Verse, Chorus, dan Bridge.
+   - Buat stylePrompt Slow Rock Melayu 90's yang hening, mendayu, intim, dan emosional sesuai seluruh batasan aransemen (3 instrumen, senyap saat vokal menyanyi, solo gitar sustain 10 detik).
+   
+Spesifikasi aransemen:
+- Genre: ${genre}
+- Mood: ${mood}
+- Tempo: ${tempo}
+- Time Signature (Birama/Ketukan): ${timeSignature}
+- Key: ${key}
+- Intro Opening Instruments suggested: ${introOpening}
+- Vocal Style: ${vocalStyle}
+- Lyric Language: ${lyricLanguage}
+- Story Flow structure: ${storyFlow}
+- Target: Rock Kapak Malaysia 90-an dengan karakter Slow Rock Melayu yang hening, mendayu, intim, emosional, bersih, dan minimalis. Tanpa instrumen tambahan di luar tiga instrumen yang diizinkan (Clean sustained electric lead guitar, warm minimal electric bass, soft acoustic drum pedal). Gitar elektrik dan ritme wajib diam/berhenti total saat vokal menyanyi.
+${liveConcert ? `- Live Concert atmosphere elements: ${liveConcert}` : ""}`
+      : `Write or creatively transform a beautiful Slow Rock/Pop Melayu song based on: "${topic}".
 (Note: If full lyrics or draft stanzas are provided above, apply the CREATIVE TRANSFORMATION method: preserve theme, emotions, and message, but completely recreate sentence structures, diksi, metaphors, and emotional expressions into a fresh standalone original song).
 (CRITICAL VOCABULARY RULE: Jangan pernah memakai kata "dada" pada lirik. Gunakan kata "hati", "sanubari", "kalbu", atau "hatiku").
 
@@ -439,6 +586,9 @@ ${liveConcert ? `- Live Concert atmosphere elements: ${liveConcert}` : ""}`;
     }
 
     const parsedData = JSON.parse(text);
+    if (isOriginalMode && parsedData.lyrics) {
+      parsedData.lyrics = ensureHyphenatedLyrics(parsedData.lyrics);
+    }
     res.json(parsedData);
   } catch (error: any) {
     console.error("Error generating lyrics & style:", error);

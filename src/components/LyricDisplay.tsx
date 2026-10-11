@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { LyricsData } from "../types";
-import { countIndonesianSyllables, hyphenateLine } from "../utils";
+import { countIndonesianSyllables, hyphenateLine, unhyphenateLine } from "../utils";
 import { Copy, Check, Edit3, Save, X, Eye, EyeOff, Music } from "lucide-react";
 
 interface LyricDisplayProps {
@@ -13,9 +13,21 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
   onUpdateLyrics,
 }) => {
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
-  const [showHyphenated, setShowHyphenated] = useState<boolean>(false);
+  
+  // Check if lyrics already have hyphens
+  const isPreHyphenated = (lyrics.verse1 && lyrics.verse1.some(l => l.includes("-"))) ||
+                          (lyrics.chorus && lyrics.chorus.some(l => l.includes("-")));
+  
+  const [showHyphenated, setShowHyphenated] = useState<boolean>(true);
   const [editingKey, setEditingKey] = useState<{ section: keyof LyricsData; index: number } | null>(null);
   const [editValue, setEditValue] = useState<string>("");
+
+  const formatLineForDisplay = (line: string): string => {
+    if (showHyphenated) {
+      return line.includes("-") ? line : hyphenateLine(line);
+    }
+    return unhyphenateLine(line);
+  };
 
   const sections: { key: keyof LyricsData; label: string; subLabel: string; target: string; min: number; max: number }[] = [
     { key: "verse1", label: "VERSE 1A", subLabel: "Perkenalan Tokoh & Cinta Awal (KAU Hadir)", target: "4 Baris • 3–8 Kata", min: 2, max: 8 },
@@ -30,7 +42,12 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
   ];
 
   const handleCopySection = (sectionName: string, lines: string[] | string) => {
-    const textToCopy = Array.isArray(lines) ? lines.join("\n") : lines;
+    let textToCopy = "";
+    if (Array.isArray(lines)) {
+      textToCopy = lines.map(l => formatLineForDisplay(l)).join("\n");
+    } else {
+      textToCopy = lines;
+    }
     navigator.clipboard.writeText(textToCopy);
     setCopiedSection(sectionName);
     setTimeout(() => setCopiedSection(null), 2000);
@@ -78,22 +95,22 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
       <div className="space-y-4 border-b border-neutral-150 pb-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h3 className="text-base font-semibold text-neutral-800">Lirik Lagu Hasil Kembangan</h3>
-            <p className="text-xs text-neutral-500">Struktur Balada Melayu &amp; Dangdut Slow (Dramatis Arc &amp; Pola Panjang-Pendek).</p>
+            <h3 className="text-base font-semibold text-neutral-800">Lirik Lagu Hasil Olahan</h3>
+            <p className="text-xs text-neutral-500">Struktur Balada Melayu &amp; Format Pemenggalan Suku Kata (Hyphenated Syllabification).</p>
           </div>
           
           <button
             type="button"
             id="btn-toggle-hyphenation"
             onClick={() => setShowHyphenated(!showHyphenated)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 border cursor-pointer shrink-0 ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 border cursor-pointer shrink-0 ${
               showHyphenated
-                ? "bg-amber-100 text-amber-900 border-amber-300"
+                ? "bg-amber-100 text-amber-950 border-amber-300 shadow-2xs"
                 : "bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50"
             }`}
           >
-            {showHyphenated ? <EyeOff size={13} /> : <Eye size={13} />}
-            <span>{showHyphenated ? "Sembunyikan Suku Kata" : "Tampilkan Suku Kata (Phonetics)"}</span>
+            {showHyphenated ? <Eye size={13} className="text-amber-800" /> : <EyeOff size={13} />}
+            <span>{showHyphenated ? "Format Suku Kata: Aktif (Ma-sih ber-bu-nga)" : "Format Standar (Tanpa Tanda Hubung)"}</span>
           </button>
         </div>
 
@@ -229,12 +246,12 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
                         ) : (
                           <div className="flex items-start justify-between gap-3 p-1.5 hover:bg-neutral-50/70 rounded-lg transition-all duration-200">
                             <div className="flex-1">
-                              <p className="text-sm font-medium text-neutral-800 leading-relaxed">
-                                {showHyphenated ? hyphenateLine(line) : line}
+                              <p className="text-sm font-medium text-neutral-800 leading-relaxed font-mono">
+                                {formatLineForDisplay(line)}
                               </p>
                               {showHyphenated && (
-                                <p className="text-[10px] text-neutral-400 italic mt-0.5 font-normal">
-                                  {line}
+                                <p className="text-[10px] text-neutral-400 italic mt-0.5 font-sans">
+                                  {unhyphenateLine(line)}
                                 </p>
                               )}
                             </div>

@@ -51,14 +51,28 @@ export function countIndonesianSyllables(text: string): number {
 }
 
 /**
- * Splits an Indonesian word into its constituent syllables using Indonesian phonetic rules.
- * e.g., "menanti" -> "me-nan-ti", "kerinduan" -> "ke-rin-du-an", "sunyi" -> "su-nyi"
+ * Splits an Indonesian word into its constituent syllables using Indonesian phonetic rules (PUEBI).
+ * e.g., "Masih" -> "Ma-sih", "berbunga" -> "ber-bu-nga", "cintaku" -> "cin-ta-ku", "ini" -> "i-ni", "yang" -> "yang"
  */
 export function hyphenateIndonesianWord(word: string): string {
   const clean = word.trim();
-  if (clean.length <= 3) return word;
+  if (!clean || clean.length < 2) return word;
+  
+  // If already hyphenated, return as is
+  if (clean.includes("-")) return clean;
 
   const isVowel = (c: string) => c ? "aeiouAEIOU".includes(c) : false;
+  
+  // 2-letter words: if not diphthong and both are vowels (e.g., "ia"), split "i-a", else return word
+  if (clean.length === 2) {
+    if (isVowel(clean[0]) && isVowel(clean[1])) {
+      const pair = clean.toLowerCase();
+      if (!["ai", "au", "oi", "ei"].includes(pair)) {
+        return `${clean[0]}-${clean[1]}`;
+      }
+    }
+    return clean;
+  }
   
   let syllables: string[] = [];
   let current = "";
@@ -69,29 +83,39 @@ export function hyphenateIndonesianWord(word: string): string {
     
     const next = clean[i + 1];
     const nextNext = clean[i + 2];
+    const nextNextNext = clean[i + 3];
     
     if (isVowel(char)) {
       if (next) {
         if (isVowel(next)) {
-          // V-V split (e.g., "sa-at", "di-a", except diphthongs "ai", "au", "oi", "ei")
+          // V-V split (e.g., "sa-at", "di-a", "do-a", except diphthongs "ai", "au", "oi", "ei")
           const dip = (char + next).toLowerCase();
           if (!["ai", "au", "oi", "ei"].includes(dip)) {
             syllables.push(current);
             current = "";
           }
         } else if (nextNext && isVowel(nextNext)) {
-          // V-C-V split -> split before the consonant (e.g., "ba-pa", "u-tang")
+          // V-C-V split -> split before the single consonant (e.g., "i-ni", "a-ku", "ma-sih", "ba-pa")
           syllables.push(current);
           current = "";
         } else if (nextNext && !isVowel(nextNext)) {
-          // V-C-C-V split -> split between the consonants unless they form a digraph (ng, ny, sy, kh)
+          // V-C-C-V or V-C-C at end
           const digraph = ["ng", "ny", "sy", "kh"].includes((next + nextNext).toLowerCase());
           if (digraph) {
-            // Digraph: treat as a single consonant, split before it (e.g., "sa-ngat", "ha-nyut")
-            syllables.push(current);
-            current = "";
+            // Digraph: only split BEFORE digraph if followed by a vowel (e.g. "bu-nga", "su-nyi")
+            // If at end of word (e.g. "yang", "senang", "bintang") or followed by consonant, keep with current syllable!
+            if (nextNextNext && isVowel(nextNextNext)) {
+              syllables.push(current);
+              current = "";
+            } else if (nextNextNext && !isVowel(nextNextNext)) {
+              // Digraph followed by another consonant (e.g. "bang-krut") -> split after digraph
+              current += next + nextNext;
+              syllables.push(current);
+              current = "";
+              i += 2;
+            }
           } else {
-            // Standard V-C-C-V -> split after the first consonant (e.g., "man-di", "ar-ti")
+            // Standard V-C-C-V -> split after the first consonant (e.g., "ber-bu-nga", "cin-ta", "man-di")
             current += next;
             syllables.push(current);
             current = "";
@@ -110,17 +134,47 @@ export function hyphenateIndonesianWord(word: string): string {
 }
 
 /**
- * Break a full line of text into hyphenated words.
+ * Break a full line of text into hyphenated words (Pemenggalan suku kata dengan tanda hubung).
+ * e.g., "Masih berbunga cintaku ini" -> "Ma-sih ber-bu-nga cin-ta-ku i-ni"
  */
 export function hyphenateLine(text: string): string {
   if (!text) return "";
-  return text.split(" ").map(word => {
-    // Preserve punctuation
-    const wordClean = word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?\"]/g, "");
-    if (!wordClean) return word;
-    const hyphenated = hyphenateIndonesianWord(wordClean);
-    return word.replace(wordClean, hyphenated);
+  return text.split(/\s+/).map(word => {
+    // Separate punctuation
+    const match = word.match(/^([^a-zA-Z0-9]*)(.*?)([^a-zA-Z0-9]*)$/);
+    if (!match) return word;
+    const [, prefix, core, suffix] = match;
+    if (!core) return word;
+    const hyphenated = hyphenateIndonesianWord(core);
+    return `${prefix}${hyphenated}${suffix}`;
   }).join(" ");
+}
+
+/**
+ * Removes syllable hyphens from a line to revert to standard text.
+ * e.g., "Ma-sih ber-bu-nga cin-ta-ku i-ni" -> "Masih berbunga cintaku ini"
+ */
+export function unhyphenateLine(text: string): string {
+  if (!text) return "";
+  return text.replace(/([a-zA-Z0-9])-([a-zA-Z0-9])/g, "$1$2");
+}
+
+/**
+ * Ensures all lines in a LyricsData object are formatted with hyphenated syllabification.
+ */
+export function ensureHyphenatedLyrics(lyrics: any): any {
+  if (!lyrics) return lyrics;
+  const result: any = { ...lyrics };
+  const keys = ["verse1", "verse2", "preChorus", "chorus", "postChorus", "verse3", "bridge", "finalChorus", "outro"];
+  for (const key of keys) {
+    if (Array.isArray(result[key])) {
+      result[key] = result[key].map((line: string) => {
+        // If line is already hyphenated, keep; if not, hyphenate
+        return line.includes("-") ? line : hyphenateLine(line);
+      });
+    }
+  }
+  return result;
 }
 
 /**

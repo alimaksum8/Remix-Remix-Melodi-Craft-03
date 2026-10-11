@@ -253,6 +253,11 @@ export default function App() {
   const topicTextareaRef = useRef<HTMLTextAreaElement>(null);
   const [selectedPreset, setSelectedPreset] = useState<Preset>(PRESETS[0]);
 
+  // Mode Lirik Original state (Hyphenated Syllabification)
+  const [isOriginalLyricsMode, setIsOriginalLyricsMode] = useState<boolean>(false);
+  const [originalLyrics, setOriginalLyrics] = useState<string>("");
+  const originalLyricsTextareaRef = useRef<HTMLTextAreaElement>(null);
+
   // Auto-expand topic textarea dynamically based on word count & line length
   useEffect(() => {
     if (topicTextareaRef.current) {
@@ -260,6 +265,29 @@ export default function App() {
       topicTextareaRef.current.style.height = `${topicTextareaRef.current.scrollHeight}px`;
     }
   }, [topic]);
+
+  // Auto-expand original lyrics textarea dynamically
+  useEffect(() => {
+    if (originalLyricsTextareaRef.current) {
+      originalLyricsTextareaRef.current.style.height = "auto";
+      originalLyricsTextareaRef.current.style.height = `${Math.max(160, originalLyricsTextareaRef.current.scrollHeight)}px`;
+    }
+  }, [originalLyrics, isOriginalLyricsMode]);
+
+  // Sample original lyrics loader helper
+  const handleLoadSampleOriginalLyrics = () => {
+    setOriginalLyrics(
+`Masih berbunga cintaku ini
+Di dalam hatiku yang terluka
+Walau kini engkau telah pergi
+Ku kan selalu menantimu di sini
+
+Mengapa harus ada perpisahan
+Bila hati ini masih mencinta
+Tak sanggup ku menahan rindu ini
+Hanya sepi yang kini menemani`
+    );
+  };
   
   // Custom advanced settings fields (multiple choice selections, all selected by default)
   const [selectedGenres, setSelectedGenres] = useState<string[]>([
@@ -363,9 +391,16 @@ export default function App() {
   // Generate Song handler
   const handleGenerateSong = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!topic.trim()) {
-      setError("Silakan masukkan tema atau topik lagu terlebih dahulu.");
-      return;
+    if (isOriginalLyricsMode) {
+      if (!originalLyrics.trim()) {
+        setError("Silakan masukkan lirik original Anda pada Kolom Lirik Original.");
+        return;
+      }
+    } else {
+      if (!topic.trim()) {
+        setError("Silakan masukkan tema atau topik lagu terlebih dahulu.");
+        return;
+      }
     }
 
     if (
@@ -391,7 +426,9 @@ export default function App() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          topic,
+          topic: isOriginalLyricsMode ? (originalLyrics.trim().split("\n")[0] || "Lirik Original") : topic,
+          isOriginalLyrics: isOriginalLyricsMode,
+          originalLyrics: isOriginalLyricsMode ? originalLyrics.trim() : "",
           genre: selectedGenres.join(", "),
           mood: selectedMoods.join(", "),
           tempo: selectedTempos.join(", "),
@@ -524,23 +561,124 @@ export default function App() {
 
               <form onSubmit={handleGenerateSong} className="space-y-6">
                 
-                {/* Topic / Theme Input */}
-                <div className="space-y-2">
-                  <label htmlFor="topic-input" className="text-xs font-bold text-neutral-700 uppercase tracking-wide flex justify-between items-center">
-                    <span>Tema / Ide Cerita Lagu</span>
-                    <span className="text-amber-600 font-semibold text-[11px]">Bisa ide singkat ATAU tempel lirik lengkap</span>
-                  </label>
-                  <textarea
-                    ref={topicTextareaRef}
-                    id="topic-input"
-                    value={topic}
-                    onChange={(e) => setTopic(e.target.value)}
-                    placeholder="Ketik ide/cerita (misal: Rindu ayah di kampung) ATAU tempel lirik lagu lengkap untuk ditransformasi secara kreatif..."
-                    rows={2}
-                    className="w-full text-sm border border-neutral-300 rounded-xl px-4 py-3 text-neutral-800 placeholder-neutral-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/50 transition-all bg-neutral-50/50 resize-none overflow-hidden min-h-[52px] leading-relaxed"
-                    required
-                  />
+                {/* Tombol Pemilih Mode: Lirik Original vs Tema Lagu Baru */}
+                <div className="p-3.5 rounded-xl border border-neutral-200/90 bg-neutral-50/80 space-y-2">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className={`p-2 rounded-lg transition-colors shrink-0 ${isOriginalLyricsMode ? "bg-amber-500 text-white shadow-xs" : "bg-neutral-200 text-neutral-600"}`}>
+                        <FileText size={16} />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-neutral-900 uppercase tracking-wide">
+                            Gunakan Lirik Original
+                          </span>
+                          {isOriginalLyricsMode && (
+                            <span className="text-[10px] bg-amber-100 text-amber-900 font-extrabold px-2 py-0.5 rounded-full border border-amber-300">
+                              Format Suku Kata Aktif
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[11px] text-neutral-500 font-normal">
+                          {isOriginalLyricsMode
+                            ? "Kolom tema disembunyikan. Lirik Anda tetap 100% utuh, hanya diformat ke pemenggalan suku kata (Ma-sih ber-bu-nga)."
+                            : "Aktifkan jika Anda sudah memiliki lirik sendiri dan tidak ingin diubah oleh AI."}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Interactive Switch Toggle */}
+                    <button
+                      type="button"
+                      id="toggle-original-lyrics-mode"
+                      role="switch"
+                      aria-checked={isOriginalLyricsMode}
+                      onClick={() => setIsOriginalLyricsMode(!isOriginalLyricsMode)}
+                      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1 ${
+                        isOriginalLyricsMode ? "bg-amber-500" : "bg-neutral-300 hover:bg-neutral-400"
+                      }`}
+                      title={isOriginalLyricsMode ? "Nonaktifkan Mode Lirik Original" : "Aktifkan Mode Lirik Original"}
+                    >
+                      <span
+                        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                          isOriginalLyricsMode ? "translate-x-5" : "translate-x-0"
+                        }`}
+                      />
+                    </button>
+                  </div>
                 </div>
+
+                {/* Conditional Input Column */}
+                {!isOriginalLyricsMode ? (
+                  /* Kolom TEMA LAGU (SLOWROCK MELAYU 90-AN) */
+                  <div className="space-y-2">
+                    <label htmlFor="topic-input" className="text-xs font-bold text-neutral-700 uppercase tracking-wide flex justify-between items-center">
+                      <span>TEMA LAGU (SLOWROCK MELAYU 90-AN)</span>
+                      <span className="text-amber-600 font-semibold text-[11px]">Ide cerita atau konsep lagu baru</span>
+                    </label>
+                    <textarea
+                      ref={topicTextareaRef}
+                      id="topic-input"
+                      value={topic}
+                      onChange={(e) => setTopic(e.target.value)}
+                      placeholder="Ketik tema/ide cerita (misal: Penantian Sia-sia di Dermaga Lama)..."
+                      rows={2}
+                      className="w-full text-sm border border-neutral-300 rounded-xl px-4 py-3 text-neutral-800 placeholder-neutral-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/50 transition-all bg-neutral-50/50 resize-none overflow-hidden min-h-[52px] leading-relaxed"
+                      required={!isOriginalLyricsMode}
+                    />
+                  </div>
+                ) : (
+                  /* Kolom LIRIK ORIGINAL (PEMENGGALAN SUKU KATA / HYPHENATED SYLLABIFICATION) */
+                  <div className="space-y-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                      <label htmlFor="original-lyrics-input" className="text-xs font-black text-amber-950 uppercase tracking-wider flex items-center gap-1.5">
+                        <Music size={14} className="text-amber-600" />
+                        <span>KOLOM LIRIK ORIGINAL</span>
+                      </label>
+                      <button
+                        type="button"
+                        onClick={handleLoadSampleOriginalLyrics}
+                        className="text-[11px] font-bold text-amber-700 hover:text-amber-900 underline self-start sm:self-auto cursor-pointer"
+                      >
+                        Muat Contoh Lirik Original
+                      </button>
+                    </div>
+
+                    {/* Informative Guidance Box */}
+                    <div className="p-3.5 bg-amber-50/90 border border-amber-200/90 rounded-xl text-xs text-amber-950 leading-relaxed space-y-1.5">
+                      <div className="font-extrabold flex items-center gap-1.5 text-amber-900">
+                        <Check size={14} className="text-emerald-600 stroke-[3]" />
+                        <span>Ketentuan Mode Lirik Original &amp; Format Suku Kata:</span>
+                      </div>
+                      <p className="text-[11px] text-amber-800 font-medium">
+                        Aplikasi <strong>tidak akan menyentuh atau mengubah</strong> kata-kata dalam lirik Anda. Hanya membuat style musik dan mengubah format tulisan menjadi <strong>pemenggalan suku kata dengan tanda hubung (hyphenated syllabification / format lirik berpemisah suku kata)</strong>.
+                      </p>
+                      <div className="bg-white/80 border border-amber-200/60 rounded-lg p-2 font-mono text-[11px] text-neutral-700 space-y-0.5">
+                        <div className="text-neutral-500">Tulisan normal: <span className="text-neutral-800 font-semibold">Masih berbunga cintaku ini</span></div>
+                        <div className="text-amber-800 font-bold">Format pemenggalan suku kata: <span className="text-amber-900">Ma-sih ber-bu-nga cin-ta-ku i-ni</span></div>
+                      </div>
+                      <p className="text-[10px] text-amber-700/90 italic">
+                        Fungsi: Memperlihatkan pemenggalan suku kata, membantu artikulasi penyanyi, mengatur penempatan suku kata terhadap melodi, serta memandu ritme vokal.
+                      </p>
+                    </div>
+
+                    <textarea
+                      ref={originalLyricsTextareaRef}
+                      id="original-lyrics-input"
+                      value={originalLyrics}
+                      onChange={(e) => setOriginalLyrics(e.target.value)}
+                      placeholder={`Tempelkan lirik original Anda di sini...\n\nContoh:\nMasih berbunga cintaku ini\nDi dalam hatiku yang terluka\nWalau kini engkau telah pergi\nKu kan selalu menantimu di sini...`}
+                      rows={8}
+                      className="w-full text-sm font-mono border border-amber-300 rounded-xl px-4 py-3 text-neutral-800 placeholder-neutral-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 transition-all bg-white min-h-[160px] leading-relaxed shadow-xs"
+                      required={isOriginalLyricsMode}
+                    />
+
+                    <div className="flex justify-between items-center text-[11px] text-neutral-400">
+                      <span>{originalLyrics.trim() ? `${originalLyrics.trim().split(/\r\n|\r|\n/).filter(Boolean).length} baris lirik terdeteksi` : "Tempel lirik lagu lengkap Anda"}</span>
+                      <span className="italic">Kata lirik dipertahankan 100% persis apa adanya.</span>
+                    </div>
+                  </div>
+                )}
 
                 {/* Advanced Settings Fields (Always Visible) */}
                 <div className="border border-neutral-150 rounded-2xl bg-neutral-50/30 p-5 space-y-5">
@@ -642,12 +780,12 @@ export default function App() {
                   {isLoading ? (
                     <>
                       <RefreshCw className="animate-spin text-neutral-950" size={16} />
-                      <span>Menggubah Lirik & Aransemen...</span>
+                      <span>{isOriginalLyricsMode ? "Memformat Suku Kata & Merancang Aransemen..." : "Menggubah Lirik & Aransemen..."}</span>
                     </>
                   ) : (
                     <>
-                      <Sparkles size={16} className="fill-neutral-950" />
-                      <span>Hasilkan Lirik & Aransemen Baru</span>
+                      {isOriginalLyricsMode ? <Music size={16} className="text-neutral-950" /> : <Sparkles size={16} className="fill-neutral-950" />}
+                      <span>{isOriginalLyricsMode ? "Proses Lirik Original (Format Suku Kata & Style Musik)" : "Hasilkan Lirik & Aransemen Baru"}</span>
                     </>
                   )}
                 </button>
