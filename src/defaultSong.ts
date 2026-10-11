@@ -6,54 +6,54 @@ export const DEFAULT_SONG: SongData = {
   lyrics: {
     intro: "Sangat hening, hanya satu melodi gitar elektrik sustain bertempo 80 BPM.",
     verse1: [
-      "Dingin malam menyelimuti jiwa",
-      "Ku terdiam dalam sepi yang sunyi",
-      "Mengenang dirimu yang jauh di sana",
-      "Meninggalkan luka di hati"
+      "Dingin malam menyelimuti jiwa...",
+      "Ku terdiam dalam sepi yang sunyi...",
+      "Mengenang dirimu yang jauh di sana...",
+      "Meninggalkan luka di hati..."
     ],
     verse2: [
-      "Sayup terdengar melodi kepiluan",
-      "Mengingatkan janji yang pernah terucap",
-      "Kini tinggalah ku dalam penantian",
-      "Menatap bayangmu yang lenyap"
+      "Sayup terdengar melodi kepiluan...",
+      "Mengingatkan janji yang pernah terucap...",
+      "Kini tinggalah ku dalam penantian...",
+      "Menatap bayangmu yang lenyap..."
     ],
     preChorus: [
-      "Mengapa harus perpisahan ini",
-      "Menghancurkan mimpi yang kita bina"
+      "Mengapa harus perpisahan ini...",
+      "Menghancurkan mimpi yang kita bina..."
     ],
     chorus: [
-      "Kasih, dengarlah rintihan hatiku",
-      "Betapa dalamnya rasa rinduku",
-      "Kuberharap kau kan kembali lagi",
-      "Menghapus air mata ini"
+      "Kasih, dengarlah rintihan hatiku...",
+      "Betapa dalamnya rasa rinduku...",
+      "Kuberharap kau kan kembali lagi...",
+      "Menghapus air mata ini..."
     ],
     postChorus: [
-      "Hanya sunyi yang menemani",
-      "Dalam sepi ku menangis",
-      "Selalu menanti dirimu",
-      "Hingga akhir nanti"
+      "Hanya sunyi yang menemani...",
+      "Dalam sepi ku menangis...",
+      "Selalu menanti dirimu...",
+      "Hingga akhir nanti..."
     ],
     verse3: [
-      "Biar waktu terus berlalu pergi",
-      "Cintaku kepadamu takkan mati",
-      "Tetap tersimpan di dalam sanubari",
-      "Sampai ku pejamkan mata ini"
+      "Biar waktu terus berlalu pergi...",
+      "Cintaku kepadamu takkan mati...",
+      "Tetap tersimpan di dalam sanubari...",
+      "Sampai ku pejamkan mata ini..."
     ],
     bridge: [
-      "Tuhan, kuatkanlah hatiku",
-      "Menghadapi cobaan yang berat ini",
-      "Semoga dia bahagia selalu",
-      "Walau tak lagi bersama ku"
+      "Tuhan, kuatkanlah hatiku...",
+      "Menghadapi cobaan yang berat ini...",
+      "Semoga dia bahagia selalu...",
+      "Walau tak lagi bersama ku..."
     ],
     finalChorus: [
-      "Kasih, dengarlah rintihan hatiku",
-      "Betapa dalamnya rasa rinduku",
-      "Kuberharap kau kan kembali lagi",
-      "Menghapus air mata ini"
+      "Kasih, dengarlah rintihan hatiku...",
+      "Betapa dalamnya rasa rinduku...",
+      "Kuberharap kau kan kembali lagi...",
+      "Menghapus air mata ini..."
     ],
     outro: [
-      "Kembali sunyi berselimut sepi",
-      "Hanya rindu yang tertinggal di sini",
+      "Kembali sunyi berselimut sepi...",
+      "Hanya rindu yang tertinggal di sini...",
       "Oooh... Wo-o-o...",
       "Sunyi..."
     ]

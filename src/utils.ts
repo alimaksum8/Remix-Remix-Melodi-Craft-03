@@ -152,7 +152,7 @@ export function hyphenateLine(text: string): string {
 
 /**
  * Removes syllable hyphens from a line to revert to standard text.
- * e.g., "Ma-sih ber-bu-nga cin-ta-ku i-ni" -> "Masih berbunga cintaku ini"
+ * e.g., "Ma-sih ber-bu-nga cin-ta-ku i-ni..." -> "Masih berbunga cintaku ini..."
  */
 export function unhyphenateLine(text: string): string {
   if (!text) return "";
@@ -160,7 +160,35 @@ export function unhyphenateLine(text: string): string {
 }
 
 /**
- * Ensures all lines in a LyricsData object are formatted with hyphenated syllabification.
+ * Ensures that a line ends with three dots (...)
+ * Strips any trailing punctuation or whitespace and appends "..."
+ */
+export function ensureEllipsis(line: string): string {
+  if (!line) return "";
+  const trimmed = line.trim();
+  if (!trimmed) return "";
+  const cleaned = trimmed.replace(/[\s\.\,\!\?]+$/, "");
+  if (!cleaned) return "...";
+  return `${cleaned}...`;
+}
+
+/**
+ * Ensures all lines in a LyricsData object end with three dots (...)
+ */
+export function ensureAllLinesHaveEllipsis(lyrics: any): any {
+  if (!lyrics) return lyrics;
+  const result: any = { ...lyrics };
+  const keys = ["verse1", "verse2", "preChorus", "chorus", "postChorus", "verse3", "bridge", "finalChorus", "outro"];
+  for (const key of keys) {
+    if (Array.isArray(result[key])) {
+      result[key] = result[key].map((line: string) => ensureEllipsis(line));
+    }
+  }
+  return result;
+}
+
+/**
+ * Ensures all lines in a LyricsData object are formatted with hyphenated syllabification and end with (...)
  */
 export function ensureHyphenatedLyrics(lyrics: any): any {
   if (!lyrics) return lyrics;
@@ -170,7 +198,8 @@ export function ensureHyphenatedLyrics(lyrics: any): any {
     if (Array.isArray(result[key])) {
       result[key] = result[key].map((line: string) => {
         // If line is already hyphenated, keep; if not, hyphenate
-        return line.includes("-") ? line : hyphenateLine(line);
+        const hyphenated = line.includes("-") ? line : hyphenateLine(line);
+        return ensureEllipsis(hyphenated);
       });
     }
   }

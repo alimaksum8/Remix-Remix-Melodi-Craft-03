@@ -110,6 +110,27 @@ function hyphenateLine(text: string): string {
   }).join(" ");
 }
 
+function ensureEllipsis(line: string): string {
+  if (!line) return "";
+  const trimmed = line.trim();
+  if (!trimmed) return "";
+  const cleaned = trimmed.replace(/[\s\.\,\!\?]+$/, "");
+  if (!cleaned) return "...";
+  return `${cleaned}...`;
+}
+
+function ensureAllLinesHaveEllipsis(lyrics: any): any {
+  if (!lyrics) return lyrics;
+  const result: any = { ...lyrics };
+  const keys = ["verse1", "verse2", "preChorus", "chorus", "postChorus", "verse3", "bridge", "finalChorus", "outro"];
+  for (const key of keys) {
+    if (Array.isArray(result[key])) {
+      result[key] = result[key].map((line: string) => ensureEllipsis(line));
+    }
+  }
+  return result;
+}
+
 function ensureHyphenatedLyrics(lyrics: any): any {
   if (!lyrics) return lyrics;
   const result: any = { ...lyrics };
@@ -117,7 +138,8 @@ function ensureHyphenatedLyrics(lyrics: any): any {
   for (const key of keys) {
     if (Array.isArray(result[key])) {
       result[key] = result[key].map((line: string) => {
-        return line.includes("-") ? line : hyphenateLine(line);
+        const hyphenated = line.includes("-") ? line : hyphenateLine(line);
+        return ensureEllipsis(hyphenated);
       });
     }
   }
@@ -265,7 +287,7 @@ cinta, kasih, sayang, rindu, hati, hatiku, sanubari, kalbu, diriku, dirimu, kita
 - Fungsi: Penutup romantis berkesan manis atau haru mendalam. Boleh disertai vocalization ("Oooh...", "Wo-o-o...", "Ho-o-o...", "Yeah...") di akhir baris.
 
 ================================
-6. POLA BARIS & PANJANG KATA
+6. POLA BARIS, PANJANG KATA, & TANDA BACA WAJIB
 ================================
 - Setiap baris idealnya: 3–6 kata (rata-rata 3–5 kata).
 - Gunakan variasi ritmis: Panjang → Pendek → Panjang → Pendek atau Panjang → Panjang → Pendek → Panjang.
@@ -273,6 +295,7 @@ cinta, kasih, sayang, rindu, hati, hatiku, sanubari, kalbu, diriku, dirimu, kita
 - Prioritaskan KELANCARAN NYANYIAN (*singability*) dan rima longgar (-mu, -ku, -an, -i, -a).
 - seperti ciptaan seorang musikus ternama
 - setiap rangkaian kata punya jiwa seolah pengalaman nyata pendengar
+- ATURAN TANDA BACA WAJIB: Setiap akhir baris lirik lagu di seluruh bagian (verse1, verse2, preChorus, chorus, postChorus, verse3, bridge, finalChorus, outro) WAJIB diakhiri dengan tanda titik tiga (...) di ujung barisnya (contoh: "Dingin malam menyelimuti jiwa...", "Ma-sih ber-bu-nga cin-ta-ku i-ni...").
 
 ================================
 7. HOOK
@@ -386,18 +409,18 @@ ${originalLyrics.trim()}
 ATURAN SANGAT KETAT UNTUK MODE LIRIK ORIGINAL (WAJIB DIPATUHI 100%):
 1. DILARANG MENYENTUH, MENGUBAH, MENAMBAH, ATAU MENGURANGI KATA-KATA LIRIK:
    Aplikasi dan AI TIDAK BOLEH mengubah, memparafrase, atau mengganti kosakata lirik yang dimasukkan pengguna. Setiap kata dalam lirik pengguna harus tetap sama persis!
-2. UBAH FORMAT TULISAN LIRIK MENJADI PEMENGGALAN SUKU KATA DENGAN TANDA HUBUNG (hyphenated syllabification / format lirik berpemisah suku kata):
-   - Format ini memenggal setiap kata berdasarkan suku kata fonetik bahasa Indonesia menggunakan tanda hubung (-).
+2. UBAH FORMAT TULISAN LIRIK MENJADI PEMENGGALAN SUKU KATA DENGAN TANDA HUBUNG (hyphenated syllabification) DAN AKHIRI DENGAN TITIK TIGA (...):
+   - Format ini memenggal setiap kata berdasarkan suku kata fonetik bahasa Indonesia menggunakan tanda hubung (-), serta di setiap akhir baris lirik WAJIB ditambahkan tanda titik tiga (...).
    - Contoh:
      Tulisan normal: "Masih berbunga cintaku ini"
-     Format pemenggalan suku kata: "Ma-sih ber-bu-nga cin-ta-ku i-ni"
+     Format pemenggalan suku kata: "Ma-sih ber-bu-nga cin-ta-ku i-ni..."
    - Contoh lain:
-     "Di dalam hatiku yang terluka" -> "Di da-lam ha-ti-ku yang ter-lu-ka"
-     "Walau kini engkau telah pergi" -> "Wa-lau ki-ni eng-kau te-lah per-gi"
-   - Seluruh baris lirik pada verse1, verse2, preChorus, chorus, postChorus, verse3, bridge, finalChorus, outro HARUS ditulis dalam format pemenggalan suku kata bertanda hubung ini.
+     "Di dalam hatiku yang terluka" -> "Di da-lam ha-ti-ku yang ter-lu-ka..."
+     "Walau kini engkau telah pergi" -> "Wa-lau ki-ni eng-kau te-lah per-gi..."
+   - Seluruh baris lirik pada verse1, verse2, preChorus, chorus, postChorus, verse3, bridge, finalChorus, outro HARUS ditulis dalam format pemenggalan suku kata bertanda hubung ini dan diakhiri titik tiga (...).
 3. DISTRIBUSI BAIT LIRIK ORIGINAL KE DALAM STRUKTUR:
    - Petakan baris-baris lirik original pengguna ke dalam bagian lagu: intro (deskripsi instrumental 8 bar), verse1, verse2, preChorus, chorus, postChorus, verse3, bridge, finalChorus, outro.
-   - Semua baris lirik WAJIB berformat pemenggalan suku kata dengan tanda hubung.
+   - Semua baris lirik WAJIB berformat pemenggalan suku kata dengan tanda hubung dan diakhiri titik tiga (...).
 4. TUGAS PRODUKSI MUSIK & ARANSEMEN:
    - Tentukan judul lagu (songTitle) yang paling tepat dari lirik tersebut.
    - Buat progresi akor (chordsSuggestion) untuk Verse, Chorus, dan Bridge.
@@ -418,6 +441,7 @@ ${liveConcert ? `- Live Concert atmosphere elements: ${liveConcert}` : ""}`
       : `Write or creatively transform a beautiful Slow Rock/Pop Melayu song based on: "${topic}".
 (Note: If full lyrics or draft stanzas are provided above, apply the CREATIVE TRANSFORMATION method: preserve theme, emotions, and message, but completely recreate sentence structures, diksi, metaphors, and emotional expressions into a fresh standalone original song).
 (CRITICAL VOCABULARY RULE: Jangan pernah memakai kata "dada" pada lirik. Gunakan kata "hati", "sanubari", "kalbu", atau "hatiku").
+(CRITICAL PUNCTUATION RULE: Di setiap akhir baris lirik pada seluruh bagian lagu, WAJIB diakhiri dengan tanda titik tiga (...), contoh: "Dingin malam menyelimuti jiwa...").
 
 (CRITICAL MUSIC PRODUCTION & ARRANGEMENT CONSTRAINTS — ATURAN WAJIB GENERATOR):
 - IDENTITAS GENRE UTAMA: Rock Kapak Malaysia 90's, Slow Rock Melayu 90's, Romantic Sad Rock Ballad.
@@ -586,8 +610,12 @@ ${liveConcert ? `- Live Concert atmosphere elements: ${liveConcert}` : ""}`;
     }
 
     const parsedData = JSON.parse(text);
-    if (isOriginalMode && parsedData.lyrics) {
-      parsedData.lyrics = ensureHyphenatedLyrics(parsedData.lyrics);
+    if (parsedData.lyrics) {
+      if (isOriginalMode) {
+        parsedData.lyrics = ensureHyphenatedLyrics(parsedData.lyrics);
+      } else {
+        parsedData.lyrics = ensureAllLinesHaveEllipsis(parsedData.lyrics);
+      }
     }
     res.json(parsedData);
   } catch (error: any) {

@@ -277,15 +277,15 @@ export default function App() {
   // Sample original lyrics loader helper
   const handleLoadSampleOriginalLyrics = () => {
     setOriginalLyrics(
-`Masih berbunga cintaku ini
-Di dalam hatiku yang terluka
-Walau kini engkau telah pergi
-Ku kan selalu menantimu di sini
+`Masih berbunga cintaku ini...
+Di dalam hatiku yang terluka...
+Walau kini engkau telah pergi...
+Ku kan selalu menantimu di sini...
 
-Mengapa harus ada perpisahan
-Bila hati ini masih mencinta
-Tak sanggup ku menahan rindu ini
-Hanya sepi yang kini menemani`
+Mengapa harus ada perpisahan...
+Bila hati ini masih mencinta...
+Tak sanggup ku menahan rindu ini...
+Hanya sepi yang kini menemani...`
     );
   };
   
@@ -654,11 +654,11 @@ Hanya sepi yang kini menemani`
                         Aplikasi <strong>tidak akan menyentuh atau mengubah</strong> kata-kata dalam lirik Anda. Hanya membuat style musik dan mengubah format tulisan menjadi <strong>pemenggalan suku kata dengan tanda hubung (hyphenated syllabification / format lirik berpemisah suku kata)</strong>.
                       </p>
                       <div className="bg-white/80 border border-amber-200/60 rounded-lg p-2 font-mono text-[11px] text-neutral-700 space-y-0.5">
-                        <div className="text-neutral-500">Tulisan normal: <span className="text-neutral-800 font-semibold">Masih berbunga cintaku ini</span></div>
-                        <div className="text-amber-800 font-bold">Format pemenggalan suku kata: <span className="text-amber-900">Ma-sih ber-bu-nga cin-ta-ku i-ni</span></div>
+                        <div className="text-neutral-500">Tulisan normal: <span className="text-neutral-800 font-semibold">Masih berbunga cintaku ini...</span></div>
+                        <div className="text-amber-800 font-bold">Format pemenggalan suku kata: <span className="text-amber-900">Ma-sih ber-bu-nga cin-ta-ku i-ni...</span></div>
                       </div>
                       <p className="text-[10px] text-amber-700/90 italic">
-                        Fungsi: Memperlihatkan pemenggalan suku kata, membantu artikulasi penyanyi, mengatur penempatan suku kata terhadap melodi, serta memandu ritme vokal.
+                        Fungsi: Memperlihatkan pemenggalan suku kata, membantu artikulasi penyanyi, mengatur penempatan suku kata terhadap melodi, serta memandu ritme vokal. Di setiap akhir baris lirik otomatis ditambahkan titik tiga (...).
                       </p>
                     </div>
 
@@ -667,7 +667,7 @@ Hanya sepi yang kini menemani`
                       id="original-lyrics-input"
                       value={originalLyrics}
                       onChange={(e) => setOriginalLyrics(e.target.value)}
-                      placeholder={`Tempelkan lirik original Anda di sini...\n\nContoh:\nMasih berbunga cintaku ini\nDi dalam hatiku yang terluka\nWalau kini engkau telah pergi\nKu kan selalu menantimu di sini...`}
+                      placeholder={`Tempelkan lirik original Anda di sini...\n\nContoh:\nMasih berbunga cintaku ini...\nDi dalam hatiku yang terluka...\nWalau kini engkau telah pergi...\nKu kan selalu menantimu di sini...`}
                       rows={8}
                       className="w-full text-sm font-mono border border-amber-300 rounded-xl px-4 py-3 text-neutral-800 placeholder-neutral-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 transition-all bg-white min-h-[160px] leading-relaxed shadow-xs"
                       required={isOriginalLyricsMode}

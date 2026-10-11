@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { LyricsData } from "../types";
-import { countIndonesianSyllables, hyphenateLine, unhyphenateLine } from "../utils";
+import { countIndonesianSyllables, hyphenateLine, unhyphenateLine, ensureEllipsis } from "../utils";
 import { Copy, Check, Edit3, Save, X, Eye, EyeOff, Music } from "lucide-react";
 
 interface LyricDisplayProps {
@@ -23,10 +23,13 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
   const [editValue, setEditValue] = useState<string>("");
 
   const formatLineForDisplay = (line: string): string => {
+    let formatted = "";
     if (showHyphenated) {
-      return line.includes("-") ? line : hyphenateLine(line);
+      formatted = line.includes("-") ? line : hyphenateLine(line);
+    } else {
+      formatted = unhyphenateLine(line);
     }
-    return unhyphenateLine(line);
+    return ensureEllipsis(formatted);
   };
 
   const sections: { key: keyof LyricsData; label: string; subLabel: string; target: string; min: number; max: number }[] = [
@@ -69,7 +72,7 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
     const lines = lyrics[section];
     if (Array.isArray(lines)) {
       const updatedLines = [...lines];
-      updatedLines[index] = editValue.trim();
+      updatedLines[index] = ensureEllipsis(editValue.trim());
       
       onUpdateLyrics({
         ...lyrics,
@@ -251,7 +254,7 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
                               </p>
                               {showHyphenated && (
                                 <p className="text-[10px] text-neutral-400 italic mt-0.5 font-sans">
-                                  {unhyphenateLine(line)}
+                                  {ensureEllipsis(unhyphenateLine(line))}
                                 </p>
                               )}
                             </div>
