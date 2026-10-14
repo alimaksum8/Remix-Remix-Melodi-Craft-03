@@ -58,6 +58,13 @@ export function hyphenateIndonesianWord(word: string): string {
   const clean = word.trim();
   if (!clean || clean.length < 2) return word;
   
+  // Explicit rule: "Han-ya" / "hanya" must always be "Ha-nya" / "ha-nya"
+  if (clean.toLowerCase() === "han-ya" || clean.toLowerCase() === "hanya") {
+    if (clean === "HAN-YA" || clean === "HANYA") return "HA-NYA";
+    if (clean[0] === clean[0].toUpperCase()) return "Ha-nya";
+    return "ha-nya";
+  }
+
   // If already hyphenated, return as is
   if (clean.includes("-")) return clean;
 
@@ -134,20 +141,38 @@ export function hyphenateIndonesianWord(word: string): string {
 }
 
 /**
+ * Explicit rule: Replace any occurrence of "Han-ya" with "Ha-nya" (case-preserved).
+ */
+export function fixHanyaSyllabification(text: string): string {
+  if (!text) return "";
+  return text
+    .replace(/\bHan-ya\b/gi, (match) => {
+      if (match === "HAN-YA") return "HA-NYA";
+      if (match[0] === match[0].toUpperCase()) return "Ha-nya";
+      return "ha-nya";
+    })
+    .replace(/Han-ya/g, "Ha-nya")
+    .replace(/han-ya/g, "ha-nya")
+    .replace(/HAN-YA/g, "HA-NYA")
+    .replace(/Han-Ya/g, "Ha-Nya");
+}
+
+/**
  * Break a full line of text into hyphenated words (Pemenggalan suku kata dengan tanda hubung).
  * e.g., "Masih berbunga cintaku ini" -> "Ma-sih ber-bu-nga cin-ta-ku i-ni"
  */
 export function hyphenateLine(text: string): string {
   if (!text) return "";
-  return text.split(/\s+/).map(word => {
+  const hyphenated = text.split(/\s+/).map(word => {
     // Separate punctuation
     const match = word.match(/^([^a-zA-Z0-9]*)(.*?)([^a-zA-Z0-9]*)$/);
     if (!match) return word;
     const [, prefix, core, suffix] = match;
     if (!core) return word;
-    const hyphenated = hyphenateIndonesianWord(core);
-    return `${prefix}${hyphenated}${suffix}`;
+    const syllabified = hyphenateIndonesianWord(core);
+    return `${prefix}${syllabified}${suffix}`;
   }).join(" ");
+  return fixHanyaSyllabification(hyphenated);
 }
 
 /**
@@ -173,7 +198,7 @@ export function ensureEllipsis(line: string): string {
 }
 
 /**
- * Ensures all lines in a LyricsData object end with three dots (...)
+ * Ensures all lines in a LyricsData object end with three dots (...) and corrects Han-ya to Ha-nya
  */
 export function ensureAllLinesHaveEllipsis(lyrics: any): any {
   if (!lyrics) return lyrics;
@@ -181,14 +206,14 @@ export function ensureAllLinesHaveEllipsis(lyrics: any): any {
   const keys = ["verse1", "verse2", "preChorus", "chorus", "postChorus", "verse3", "bridge", "finalChorus", "outro"];
   for (const key of keys) {
     if (Array.isArray(result[key])) {
-      result[key] = result[key].map((line: string) => ensureEllipsis(line));
+      result[key] = result[key].map((line: string) => ensureEllipsis(fixHanyaSyllabification(line)));
     }
   }
   return result;
 }
 
 /**
- * Ensures all lines in a LyricsData object are formatted with hyphenated syllabification and end with (...)
+ * Ensures all lines in a LyricsData object are formatted with hyphenated syllabification, replace Han-ya with Ha-nya, and end with (...)
  */
 export function ensureHyphenatedLyrics(lyrics: any): any {
   if (!lyrics) return lyrics;
@@ -198,8 +223,8 @@ export function ensureHyphenatedLyrics(lyrics: any): any {
     if (Array.isArray(result[key])) {
       result[key] = result[key].map((line: string) => {
         // If line is already hyphenated, keep; if not, hyphenate
-        const hyphenated = line.includes("-") ? line : hyphenateLine(line);
-        return ensureEllipsis(hyphenated);
+        const hyphenated = line.includes("-") ? fixHanyaSyllabification(line) : hyphenateLine(line);
+        return ensureEllipsis(fixHanyaSyllabification(hyphenated));
       });
     }
   }

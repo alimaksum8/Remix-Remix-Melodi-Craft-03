@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { LyricsData } from "../types";
-import { countIndonesianSyllables, hyphenateLine, unhyphenateLine, ensureEllipsis } from "../utils";
+import { countIndonesianSyllables, hyphenateLine, unhyphenateLine, ensureEllipsis, fixHanyaSyllabification } from "../utils";
 import { Copy, Check, Edit3, Save, X, Eye, EyeOff, Music } from "lucide-react";
 
 interface LyricDisplayProps {
@@ -25,7 +25,8 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
   const formatLineForDisplay = (line: string): string => {
     let formatted = "";
     if (showHyphenated) {
-      formatted = line.includes("-") ? line : hyphenateLine(line);
+      formatted = line.includes("-") ? fixHanyaSyllabification(line) : hyphenateLine(line);
+      formatted = fixHanyaSyllabification(formatted);
     } else {
       formatted = unhyphenateLine(line);
     }
@@ -72,7 +73,7 @@ export const LyricDisplay: React.FC<LyricDisplayProps> = ({
     const lines = lyrics[section];
     if (Array.isArray(lines)) {
       const updatedLines = [...lines];
-      updatedLines[index] = ensureEllipsis(editValue.trim());
+      updatedLines[index] = ensureEllipsis(fixHanyaSyllabification(editValue.trim()));
       
       onUpdateLyrics({
         ...lyrics,

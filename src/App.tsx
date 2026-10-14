@@ -13,6 +13,10 @@ import {
   formatSunoStyleTags,
   formatYollyAiStyleTags,
   formatSongGeneratorIoStyleTags,
+  hyphenateLine,
+  ensureEllipsis,
+  ensureHyphenatedLyrics,
+  ensureAllLinesHaveEllipsis,
 } from "./utils";
 import {
   Music,
@@ -256,6 +260,7 @@ export default function App() {
   // Mode Lirik Original state (Hyphenated Syllabification)
   const [isOriginalLyricsMode, setIsOriginalLyricsMode] = useState<boolean>(false);
   const [originalLyrics, setOriginalLyrics] = useState<string>("");
+  const [showOriginalPreview, setShowOriginalPreview] = useState<boolean>(false);
   const originalLyricsTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-expand topic textarea dynamically based on word count & line length
@@ -448,6 +453,13 @@ Hanya sepi yang kini menemani...`
       }
 
       const generatedData = await response.json();
+      if (generatedData.lyrics) {
+        if (isOriginalLyricsMode) {
+          generatedData.lyrics = ensureHyphenatedLyrics(generatedData.lyrics);
+        } else {
+          generatedData.lyrics = ensureAllLinesHaveEllipsis(generatedData.lyrics);
+        }
+      }
       setSongData(generatedData);
       
       // Auto switch to lyrics tab to display output
@@ -561,49 +573,47 @@ Hanya sepi yang kini menemani...`
 
               <form onSubmit={handleGenerateSong} className="space-y-6">
                 
-                {/* Tombol Pemilih Mode: Lirik Original vs Tema Lagu Baru */}
-                <div className="p-3.5 rounded-xl border border-neutral-200/90 bg-neutral-50/80 space-y-2">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2.5">
-                      <div className={`p-2 rounded-lg transition-colors shrink-0 ${isOriginalLyricsMode ? "bg-amber-500 text-white shadow-xs" : "bg-neutral-200 text-neutral-600"}`}>
-                        <FileText size={16} />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-bold text-neutral-900 uppercase tracking-wide">
-                            Gunakan Lirik Original
-                          </span>
-                          {isOriginalLyricsMode && (
-                            <span className="text-[10px] bg-amber-100 text-amber-900 font-extrabold px-2 py-0.5 rounded-full border border-amber-300">
-                              Format Suku Kata Aktif
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-[11px] text-neutral-500 font-normal">
-                          {isOriginalLyricsMode
-                            ? "Kolom tema disembunyikan. Lirik Anda tetap 100% utuh, hanya diformat ke pemenggalan suku kata (Ma-sih ber-bu-nga)."
-                            : "Aktifkan jika Anda sudah memiliki lirik sendiri dan tidak ingin diubah oleh AI."}
-                        </p>
-                      </div>
-                    </div>
+                {/* Tombol Kolom Lirik Original vs Tema Lagu (Segmented Tab Bar) */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider">
+                      PILIH MODE INPUT LAGU:
+                    </span>
+                    <span className="text-[11px] font-semibold text-amber-700">
+                      {isOriginalLyricsMode ? "Mode Lirik Original Aktif" : "Mode Tema Baru Aktif"}
+                    </span>
+                  </div>
 
-                    {/* Interactive Switch Toggle */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-1.5 bg-neutral-100 rounded-2xl border border-neutral-200">
                     <button
                       type="button"
-                      id="toggle-original-lyrics-mode"
-                      role="switch"
-                      aria-checked={isOriginalLyricsMode}
-                      onClick={() => setIsOriginalLyricsMode(!isOriginalLyricsMode)}
-                      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1 ${
-                        isOriginalLyricsMode ? "bg-amber-500" : "bg-neutral-300 hover:bg-neutral-400"
+                      id="btn-mode-tema"
+                      onClick={() => setIsOriginalLyricsMode(false)}
+                      className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                        !isOriginalLyricsMode
+                          ? "bg-white text-neutral-900 shadow-sm border border-neutral-200/90"
+                          : "text-neutral-500 hover:text-neutral-800 hover:bg-neutral-200/50"
                       }`}
-                      title={isOriginalLyricsMode ? "Nonaktifkan Mode Lirik Original" : "Aktifkan Mode Lirik Original"}
                     >
-                      <span
-                        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
-                          isOriginalLyricsMode ? "translate-x-5" : "translate-x-0"
-                        }`}
-                      />
+                      <Sparkles size={14} className={!isOriginalLyricsMode ? "text-amber-600 fill-amber-500" : ""} />
+                      <span>TEMA LAGU (SLOWROCK MELAYU 90-AN)</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      id="btn-mode-lirik-original"
+                      onClick={() => setIsOriginalLyricsMode(true)}
+                      className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                        isOriginalLyricsMode
+                          ? "bg-amber-500 text-neutral-950 shadow-sm font-extrabold border border-amber-600/30"
+                          : "text-neutral-600 hover:text-neutral-900 hover:bg-neutral-200/50"
+                      }`}
+                    >
+                      <Music size={14} className={isOriginalLyricsMode ? "text-neutral-950 stroke-[2.5]" : "text-amber-600"} />
+                      <span>TOMBOL KOLOM LIRIK ORIGINAL</span>
+                      {isOriginalLyricsMode && (
+                        <span className="w-2 h-2 rounded-full bg-neutral-950 animate-pulse ml-0.5" />
+                      )}
                     </button>
                   </div>
                 </div>
@@ -635,13 +645,25 @@ Hanya sepi yang kini menemani...`
                         <Music size={14} className="text-amber-600" />
                         <span>KOLOM LIRIK ORIGINAL</span>
                       </label>
-                      <button
-                        type="button"
-                        onClick={handleLoadSampleOriginalLyrics}
-                        className="text-[11px] font-bold text-amber-700 hover:text-amber-900 underline self-start sm:self-auto cursor-pointer"
-                      >
-                        Muat Contoh Lirik Original
-                      </button>
+                      <div className="flex items-center gap-3">
+                        {originalLyrics.trim() && (
+                          <button
+                            type="button"
+                            onClick={() => setShowOriginalPreview(!showOriginalPreview)}
+                            className="text-[11px] font-bold text-amber-800 hover:text-amber-950 flex items-center gap-1 cursor-pointer"
+                          >
+                            <FileText size={12} />
+                            <span>{showOriginalPreview ? "Tutup Pratinjau" : "Pratinjau Suku Kata"}</span>
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          onClick={handleLoadSampleOriginalLyrics}
+                          className="text-[11px] font-bold text-amber-700 hover:text-amber-900 underline cursor-pointer"
+                        >
+                          Muat Contoh Lirik Original
+                        </button>
+                      </div>
                     </div>
 
                     {/* Informative Guidance Box */}
@@ -658,7 +680,7 @@ Hanya sepi yang kini menemani...`
                         <div className="text-amber-800 font-bold">Format pemenggalan suku kata: <span className="text-amber-900">Ma-sih ber-bu-nga cin-ta-ku i-ni...</span></div>
                       </div>
                       <p className="text-[10px] text-amber-700/90 italic">
-                        Fungsi: Memperlihatkan pemenggalan suku kata, membantu artikulasi penyanyi, mengatur penempatan suku kata terhadap melodi, serta memandu ritme vokal. Di setiap akhir baris lirik otomatis ditambahkan titik tiga (...).
+                        Fungsi: Memperlihatkan pemenggalan suku kata dalam setiap kata, membantu penyanyi memahami artikulasi dan pelafalan, membantu mengatur penempatan suku kata terhadap melodi, serta menjadi panduan saat menyusun ritme vokal. Di setiap akhir baris lirik otomatis ditambahkan titik tiga (...).
                       </p>
                     </div>
 
@@ -672,6 +694,23 @@ Hanya sepi yang kini menemani...`
                       className="w-full text-sm font-mono border border-amber-300 rounded-xl px-4 py-3 text-neutral-800 placeholder-neutral-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 transition-all bg-white min-h-[160px] leading-relaxed shadow-xs"
                       required={isOriginalLyricsMode}
                     />
+
+                    {/* Live Syllabification Preview Box */}
+                    {showOriginalPreview && originalLyrics.trim() && (
+                      <div className="p-3 bg-neutral-900 text-amber-300 font-mono text-xs rounded-xl border border-neutral-700 space-y-1 shadow-inner">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 border-b border-neutral-800 pb-1 flex items-center justify-between">
+                          <span>Hasil Pemenggalan Suku Kata (Live Preview):</span>
+                          <span className="text-emerald-400 text-[10px]">Kata lirik 100% utuh</span>
+                        </div>
+                        <div className="space-y-0.5 pt-1 text-neutral-200">
+                          {originalLyrics.split(/\r?\n/).filter(Boolean).map((line, idx) => (
+                            <div key={idx} className="hover:text-amber-300 transition-colors">
+                              {ensureEllipsis(hyphenateLine(line))}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     <div className="flex justify-between items-center text-[11px] text-neutral-400">
                       <span>{originalLyrics.trim() ? `${originalLyrics.trim().split(/\r\n|\r|\n/).filter(Boolean).length} baris lirik terdeteksi` : "Tempel lirik lagu lengkap Anda"}</span>
